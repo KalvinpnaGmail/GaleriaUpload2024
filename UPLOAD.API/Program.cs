@@ -10,19 +10,19 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IApiService, ApiService>();
+//builder.Services.AddScoped<IApiService, ApiService>();
 
-var app = builder.Build();
 
-builder.Services.AddDbContext<DbContext>(options =>
+
+builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexionSql"),
+    options.UseSqlServer(builder.Configuration.GetConnectionString("LocalConnection"),
         (a) => a.MigrationsAssembly("UPLOAD.API"));
 },
 ServiceLifetime.Transient);
 builder.Services.AddCors();
-
+var app = builder.Build();
 
 
 

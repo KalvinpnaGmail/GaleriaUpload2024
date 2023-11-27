@@ -6,10 +6,11 @@ namespace UPLOAD.API.Data
     public partial class DataContext:DbContext
     {
 
+        public virtual DbSet<Image> Images { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-
-        public virtual DbSet<Image> Images { get; set; }
+            
 
 
         public DataContext() 

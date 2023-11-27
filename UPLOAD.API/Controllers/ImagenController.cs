@@ -1,16 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Principal;
 using UPLOAD.API.Data;
+using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
 
 namespace UPLOAD.API.Controllers
 {
-    public class ImagenController : Controller
-    {
+  
         [ApiController]
         [Route("[controller]")]
-        public class ImageController : Controller
+        public class ImageController : ControllerBase
         {
 
             private readonly string _usuario;
@@ -35,11 +36,11 @@ namespace UPLOAD.API.Controllers
 
 
             [HttpPost]
-            public async Task<Image> Create(ImageRequet request)
+            public async Task<Image> Create(ImagenDTO request)
             {
                 var image = new Image() { Name = request.Name };
                 //Cloudinary
-                image.URL = await Upload(request.Base64);
+                image.Url = await Upload(request.Base64);
 
                 await _contexto.Images.AddAsync(image);
                 await _contexto.SaveChangesAsync();
@@ -74,4 +75,3 @@ namespace UPLOAD.API.Controllers
 
         }
     }
-}
