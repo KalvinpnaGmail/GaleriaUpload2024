@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -9,6 +9,27 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.13" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="7.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.18.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UPLOAD.SHARE\UPLOAD.SHARE.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <OpenApiReference Include="..\..\..\..\Desktop\swaggerjson.json" CodeGenerator="NSwagCSharp" Namespace="clienteSwager" Link="OpenAPIs\swaggerjson.json" />
   </ItemGroup>
 
 </Project>

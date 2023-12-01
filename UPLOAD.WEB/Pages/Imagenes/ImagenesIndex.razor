@@ -1,0 +1,33 @@
+﻿@page "/Imagenes"
+@using UPLOAD.SHARE.DTOS
+@using UPLOAD.SHARE.Entities
+@using UPLOAD.WEB.Services
+
+
+
+
+@inject IImageService ImageService
+
+<h3>Imágenes</h3>
+
+<button @onclick="CargarImagen">Cargar Imagen</button>
+
+@code {
+    private IReadOnlyCollection<Image> imagenes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        imagenes = await ImageService.GetAllImages();
+    }
+
+
+
+    private async Task CargarImagen()
+    {
+        // var nuevaImagen = new ImagenDTO { /* Configura los detalles de la imagen */ };
+        // var imagenCargada = await ImageService.UploadImage(nuevaImagen);
+
+        // Actualiza la lista de imágenes después de cargar una nueva
+        //imagenes = await ImageService.GetAllImages();
+    }
+}

@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using UPLOAD.API.Data;
-using UPLOAD.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +10,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //builder.Services.AddScoped<IApiService, ApiService>();
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin(); // add the allowed origins
+                      });
+});
+
+
 
 
 
@@ -21,7 +31,7 @@ builder.Services.AddDbContext<DataContext>(options =>
         (a) => a.MigrationsAssembly("UPLOAD.API"));
 },
 ServiceLifetime.Transient);
-builder.Services.AddCors();
+//builder.Services.AddCors();
 var app = builder.Build();
 
 
@@ -37,7 +47,8 @@ if (app.Environment.IsDevelopment())
 
 //builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=LocalConnection"));
 
-app.UseCors(builder => {
+app.UseCors(builder =>
+{
     builder.AllowAnyOrigin()
            .AllowAnyHeader()
            .AllowAnyMethod();
@@ -49,5 +60,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true)
+    .AllowCredentials());
 
 app.Run();

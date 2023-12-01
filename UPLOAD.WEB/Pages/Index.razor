@@ -1,9 +1,35 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+@if (result!=null)
+{
+    @foreach (clienteSwager.WeatherForecast weather in result) 
+    {
+        <div>
+            @weather.TemperatureC
+            @weather.TemperatureF
+            @weather.Summary
+            @weather.Date
+        </div>
+        
+    }
+}
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
+@code{
+    private ICollection<clienteSwager.WeatherForecast> result;
+    private clienteSwager.swaggerjsonClient client = new clienteSwager.swaggerjsonClient("https://localhost:7207/", new HttpClient());
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+
+    private async Task Refresh()
+    {
+        result = await client.GetWeatherForecastAsync();
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Refresh();
+    }
+   
+}
+ 
