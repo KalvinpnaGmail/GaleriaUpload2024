@@ -7,7 +7,7 @@ namespace UPLOAD.API.Helpers
 
         public class Acler
         {
-            public string url = "http://181.98.176.128";
+           
             public double formatearDecimal(string valor)
             {
                 string result2 = valor.Substring(0, valor.Length - 2);

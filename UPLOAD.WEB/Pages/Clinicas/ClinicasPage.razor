@@ -1,19 +1,23 @@
 ﻿@page "/clinicaspage"
-@using UPLOAD.SHARE.Entities
 
-<h3>Clinicas</h3>
+
 @inject IRepository repository
 
-@inject SweetAlertService sweetAlertService
 
 
-@if (clinicas is null)
+<h3>Clinicas</h3>
+
+
+@* @inject SweetAlertService sweetAlertService
+ *@
+
+@if (Clinicas is null)
 {
     <div class="spinner" />
 }
 else
 {
-    <GenericList MyList="clinicas">
+    <GenericList MyList="Clinicas">
         <Body>
             <div class="card">
                 <div class="card-header">
@@ -43,7 +47,7 @@ else
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var clinica in clinicas)
+                            @foreach (var clinica in Clinicas)
                             {
                                 <tr>
                                     <td>
@@ -62,7 +66,7 @@ else
 
 @code {
    
-    public List<Clinica>? clinicas { get; set; }
+    public List<Clinica>? Clinicas { get; set; }
 
     
 
@@ -77,7 +81,9 @@ else
     {
  
         var responseHppt = await repository.Get<List<Clinica>>("/api/clinicas/DevuelveClinicas");
-             clinicas = responseHppt.Response!;
+        //var responseHppt = await repository.Get<Clinica>("/api/clinicas/DevuelveClinicas");
+
+             Clinicas = responseHppt.Response!;
      
        
     }

@@ -25,10 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <OpenApiReference Include="..\..\..\..\Desktop\swaggerjson.json" CodeGenerator="NSwagCSharp" Namespace="clienteSwager" Link="OpenAPIs\swaggerjson.json" />
   </ItemGroup>
 
