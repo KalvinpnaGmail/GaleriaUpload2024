@@ -18,8 +18,8 @@ namespace UPLOAD.API.Controllers
 
         public ClinicasController(IConfiguration configuration)
         {
-            _httpClient = new HttpClient();
-            usuario= configuration["AclerApi:usuario"]!;
+            _httpClient = new HttpClient(new HttpClientHandler { ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true });
+            usuario = configuration["AclerApi:usuario"]!;
             pass= configuration["AclerApi:pass"]!;
             url = configuration["AclerApi:url"]!;
         }
@@ -38,7 +38,7 @@ namespace UPLOAD.API.Controllers
             try
             {
                 // Realizar la solicitud GET (o la solicitud que necesites)
-                HttpResponseMessage response = await _httpClient.GetAsync(url+"json/Clinicas.php");
+                HttpResponseMessage response = await _httpClient.GetAsync(url+"Clinicas.php");
 
                 // Verificar la respuesta
                 if (response.IsSuccessStatusCode)

@@ -82,8 +82,7 @@ else
  
         var responseHppt = await repository.Get<List<Clinica>>("/api/clinicas/DevuelveClinicas");
         //var responseHppt = await repository.Get<Clinica>("/api/clinicas/DevuelveClinicas");
-
-             Clinicas = responseHppt.Response!;
+         Clinicas = responseHppt.Response!;
      
        
     }
