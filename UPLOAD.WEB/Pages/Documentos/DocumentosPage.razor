@@ -1,29 +1,28 @@
-﻿@page "/clinicaspage"
-
+﻿@page "/documentospage"
 
 @inject IRepository repository
 
 
 
-<h3>Clinicas</h3>
+<h3>Documentos</h3>
 
 
 @* @inject SweetAlertService sweetAlertService
  *@
 
-@if (Clinicas is null)
+@if (Imagenes is null)
 {
     <div class="spinner" />
 }
 else
 {
-    <GenericList MyList="Clinicas">
+    <GenericList MyList="Imagenes">
         <Body>
             <div class="card">
                 <div class="card-header">
                     <span>
-                        <i class="oi oi-star"/> Clinicas
-                        <a class="btn btn-sm btn-primary float-end" href="/clinicas/create"><i class="oi oi-plus"/> Nueva Clinica</a>
+                        <i class="oi oi-star"/> Documentos
+                        <a class="btn btn-sm btn-primary float-end" href="/clinicas/create"><i class="oi oi-plus"/> Nuevo Documento</a>
                     </span>
                 </div>
                 <div class="card-body">
@@ -42,19 +41,19 @@ else
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th>Nro de Prestador</th>
+                                <th>Link</th>
                                 <th style="width:200px"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var clinica in Clinicas)
+                            @foreach (var image in Imagenes)
                             {
                                 <tr>
                                     <td>
-                                        @clinica.DENOMINACION
+                                        @image.Name
                                     </td>
                                     <td>
-                                        @clinica.Id
+                                        @image.Url
                                     </td>
                                 </tr>
                             }
@@ -68,7 +67,7 @@ else
 
 @code {
 
-    public List<Clinica>? Clinicas { get; set; }
+    public List<Image>? Imagenes { get; set; }
 
 
 
@@ -82,9 +81,9 @@ else
     private async Task LoadAsync()
     {
 
-        var responseHppt = await repository.Get<List<Clinica>>("/api/clinicas/DevuelveClinicas");
+        var responseHppt = await repository.Get<List<Image>>("/api/imagenes/DevuelveImagenes");
        
-        Clinicas = responseHppt.Response!;
+        Imagenes = responseHppt.Response!;
      
        
     }

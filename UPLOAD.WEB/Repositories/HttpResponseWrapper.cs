@@ -2,13 +2,20 @@
 
 namespace UPLOAD.WEB.Repositories
 {
+    //me devuelve las respuestas  200 500 600
+    //T ES CLASE GENERICA
     public class HttpResponseWrapper<T>
     {
+        //
+        //
+        //T? PORQUE PUEDE SER NULO NO TODAS LAS RESPUESTAS HTTP DAN RESPUESTAS
+        //ERROR = SI HUBO ERROR TRUE O FALSE
+        //HttpResponseMessage= OBJEETO LE MANDO EL ERROR DEL MENSAJE
         public HttpResponseWrapper(T? response, bool error, HttpResponseMessage httpResponseMessage)
         {
-            Error = error;
-            Response = response;
-            HttpResponseMessage = httpResponseMessage;
+            Error = error;  //
+            Response = response;//
+            HttpResponseMessage = httpResponseMessage;//
         }
 
         public bool Error { get; set; }

@@ -12,9 +12,17 @@ namespace UPLOAD.API.Data
                .IsRequired()
                .HasMaxLength(100);
 
+
+            // Configuración para el índice único en 'Name'
+            entity.HasIndex(x => x.Name).IsUnique();
+
+
+
             entity.Property(x => x.Url)
                 .IsRequired()
                 .HasColumnType("text");
         }
+
+      
     }
 }

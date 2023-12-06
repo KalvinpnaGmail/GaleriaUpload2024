@@ -3,35 +3,32 @@ using UPLOAD.SHARE.Entities;
 
 namespace UPLOAD.API.Data
 {
-    public partial class DataContext:DbContext
+    public class DataContext : DbContext
     {
 
-        public virtual DbSet<Image> Images { get; set; }
-
-        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
-
-            
 
 
-        public DataContext() 
-        { 
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
         }
 
+        public DbSet<Image> Images { get; set; }
 
-             
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+//modelBuilder.Entity<Image>().HasIndex(x => x.Name).IsUnique();
             modelBuilder.ApplyConfiguration(new ImageConfiguration());
-
-            OnModelCreatingPartial(modelBuilder);
         }
 
 
        
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => base.OnConfiguring(optionsBuilder);
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }
+
+
+
+    
 

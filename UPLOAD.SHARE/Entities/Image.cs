@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace UPLOAD.SHARE.Entities
 {
@@ -11,10 +6,14 @@ namespace UPLOAD.SHARE.Entities
     {
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(100)]
+        [Display(Name = "Nombre")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
         public string Name { get; set; } = string.Empty;
 
-        public string Url { get; set; }= string.Empty;
+
+        [Display(Name = "Link")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public string Url { get; set; } = string.Empty;
     }
 }
