@@ -10,6 +10,8 @@ namespace UPLOAD.WEB.Repositories
 
         private JsonSerializerOptions _jsonDefaultOptions => new JsonSerializerOptions
         {
+            //estandar de java empieza minuscula c# en mayusculas..para errarme json ignore
+            
             PropertyNameCaseInsensitive = true,
         };
 
@@ -21,17 +23,20 @@ namespace UPLOAD.WEB.Repositories
         public async Task<HttpResponseWrapper<T>> Get<T>(string url)
         {
             var responseHttp = await _httpClient.GetAsync(url);
+            //si funciono httpClient
             if (responseHttp.IsSuccessStatusCode)
             {
+                //unserializeAnswer : recibo un string y lo convierto en un objeto
                 var response = await UnserializeAnswer<T>(responseHttp, _jsonDefaultOptions);
                 return new HttpResponseWrapper<T>(response, false, responseHttp);
             }
-
+            //
             return new HttpResponseWrapper<T>(default, true, responseHttp);
         }
 
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T model)
         {
+            ///al modelo lo convierto en json
             var mesageJSON = JsonSerializer.Serialize(model);
             var messageContet = new StringContent(mesageJSON, Encoding.UTF8, "application/json");
             var responseHttp = await _httpClient.PostAsync(url, messageContet);

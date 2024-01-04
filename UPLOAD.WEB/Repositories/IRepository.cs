@@ -11,6 +11,9 @@
         //trespondes me devuelve el body
         Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T model);
 
+
+
+
         ///delet no devuelve respueta
         Task<HttpResponseWrapper<object>> Delete(string url);
         ///delet no devuelve respuesta
