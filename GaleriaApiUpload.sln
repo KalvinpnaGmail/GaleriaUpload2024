@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UPLOAD.SHARE", "UPLOAD.SHAR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UPLOAD.WEB", "UPLOAD.WEB\UPLOAD.WEB.csproj", "{660A5157-FFDD-4F0D-A4DE-3AFA0237CBC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UPLOAD.MOBILE", "UPLOAD.MOBILE\UPLOAD.MOBILE.csproj", "{71F61AAF-4BFF-43AB-AEA1-9490D82DF87A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,12 @@ Global
 		{660A5157-FFDD-4F0D-A4DE-3AFA0237CBC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{660A5157-FFDD-4F0D-A4DE-3AFA0237CBC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{660A5157-FFDD-4F0D-A4DE-3AFA0237CBC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71F61AAF-4BFF-43AB-AEA1-9490D82DF87A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71F61AAF-4BFF-43AB-AEA1-9490D82DF87A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71F61AAF-4BFF-43AB-AEA1-9490D82DF87A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{71F61AAF-4BFF-43AB-AEA1-9490D82DF87A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71F61AAF-4BFF-43AB-AEA1-9490D82DF87A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71F61AAF-4BFF-43AB-AEA1-9490D82DF87A}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
