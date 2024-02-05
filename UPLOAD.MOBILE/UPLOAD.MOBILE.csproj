@@ -16,7 +16,6 @@
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.upload.mobile</ApplicationId>
-		<ApplicationIdGuid>930598f6-1572-467a-bbf9-862cbb200779</ApplicationIdGuid>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
