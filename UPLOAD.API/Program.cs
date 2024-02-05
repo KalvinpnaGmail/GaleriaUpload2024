@@ -54,6 +54,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+///para que me habilite las peticiones
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
