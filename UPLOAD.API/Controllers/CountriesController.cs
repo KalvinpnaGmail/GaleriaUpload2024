@@ -18,7 +18,7 @@ namespace UPLOAD.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<IActionResult> Get()
         {
             return Ok(await _context.Countries.ToListAsync());
         }
@@ -28,6 +28,7 @@ namespace UPLOAD.API.Controllers
         {
             _context.Add(country);
             await _context.SaveChangesAsync();
+            //el ok(county) me devuelve el pais como quedo sino lo necestio lo puedo mandar vacio ok()
             return Ok(country);
         }
     }
