@@ -10,6 +10,10 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7207/") });
+//formas de inyectar serviios
+//scoped: la usamos cuando quiero que cree una nueva instancia cada vez que lo llamo
+//Transient:usamos solouna vez se injecta una vez---en el ciclo de vida del program
+//Singleton:la primera vez lo crea y lo deja en memoria  
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddSweetAlert2();
 

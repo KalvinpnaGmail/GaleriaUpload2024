@@ -21,4 +21,8 @@
     <ProjectReference Include="..\UPLOAD.SHARE\UPLOAD.SHARE.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Countries\CountriesIndex.razor" />
     <Content Remove="Servicios\swaggerjson.json" />
   </ItemGroup>
 
@@ -31,6 +32,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UPLOAD.SHARE\UPLOAD.SHARE.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Countries\CountriesIndex.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Countries\CountriesIndex.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Countries\CountriesIndex.razor" />
   </ItemGroup>
 
 </Project>
