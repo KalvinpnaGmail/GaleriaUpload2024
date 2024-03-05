@@ -56,6 +56,7 @@ namespace UPLOAD.API.Controllers
             // Es esta parte deben poner sus credenciales de Cloudinary: username, api_key, api_secret
             var cloudinary = new Cloudinary(new Account(_usuario, _pass, _llave));
 
+            
 
             cloudinary.Api.Secure = true;
             var uploadParams = new ImageUploadParams()

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Countries\CountriesIndex.razor" />
+    <Content Remove="Pages\Documentos\DocumentosUpload.razor" />
     <Content Remove="Servicios\swaggerjson.json" />
   </ItemGroup>
 
@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.5.0" />
+    <PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.13" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="7.0.2">
@@ -35,15 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Countries\CountriesIndex.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\Countries\CountriesIndex.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\Countries\CountriesIndex.razor" />
+    <None Include="Pages\Documentos\DocumentosUpload.razor" />
   </ItemGroup>
 
 </Project>

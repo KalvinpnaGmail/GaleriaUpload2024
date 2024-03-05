@@ -23,6 +23,13 @@ namespace UPLOAD.API.Controllers
             return Ok(await _context.Countries.ToListAsync());
         }
 
+
+        /// <summary>
+        /// 
+        /// https://www.base64encoder.io/image-to-base64-converter/
+        /// </summary>
+        
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Post(Country country)
         {
@@ -30,9 +37,32 @@ namespace UPLOAD.API.Controllers
             await _context.SaveChangesAsync();
             return Ok(country);
         }
-    
 
 
 
-}
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> Get(int id)
+        {
+            var country = await _context.Countries.FirstOrDefaultAsync(x => x.Id == id);
+            if (country is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(country);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Put(Country country)
+        {
+            _context.Update(country);
+            await _context.SaveChangesAsync();
+            return Ok(country);
+        }
+
+       
+
+
+
+    }
 }
