@@ -4,9 +4,9 @@ using UPLOAD.SHARE.Entities;
 
 namespace UPLOAD.API.Data
 {
-    public class ImageConfiguration : IEntityTypeConfiguration<Image>
+    public class CountryConfiguration : IEntityTypeConfiguration<Country>
     {
-        public void Configure(EntityTypeBuilder<Image> entity)
+        public void Configure(EntityTypeBuilder<Country> entity)
         {
             entity.Property(x => x.Name)
                .IsRequired()
@@ -18,19 +18,9 @@ namespace UPLOAD.API.Data
 
 
 
-            entity.Property(x => x.Url)
-                .IsRequired()
-                .HasColumnType("text");
+          
         }
 
-
-     
-
-
-
-
-
+      
     }
-
-   
 }

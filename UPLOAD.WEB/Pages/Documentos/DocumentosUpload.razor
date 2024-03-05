@@ -1,0 +1,17 @@
+﻿@page "/documentos/imageupload"
+
+
+
+<h3>Cargar Imagen</h3>
+
+<EditForm Model="@imageModel" OnValidSubmit="@UploadImage">
+    <InputText @bind-Value="imageModel.Name" placeholder="Nombre" />
+    <InputFile @bind-Value="imageModel.ImageFile" />
+    <button type="submit">Subir Imagen</button>
+</EditForm>
+
+<p>@uploadMessage</p>
+
+@code {
+   
+}

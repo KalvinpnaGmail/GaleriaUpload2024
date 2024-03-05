@@ -8,6 +8,9 @@ namespace UPLOAD.WEB.Repositories
     {
         private readonly HttpClient _httpClient;
 
+
+        //json es stadandar de java y c# Mayusculas para ahorrame los json ignore porque 
+        //espero mayusculas
         private JsonSerializerOptions _jsonDefaultOptions => new JsonSerializerOptions
         {
             //estandar de java empieza minuscula c# en mayusculas..para errarme json ignore
@@ -18,6 +21,7 @@ namespace UPLOAD.WEB.Repositories
         public Repository(HttpClient httpClient)
         {
             _httpClient = httpClient;
+            //httpcliente en el programs en la web lo inyectamos las api
         }
 
         public async Task<HttpResponseWrapper<T>> Get<T>(string url)
@@ -25,21 +29,28 @@ namespace UPLOAD.WEB.Repositories
             var responseHttp = await _httpClient.GetAsync(url);
             //si funciono httpClient
             if (responseHttp.IsSuccessStatusCode)
+
             {
-                //unserializeAnswer : recibo un string y lo convierto en un objeto
+                //vamos a leer la respuesta ya que no hay error
                 var response = await UnserializeAnswer<T>(responseHttp, _jsonDefaultOptions);
+                ///devuelva la respueta de T, le digo que no hay error, y  responseHttp
                 return new HttpResponseWrapper<T>(response, false, responseHttp);
             }
             //
             return new HttpResponseWrapper<T>(default, true, responseHttp);
         }
 
+
+        ///Este post no devuelve nada
         public async Task<HttpResponseWrapper<object>> Post<T>(string url, T model)
         {
-            ///al modelo lo convierto en json
             var mesageJSON = JsonSerializer.Serialize(model);
+            //Lo codifico---utf8
             var messageContet = new StringContent(mesageJSON, Encoding.UTF8, "application/json");
+            //HAcemos el post
             var responseHttp = await _httpClient.PostAsync(url, messageContet);
+            ///y luego mando la repusta ya que no devuelvo el objeto
+
             return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp);
         }
 
@@ -58,6 +69,7 @@ namespace UPLOAD.WEB.Repositories
 
         private async Task<T> UnserializeAnswer<T>(HttpResponseMessage httpResponse, JsonSerializerOptions jsonSerializerOptions)
         {
+            ///todo me lo devuelve como string asi que lo tengo que convertir a un objeto si es una imagen no la puedo leer como String sino strings
             var respuestaString = await httpResponse.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<T>(respuestaString, jsonSerializerOptions)!;
         }
