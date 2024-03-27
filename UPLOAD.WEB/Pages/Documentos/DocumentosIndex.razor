@@ -1,10 +1,21 @@
 ﻿@page "/documentos"
 
 @inject IRepository repository
+<div class="card">
+    <div class="card-header">
+        <i class="oi oi-cloud-upload" /> Documentos
+        <a class="btn btn-sm btn-primary float-end" href="/documentos/imageupload"><i class="oi oi-plus" /> Subir Imagen</a>
 
 
+    </div>
 
-<h3>Documentos</h3>
+</div>
+@* <div class="mb-3">
+      <i class="oi oi-star"/> Documentos
+     <a class="btn btn-sm btn-primary float-end" href="/documentos/imageupload"><i class="oi oi-plus" /> Subir Imagen</a>
+</div> *@
+
+
 
 
 @* @inject SweetAlertService sweetAlertService
@@ -19,12 +30,12 @@ else
     <GenericList MyList="Imagenes">
         <Body>
             <div class="card">
-                <div class="card-header">
+               @*  <div class="card-header">
                     <span>
                         <i class="oi oi-star"/> Documentos
                         <a class="btn btn-sm btn-primary float-end" href="/documentos/imageupload"><i class="oi oi-plus" /> Subir Imagen</a>
                     </span>
-                </div>
+                </div> *@
                 <div class="card-body">
                     <div class="mb-2" style="display: flex; flex-wrap:wrap; align-items: center;">
                         <div>

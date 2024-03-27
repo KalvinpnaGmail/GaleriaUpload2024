@@ -64,7 +64,8 @@ namespace UPLOAD.API.Controllers
                 File = new FileDescription(Guid.NewGuid().ToString(), new MemoryStream(Convert.FromBase64String(base64))),
 
                 Type = "upload",
-                Tags = "NrodeOss"
+                Tags = "NrodeOss",
+                Folder="Os"
             };
             var respuesta = await cloudinary.UploadAsync(uploadParams);
             return respuesta.SecureUrl.AbsoluteUri;
