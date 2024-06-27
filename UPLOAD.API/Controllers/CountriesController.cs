@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Formats.Asn1;
 using UPLOAD.API.Data;
 using UPLOAD.SHARE.Entities;
 
@@ -58,9 +59,22 @@ namespace UPLOAD.API.Controllers
             _context.Update(country);
             await _context.SaveChangesAsync();
             return Ok(country);
+            //NoContent es igual al ok pero no me interesa que devuelve
+            //return NoContent();
         }
 
-       
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var country = await _context.Countries.FindAsync(id);
+            if (country== null)
+            {
+                return NotFound();
+            }
+            _context.Remove(country);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
 
 
 

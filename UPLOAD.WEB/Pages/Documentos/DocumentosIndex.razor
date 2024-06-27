@@ -92,7 +92,7 @@ else
     private async Task LoadAsync()
     {
 
-        var responseHppt = await repository.Get<List<Image>>("/api/imagenes/DevuelveImagenes");
+        var responseHppt = await repository.GetAsync<List<Image>>("/api/imagenes/DevuelveImagenes");
        
         Imagenes = responseHppt.Response!;
      

@@ -82,7 +82,7 @@ else
     private async Task LoadAsync()
     {
 
-        var responseHppt = await repository.Get<List<Clinica>>("/api/clinicas/DevuelveClinicas");
+        var responseHppt = await repository.GetAsync<List<Clinica>>("/api/clinicas/DevuelveClinicas");
        
         Clinicas = responseHppt.Response!;
      

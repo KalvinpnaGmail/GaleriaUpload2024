@@ -7,10 +7,10 @@
 <EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
     <div class="mb-3">
-        <label>País:</label>
+        <label>Documentos:</label>
         <div>
-            <InputText class="form-control" @bind-Value="@Country.Name" />
-            <ValidationMessage For="@(() => Country.Name)" />
+            <InputText class="form-control" @bind-Value="@Image.Name" />
+            <ValidationMessage For="@(() => Image.Name)" />
         </div>
     </div>
 
@@ -24,7 +24,7 @@
 
     [EditorRequired]
     [Parameter]
-    public Country Country { get; set; } = null!;
+    public Image Image { get; set; } = null!;
 
 
     ///apr <summary>
@@ -43,7 +43,7 @@
 
     protected override void OnInitialized()
     {
-        editContext = new(Country);
+        editContext = new(Image);
     }
 
     private async Task OnBeforeInternalNavigation(LocationChangingContext context)
