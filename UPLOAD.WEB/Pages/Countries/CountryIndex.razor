@@ -1,5 +1,5 @@
 ﻿@page "/countries"
-@inject IRepository repository
+
 
 <h3>Paises</h3>
 <div class="mb-3">
@@ -35,14 +35,3 @@
 </GenericList>
 
 
-@code {
-    public List<Country>? Countries { set; get; }
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        var responseHttp = await repository.GetAsync<List<Country>>("/api/countries");
-        Countries = responseHttp.Response;
-    }
-}
