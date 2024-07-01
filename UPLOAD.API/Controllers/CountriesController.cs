@@ -19,9 +19,11 @@ namespace UPLOAD.API.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(await _context.Countries.ToListAsync());
+            //no me logues todas las operaciones SI SOLO ES LECTURA
+            
+            return Ok(await _context.Countries.AsNoTracking().ToListAsync());
         }
 
 
@@ -32,7 +34,7 @@ namespace UPLOAD.API.Controllers
         
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Post(Country country)
+        public async Task<IActionResult> Post(Country country)
         {
             _context.Add(country);
             await _context.SaveChangesAsync();
@@ -42,7 +44,7 @@ namespace UPLOAD.API.Controllers
 
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             var country = await _context.Countries.FirstOrDefaultAsync(x => x.Id == id);
             if (country is null)
@@ -54,7 +56,7 @@ namespace UPLOAD.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put(Country country)
+        public async Task<IActionResult> Put(Country country)
         {
             _context.Update(country);
             await _context.SaveChangesAsync();

@@ -3,6 +3,10 @@
 namespace UPLOAD.WEB.Repositories
 {
     //me devuelve las respuestas  200 500 600
+    /// <summary>
+    /// es un envoltorio de repuestas
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     //T ES CLASE GENERICA
     public class HttpResponseWrapper<T>
     {

@@ -1,12 +1,9 @@
 ﻿@typeparam Titem
-
 @if (MyList is null)
 {
     @if (Loading is null)
     {
-        <div class="align-items-center">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" />
-        </div>
+     <Loading/>
     }
     else
     {
@@ -17,7 +14,7 @@ else if (MyList.Count == 0)
 {
     @if (NoRecords is null)
     {
-        <p>Disculpe, no hay registros para mostrar!...</p>
+        <p>Disculpe, no hay registros para mostrar...</p>
     }
     else
     {
@@ -29,29 +26,3 @@ else
     @Body
 }
 
-
-@code {
-    //RenderFragment: que le vamos a pasar un pedazo de codigo de blazor yy se va a llamar Loading
-    [Parameter]
-    public RenderFragment? Loading { get; set; }
-
-
-    // contemplamos si no hay registros
-    [Parameter]
-    public RenderFragment? NoRecords { get; set; }
-
-
-    // contemplamos cuerpo que quiero pintar y si va a hacer obligatorio para evitar el warning
-    // con el nulo  = null!
-    [Parameter]
-    [EditorRequired]
-    public RenderFragment Body { get; set; } = null!;
-
-
-    // contemplamos Item del body
-    [Parameter]
-    [EditorRequired]
-    public List<Titem> MyList { get; set; } = null!;
-
-
-}

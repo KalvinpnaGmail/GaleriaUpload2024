@@ -9,7 +9,7 @@
         Task<HttpResponseWrapper<object>> PostAsync<T>(string url, T model);
 
         //trespondes lo que me devuelve en el body
-        Task<HttpResponseWrapper<TResponse>> PostAsync<T, TResponse>(string url, T model);
+        Task<HttpResponseWrapper<TActionResponse>> PostAsync<T, TActionResponse>(string url, T model);
 
 
 
@@ -18,7 +18,7 @@
         ///put no devuelve respuesta
         Task<HttpResponseWrapper<object>> PutAsync<T>(string url, T model);
         //put que devuelve respuesta por sobrecarga
-        Task<HttpResponseWrapper<TResponse>> PutAsync<T, TResponse>(string url, T model);
+        Task<HttpResponseWrapper<TActionResponse>> PutAsync<T, TActionResponse>(string url, T model);
 
 
 
