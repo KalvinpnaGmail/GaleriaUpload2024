@@ -2,13 +2,12 @@
 using UPLOAD.SHARE.Entities;
 using UPLOAD.WEB.Repositories;
 
-namespace UPLOAD.WEB.Pages.Clinicas
+namespace UPLOAD.WEB.Pages.Documentos
 {
-    public partial class ClinicasPage
+    public partial class DocumentosIndex
     {
-
         [Inject] private IRepository Repository { get; set; } = null!;
-        public List<Clinica>? Clinicas { get; set; }
+        public List<Image>? Imagenes { get; set; }
 
 
 
@@ -17,10 +16,16 @@ namespace UPLOAD.WEB.Pages.Clinicas
             await LoadAsync();
         }
 
+
+
         private async Task LoadAsync()
         {
-            var responseHppt = await Repository.GetAsync<List<Clinica>>("/api/clinicas/DevuelveClinicas");
-            Clinicas = responseHppt.Response!;
-         }
+
+            var responseHppt = await Repository.GetAsync<List<Image>>("/api/imagenes/DevuelveImagenes");
+
+            Imagenes = responseHppt.Response!;
+
+
+        }
     }
 }

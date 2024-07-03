@@ -1,6 +1,6 @@
 ﻿@page "/documentos"
 
-@inject IRepository repository
+
 <div class="card">
     <div class="card-header">
         <i class="oi oi-cloud-upload" /> Documentos
@@ -76,27 +76,3 @@ else
     </GenericList>
 }
 
-@code {
-
-    public List<Image>? Imagenes { get; set; }
-
-
-
-    protected async override Task OnInitializedAsync()
-    {
-        await LoadAsync();
-    }
-
-
-
-    private async Task LoadAsync()
-    {
-
-        var responseHppt = await repository.GetAsync<List<Image>>("/api/imagenes/DevuelveImagenes");
-       
-        Imagenes = responseHppt.Response!;
-     
-       
-    }
-   
-}

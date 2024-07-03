@@ -1,6 +1,11 @@
 ﻿
-using System.Text.Json;
 using System.Text;
+using System.Text.Json;
+///1/primero van atributos privados
+///2-constructores
+// 3-prop publicas
+// 4-Metodos publicas
+///5-Metods privados
 
 namespace UPLOAD.WEB.Repositories
 {
@@ -52,17 +57,17 @@ namespace UPLOAD.WEB.Repositories
             return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp);
         }
 
-        public async Task<HttpResponseWrapper<TResponse>> PostAsync<T, TResponse>(string url, T model)
+        public async Task<HttpResponseWrapper<TActionResponse>> PostAsync<T, TActionResponse>(string url, T model)
         {
             var messageJSON = JsonSerializer.Serialize(model);
             var messageContet = new StringContent(messageJSON, Encoding.UTF8, "application/json");
             var responseHttp = await _httpClient.PostAsync(url, messageContet);
             if (responseHttp.IsSuccessStatusCode)
             {
-                var response = await UnserializeAnswer<TResponse>(responseHttp, _jsonDefaultOptions);
-                return new HttpResponseWrapper<TResponse>(response, false, responseHttp);
+                var response = await UnserializeAnswer<TActionResponse>(responseHttp, _jsonDefaultOptions);
+                return new HttpResponseWrapper<TActionResponse>(response, false, responseHttp);
             }
-            return new HttpResponseWrapper<TResponse>(default, !responseHttp.IsSuccessStatusCode, responseHttp);
+            return new HttpResponseWrapper<TActionResponse>(default, !responseHttp.IsSuccessStatusCode, responseHttp);
         }
 
         private async Task<T> UnserializeAnswer<T>(HttpResponseMessage httpResponse, JsonSerializerOptions jsonSerializerOptions)
@@ -89,18 +94,19 @@ namespace UPLOAD.WEB.Repositories
 
         }
 
-        public async  Task<HttpResponseWrapper<TResponse>> PutAsync<T, TResponse>(string url, T model)
+        public async Task<HttpResponseWrapper<TActionResponse>> PutAsync<T, TActionResponse>(string url, T model)
         {
             var messageJSON = JsonSerializer.Serialize(model);
             var messageContent = new StringContent(messageJSON, Encoding.UTF8, "application/json");
             var responseHttp = await _httpClient.PutAsync(url, messageContent);
             if (responseHttp.IsSuccessStatusCode)
             {
-                var response = await UnserializeAnswer<TResponse>(responseHttp, _jsonDefaultOptions);
-                return new HttpResponseWrapper<TResponse>(response, false, responseHttp);
+                var response = await UnserializeAnswer<TActionResponse>(responseHttp, _jsonDefaultOptions);
+                //devuelve (response:como quedo objeeto modificado, y responshttp:la respuesta pra hacer algo con ella
+                return new HttpResponseWrapper<TActionResponse>(response, false, responseHttp);
             }
 
-            return new HttpResponseWrapper<TResponse>(default, !responseHttp.IsSuccessStatusCode, responseHttp);
+            return new HttpResponseWrapper<TActionResponse>(default, !responseHttp.IsSuccessStatusCode, responseHttp);
 
         }
     }

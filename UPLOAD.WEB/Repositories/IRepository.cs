@@ -2,6 +2,14 @@
 {
     public interface IRepository
     {
+        //
+        /// es un servicio de lo proviendo de lo que se esta haciendo en backedn
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+
         Task<HttpResponseWrapper<T>> GetAsync<T>(string url);
      
 
