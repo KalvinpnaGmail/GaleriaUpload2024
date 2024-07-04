@@ -29,11 +29,33 @@ namespace UPLOAD.API.Controllers
             _contexto = contexto;
         }
 
+        //[HttpGet("DevuelveImagenes")]
+        //public async Task<IReadOnlyCollection<Image>> GetAll()
+        //{
+        //    return await _contexto.Images.ToArrayAsync(); ;
+        //}
+
         [HttpGet("DevuelveImagenes")]
-        public async Task<IReadOnlyCollection<Image>> GetAll()
+        public async Task<IActionResult> Get()
         {
-            return await _contexto.Images.ToArrayAsync(); ;
+            //no me logues todas las operaciones SI SOLO ES LECTURA
+
+            return Ok(await _contexto.Images.AsNoTracking().ToListAsync());
         }
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var imagen = await _contexto.Images.FirstOrDefaultAsync(x => x.Id == id);
+            if (imagen is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(imagen);
+        }
+
 
 
         [HttpPost]
