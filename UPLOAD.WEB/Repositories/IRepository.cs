@@ -20,9 +20,9 @@
         Task<HttpResponseWrapper<TActionResponse>> PostAsync<T, TActionResponse>(string url, T model);
 
 
-
+        Task<HttpResponseWrapper<object>> DeleteAsync<T>(string url);
         ///delet no devuelve respueta
-        Task<HttpResponseWrapper<object>> DeleteAsync(string url);
+        
         ///put no devuelve respuesta
         Task<HttpResponseWrapper<object>> PutAsync<T>(string url, T model);
         //put que devuelve respuesta por sobrecarga

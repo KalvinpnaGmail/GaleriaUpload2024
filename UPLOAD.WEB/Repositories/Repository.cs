@@ -77,13 +77,18 @@ namespace UPLOAD.WEB.Repositories
             return JsonSerializer.Deserialize<T>(respuestaString, jsonSerializerOptions)!;
         }
 
-        public async Task<HttpResponseWrapper<object>> DeleteAsync(string url)
+    
+        public async Task<HttpResponseWrapper<object>> DeleteAsync<T>(string url)
         {
-            var responseHTTP = await _httpClient.DeleteAsync(url);
-            return new HttpResponseWrapper<object>(null, !responseHTTP.IsSuccessStatusCode, responseHTTP);
-
-
+            var responseHttp = await _httpClient.DeleteAsync(url);
+            return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp); ;
         }
+
+       
+
+
+
+
 
         public async Task<HttpResponseWrapper<object>> PutAsync<T>(string url, T model)
         {
@@ -109,6 +114,8 @@ namespace UPLOAD.WEB.Repositories
             return new HttpResponseWrapper<TActionResponse>(default, !responseHttp.IsSuccessStatusCode, responseHttp);
 
         }
+
+        
     }
 
 }

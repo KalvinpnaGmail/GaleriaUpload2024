@@ -26,11 +26,12 @@
                 {
                     <tr>
                         <td>
-                            <a class="btn btn-warning">Editar</a>
-                            <button class="btn btn-danger">Borrar</button>
+                            @country.Name
+                            
                         </td>
                         <td>
-                            @country.Name
+                            <a href="/countries/edit/@country.Id" class="btn btn-warning">Editar</a>
+                            <button @onclick=@(()=>DeleteAsync(country))  class="btn btn-danger">Borrar</button>
                         </td>
                     </tr>
                 }
