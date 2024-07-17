@@ -4,7 +4,7 @@ using UPLOAD.WEB.Repositories;
 
 namespace UPLOAD.WEB.Pages.Documentos
 {
-    public partial class DocumentosIndex
+    public partial class DocumentIndex
     {
         [Inject] private IRepository Repository { get; set; } = null!;
         public List<Image>? Imagenes { get; set; }

@@ -22,7 +22,7 @@ namespace UPLOAD.WEB.Pages.Countries
 
         private async Task LoadAsync()
         {
-            await base.OnInitializedAsync();
+            
             var responseHttp = await repository.GetAsync<List<Country>>("/api/countries");
             if (responseHttp.Error)
             {

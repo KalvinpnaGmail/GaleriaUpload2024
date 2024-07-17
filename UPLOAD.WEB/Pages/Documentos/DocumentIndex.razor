@@ -1,10 +1,10 @@
-﻿@page "/documentos"
+﻿@page "/document"
 
 
 <div class="card">
     <div class="card-header">
         <i class="oi oi-cloud-upload" /> Documentos
-        <a class="btn btn-sm btn-primary float-end" href="/documentos/imageupload"><i class="oi oi-plus" /> Subir Imagen</a>
+        <a class="btn btn-sm btn-primary float-end" href="/document/imageupload"><i class="oi oi-plus" /> Subir Imagen</a>
 
 
     </div>
@@ -67,7 +67,7 @@ else
                                         @image.Url
                                     </td>
                                     <td>
-                                        <a class="btn btn-warning">Editar</a>
+                                        <a href="/document/edit/@image.Id" class="btn btn-warning">Editar</a>
                                         <button class="btn btn-danger">Borrar</button>
                                     </td>
                                 </tr>

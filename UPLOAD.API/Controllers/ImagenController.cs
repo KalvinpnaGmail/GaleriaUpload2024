@@ -18,7 +18,7 @@ namespace UPLOAD.API.Controllers
         private readonly string _usuario;
         private readonly string _pass;
         private readonly string _llave;
-        private DataContext _contexto;
+        private readonly DataContext _contexto;
 
 
         public ImageController(DataContext contexto, IConfiguration configuration)
@@ -61,9 +61,11 @@ namespace UPLOAD.API.Controllers
         [HttpPost]
         public async Task<Image> Create(ImagenDTO request)
         {
-            var image = new Image() { Name = request.Name };
-            //Cloudinary
-            image.Url = await Upload(request.Base64);
+            var image = new Image
+            {
+                Name = request.Name,             //Cloudinary
+                Url = await Upload(request.Base64)
+            };
 
             await _contexto.Images.AddAsync(image);
             await _contexto.SaveChangesAsync();

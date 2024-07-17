@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Documentos\DocumentForm.razor" />
     <Content Remove="Servicios\swaggerjson.json" />
   </ItemGroup>
 
@@ -32,18 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UPLOAD.SHARE\UPLOAD.SHARE.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Documentos\DocumentForm.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\Documentos\DocumentForm.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\Documentos\DocumentForm.razor" />
   </ItemGroup>
 
 </Project>
