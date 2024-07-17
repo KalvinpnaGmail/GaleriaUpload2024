@@ -73,6 +73,39 @@ namespace UPLOAD.API.Controllers
             return image;
         }
 
+
+
+        [HttpPut]
+        public async Task<IActionResult> Put(Image image)
+        {
+            _contexto.Update(image);
+            await _contexto.SaveChangesAsync();
+            return Ok(image);
+            //NoContent es igual al ok pero no me interesa que devuelve
+            //return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var image = await _contexto.Images.FindAsync(id);
+            if (image == null)
+            {
+                return NotFound();
+            }
+            _contexto.Remove(image);
+            await _contexto.SaveChangesAsync();
+            return NoContent();
+        }
+
+
+
+
+
+
+
+
+
         private async Task<string> Upload(string base64)
         {
 

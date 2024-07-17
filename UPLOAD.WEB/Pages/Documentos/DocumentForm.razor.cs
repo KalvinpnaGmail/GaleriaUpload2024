@@ -13,11 +13,12 @@ namespace UPLOAD.WEB.Pages.Documentos
         [EditorRequired, Parameter] public EventCallback OnvalidSubmit { get; set; }
         [EditorRequired, Parameter]public EventCallback ReturnAction {  get; set; }
         public bool FormPostedSuccessfully { get; set; }
+        
         [Inject] public SweetAlertService SweetAlertService { get; set; } = null!;
 
         protected override void OnInitialized()
         {
-            editContext = new EditContext(Image);
+            editContext = new (Image);
         }
 
         private async Task OnBeforeInternalNavigation(LocationChangingContext context)

@@ -53,6 +53,8 @@ else
                             <tr>
                                 <th>Nombre</th>
                                 <th>Link</th>
+                                <th>Obra Social</th>
+                                <th>Periodo</th>
                                 <th style="width:200px"></th>
                             </tr>
                         </thead>
@@ -65,6 +67,12 @@ else
                                     </td>
                                     <td>
                                         @image.Url
+                                    </td>
+                                    <td>
+                                        @image.ObraSocial
+                                    </td>
+                                    <td>
+                                        @image.Periodo.ToString("yyyy-MM-dd")
                                     </td>
                                     <td>
                                         <a href="/document/edit/@image.Id" class="btn btn-warning">Editar</a>
