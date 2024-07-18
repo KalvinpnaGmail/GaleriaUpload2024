@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.5.0" />
+    <Content Remove="Servicios\swaggerjson.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <OpenApiReference Include="Servicios\swaggerjson.json" CodeGenerator="NSwagCSharp" Namespace="clienteSwager" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.13" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="7.0.2">
@@ -23,10 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UPLOAD.SHARE\UPLOAD.SHARE.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <OpenApiReference Include="..\..\..\..\Desktop\swaggerjson.json" CodeGenerator="NSwagCSharp" Namespace="clienteSwager" Link="OpenAPIs\swaggerjson.json" />
   </ItemGroup>
 
 </Project>

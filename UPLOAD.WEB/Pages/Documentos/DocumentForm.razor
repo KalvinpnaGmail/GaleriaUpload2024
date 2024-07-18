@@ -1,0 +1,24 @@
+﻿<NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"/>
+<EditForm EditContext="editContext" OnValidSubmit="OnvalidSubmit">
+    <DataAnnotationsValidator/>
+    <div class="mb-3">
+        <label>Cambiar nombre de la Imagen:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Image.Name"/>
+            <ValidationMessage For="@(()=>Image.Name)" />
+            <InputText class="form-control" @bind-Value="@Image.Url" readonly />
+            <ValidationMessage For="@(()=>Image.Url)" />
+            <InputText class="form-control" @bind-Value="@Image.ObraSocial"  />
+            <ValidationMessage For="@(()=>Image.ObraSocial)" />
+            <div class="mb-3">
+                <label>Periodo:</label>
+                <InputDate class="form-control" @bind-Value="@Image.Periodo" />
+                <ValidationMessage For="@(()=>Image.Periodo)" />
+            </div>
+        </div>
+        
+        
+    </div>
+    <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+    <button class="btn btn-success" @onclick="ReturnAction">Regresar</button>
+</EditForm>

@@ -15,5 +15,23 @@ namespace UPLOAD.SHARE.Entities
         [Display(Name = "Link")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Url { get; set; } = string.Empty;
+
+        [Display(Name = "Obra Social")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public string ObraSocial { get; set; } = string.Empty;
+
+        [Display(Name = "Periodo")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public DateTime Periodo { get; set; } = DateTime.MinValue; // Asigna una fecha válida según tu lógica
+
+        // Método para formatear la propiedad Periodo
+        public string ObtenerPeriodoFormateado()
+        {
+            // Formatea la fecha en el formato "MM/yyyy"
+            return Periodo.ToString("MM/yyyy");
+        }
+
+
+
     }
 }

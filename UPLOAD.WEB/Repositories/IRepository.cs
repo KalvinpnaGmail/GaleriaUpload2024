@@ -2,21 +2,31 @@
 {
     public interface IRepository
     {
-        Task<HttpResponseWrapper<T>> Get<T>(string url);
+        //
+        /// es un servicio de lo proviendo de lo que se esta haciendo en backedn
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+
+        Task<HttpResponseWrapper<T>> GetAsync<T>(string url);
      
 
         //sin que me devuelva nadie
-        Task<HttpResponseWrapper<object>> Post<T>(string url, T model);
+        Task<HttpResponseWrapper<object>> PostAsync<T>(string url, T model);
 
         //trespondes lo que me devuelve en el body
-        Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T model);
+        Task<HttpResponseWrapper<TActionResponse>> PostAsync<T, TActionResponse>(string url, T model);
 
+
+        Task<HttpResponseWrapper<object>> DeleteAsync<T>(string url);
         ///delet no devuelve respueta
-        Task<HttpResponseWrapper<object>> Delete(string url);
+        
         ///put no devuelve respuesta
-        Task<HttpResponseWrapper<object>> Put<T>(string url, T model);
+        Task<HttpResponseWrapper<object>> PutAsync<T>(string url, T model);
         //put que devuelve respuesta por sobrecarga
-        Task<HttpResponseWrapper<TResponse>> Put<T, TResponse>(string url, T model);
+        Task<HttpResponseWrapper<TActionResponse>> PutAsync<T, TActionResponse>(string url, T model);
 
 
 

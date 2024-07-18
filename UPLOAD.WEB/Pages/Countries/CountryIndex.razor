@@ -1,10 +1,15 @@
 ﻿@page "/countries"
-@inject IRepository repository
+
 
 <h3>Paises</h3>
 <div class="mb-3">
-    <a class="btn btn-primary" href="/countries/create">Nuevo País</a>
+    <a class="btn btn-primary mb-3" href="/countries/create">Nuevo País</a>
 </div>
+
+@* @if (Countries == null)
+{
+    <p>Cargado...</p>
+} *@
 
 <GenericList MyList="Countries">
     <Body>
@@ -21,11 +26,12 @@
                 {
                     <tr>
                         <td>
-                            <a class="btn btn-warning">Editar</a>
-                            <button class="btn btn-danger">Borrar</button>
+                            @country.Name
+                            
                         </td>
                         <td>
-                            @country.Name
+                            <a href="/countries/edit/@country.Id" class="btn btn-warning">Editar</a>
+                            <button @onclick=@(()=>DeleteAsync(country))  class="btn btn-danger">Borrar</button>
                         </td>
                     </tr>
                 }
@@ -35,13 +41,3 @@
 </GenericList>
 
 
-@code {
-    public List<Country>? Countries { set; get; }
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        var responseHttp = await repository.Get<List<Country>>("/api/countries");
-        Countries = responseHttp.Response;
-    }
-}

@@ -1,10 +1,6 @@
 ﻿@page "/clinicas"
 
 
-@inject IRepository repository
-
-
-
 <h3>Clinicas</h3>
 
 
@@ -66,27 +62,3 @@ else
     </GenericList>
 }
 
-@code {
-
-    public List<Clinica>? Clinicas { get; set; }
-
-
-
-    protected async override Task OnInitializedAsync()
-    {
-        await LoadAsync();
-    }
-
-
-
-    private async Task LoadAsync()
-    {
-
-        var responseHppt = await repository.Get<List<Clinica>>("/api/clinicas/DevuelveClinicas");
-       
-        Clinicas = responseHppt.Response!;
-     
-       
-    }
-   
-}

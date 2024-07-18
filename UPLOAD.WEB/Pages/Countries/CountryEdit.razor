@@ -1,0 +1,17 @@
+﻿@page "/countries/edit/{Id:int}"
+
+
+<h3>Editar País</h3>
+@* no puedo tirar el formulario de una porque el country es null se puede demorar un segundo por eso hago la pregunta *@
+@if(country is null)
+{
+    <Loading/>
+}
+else
+{
+    <CountryForm @ref="countryForm" Country="country" OnValidSubmit="EditAsync" ReturnAction="Return" />
+}
+
+
+
+

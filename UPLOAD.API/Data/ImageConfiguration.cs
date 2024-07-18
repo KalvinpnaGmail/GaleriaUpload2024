@@ -14,7 +14,8 @@ namespace UPLOAD.API.Data
 
 
             // Configuración para el índice único en 'Name'
-            entity.HasIndex(x => x.Name).IsUnique();
+            entity.HasIndex(x => x.Id).IsUnique();
+
 
 
 

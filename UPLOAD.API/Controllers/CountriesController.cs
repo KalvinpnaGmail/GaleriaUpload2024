@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Sales.Shared.Entities;
+using System.Formats.Asn1;
 using UPLOAD.API.Data;
 using UPLOAD.SHARE.Entities;
 
@@ -8,17 +8,22 @@ namespace UPLOAD.API.Controllers
 {
     [ApiController]
     [Route("/api/countries")]
+    public class CountriesControlle:ControllerBase
     {
         private readonly DataContext _context;
 
+        public CountriesControlle(DataContext context)
         {
             _context = context;
         }
 
 
         [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            return Ok(await _context.Countries.ToListAsync());
+            //no me logues todas las operaciones SI SOLO ES LECTURA
+            
+            return Ok(await _context.Countries.AsNoTracking().ToListAsync());
         }
 
 
@@ -29,18 +34,17 @@ namespace UPLOAD.API.Controllers
         
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Post(Country country)
+        public async Task<IActionResult> Post(Country country)
         {
             _context.Add(country);
             await _context.SaveChangesAsync();
-            //el ok(county) me devuelve el pais como quedo sino lo necestio lo puedo mandar vacio ok()
             return Ok(country);
         }
 
 
 
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult> Get(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
         {
             var country = await _context.Countries.FirstOrDefaultAsync(x => x.Id == id);
             if (country is null)
@@ -52,14 +56,27 @@ namespace UPLOAD.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put(Country country)
+        public async Task<IActionResult> Put(Country country)
         {
             _context.Update(country);
             await _context.SaveChangesAsync();
             return Ok(country);
+            //NoContent es igual al ok pero no me interesa que devuelve
+            //return NoContent();
         }
 
-       
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var country = await _context.Countries.FindAsync(id);
+            if (country== null)
+            {
+                return NotFound();
+            }
+            _context.Remove(country);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
 
 
 

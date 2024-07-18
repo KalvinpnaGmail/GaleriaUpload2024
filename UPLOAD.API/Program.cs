@@ -41,12 +41,12 @@ if (app.Environment.IsDevelopment())
 
 //builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=LocalConnection"));
 
-app.UseCors(builder =>
-{
-    builder.AllowAnyOrigin()
-           .AllowAnyHeader()
-           .AllowAnyMethod();
-});
+//app.UseCors(builder =>
+//{
+//    builder.AllowAnyOrigin()
+//           .AllowAnyHeader()
+//           .AllowAnyMethod();
+//});
 
 
 app.UseHttpsRedirection();
