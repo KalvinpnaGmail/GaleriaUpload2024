@@ -15,6 +15,12 @@ namespace UPLOAD.API.Data
         public DbSet<Country> Countries { get; set; }
 
         public DbSet<Image> Images { get; set; }
+       
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
+        //    modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
+        //}
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,12 +33,12 @@ namespace UPLOAD.API.Data
         }
 
 
-       
+
 
     }
 }
 
 
 
-    
+
 
