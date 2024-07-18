@@ -4,6 +4,7 @@ using CurrieTechnologies.Razor.SweetAlert2;
 using UPLOAD.WEB.Repositories;
 using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
+using System.Diagnostics.Metrics;
 
 namespace UPLOAD.WEB.Pages.Documentos
 {
@@ -57,10 +58,12 @@ namespace UPLOAD.WEB.Pages.Documentos
         private async Task UploadImage(string imageName, string base64Image)
         {
             try
+
             {
                 var imagenDTO = new ImagenDTO(imageName, base64Image);
 
                 // Llamar a la API para cargar la imagen utilizando HttpClient
+                //var response = await Repository.PostAsync("api/imagenes", imagenDTO);
                 var response = await Repository.PostAsync<ImagenDTO>("api/imagenes", imagenDTO);
                 if (response.Error)
                 {
