@@ -67,7 +67,7 @@ namespace UPLOAD.API.Controllers
 
 
         [HttpPost]
-        public async Task<Image> Create(ImagenDTO request)
+        public async Task<IActionResult> Create(ImagenDTO request)
         {
             var obraSocial = "Sancor";
             //var periodo = DateTime.Now;
@@ -83,9 +83,15 @@ namespace UPLOAD.API.Controllers
             await _contexto.Images.AddAsync(image);
             await _contexto.SaveChangesAsync();
 
-            return image;
+
+           
+
+
+            return Ok(image);
         }
 
+
+       
         //[HttpPost]
         //public async Task<Image> Create(ImagenDTO request)
         //{
