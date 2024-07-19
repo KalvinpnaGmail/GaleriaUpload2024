@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Sales.Shared.Entities;
 using UPLOAD.SHARE.Entities;
 
 namespace UPLOAD.API.Data
@@ -16,8 +15,7 @@ namespace UPLOAD.API.Data
         public DbSet<Country> Countries { get; set; }
 
         public DbSet<Image> Images { get; set; }
-        public DbSet<Country> Countries { get; set; }
-
+       
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
         //    base.OnModelCreating(modelBuilder);
@@ -35,12 +33,12 @@ namespace UPLOAD.API.Data
         }
 
 
-       
+
 
     }
 }
 
 
 
-    
+
 
