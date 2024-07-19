@@ -18,9 +18,9 @@ namespace UPLOAD.WEB.Pages.Documentos
 
 
 
-        [Inject] private IRepository Repository { get; set; } = null!;
-        [Inject] private NavigationManager NavigationManager { get; set; } = null!;
-        [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
+        [Inject] private IRepository repository { get; set; } = null!;
+        [Inject] private NavigationManager navigationManager { get; set; } = null!;
+        [Inject] private SweetAlertService sweetAlertService{ get; set; } = null!;
 
 
         ////pasame id como parametro para ver que Iamgen es
@@ -35,18 +35,18 @@ namespace UPLOAD.WEB.Pages.Documentos
         protected override async Task OnParametersSetAsync()
         {
             //$ es interpolacion c# para pasar como parametro
-            var responseHttp = await Repository.GetAsync<Image>($"/api/imagenes/{Id}");
+            var responseHttp = await repository.GetAsync<Image>($"/api/imagenes/{Id}");
             if (responseHttp.Error)
             {
                 //si el usuario me cambio el pais por la qstring
                 if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
                 {
-                    NavigationManager.NavigateTo("/document");
+                    navigationManager.NavigateTo("/document");
                 }
                 else
                 {
                     var message = await responseHttp.GetErrorMessageAsync();
-                    await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                    await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
 
                 }
             }
@@ -61,12 +61,12 @@ namespace UPLOAD.WEB.Pages.Documentos
         ///cuadndo el usario dice que si va a cambiar
         private async Task EditAsync()
         {
-            var responseHttp = await Repository.PutAsync("/api/imagenes", image);
+            var responseHttp = await repository.PutAsync("/api/imagenes", image);
             //si hay error al actualiza lo pintamos
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
-                await SweetAlertService.FireAsync("Error", message);
+                await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
                 return;
             }
             //
@@ -74,7 +74,7 @@ namespace UPLOAD.WEB.Pages.Documentos
             Return();
             ///luego de mandarlo a la pantalla  pinto mensaje de cambio
             ///tostadita abajo y final informativo se usa tostadita
-            var toast = SweetAlertService.Mixin(new SweetAlertOptions
+            var toast = sweetAlertService.Mixin(new SweetAlertOptions
             {
                 Toast = true,
                 Position = SweetAlertPosition.BottomEnd,
@@ -89,7 +89,7 @@ namespace UPLOAD.WEB.Pages.Documentos
         {
             //si lo grabo
             documentForm!.FormPostedSuccessfully = true;
-            NavigationManager.NavigateTo("/document");
+            navigationManager.NavigateTo("/document");
         }
     }
 }
