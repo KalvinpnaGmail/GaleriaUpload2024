@@ -77,7 +77,8 @@ else
                                     </td>
                                     <td>
                                         <a href="/document/edit/@image.Id" class="btn btn-warning">Editar</a>
-                                        <button class="btn btn-danger">Borrar</button>
+                                        <button @onclick=@(()=>DeleteAsync(image)) class="btn btn-danger">Borrar</button>
+                                        
                                     </td>
                                 </tr>
                             }
