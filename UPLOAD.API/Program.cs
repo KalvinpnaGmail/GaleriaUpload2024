@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using UPLOAD.API.Data;
+using UPLOAD.API.Repositories.Implementations;
+using UPLOAD.API.Repositories.Interfaces;
+using UPLOAD.API.UnitsOfWork.Implementations;
+using UPLOAD.API.UnitsOfWork.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +35,11 @@ builder.Services.AddDbContext<DataContext>(options =>
         (a) => a.MigrationsAssembly("UPLOAD.API"));
 },
 ServiceLifetime.Transient);
+builder.Services.AddScoped(typeof(IGenericUnitOfWork<>), typeof(GenericUnitOfWork<>));
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+
+
 //builder.Services.AddCors();
 var app = builder.Build();
 
