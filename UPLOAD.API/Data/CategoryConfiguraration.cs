@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UPLOAD.SHARE.Entities;
 namespace UPLOAD.API.Data
 {
-    public class PrestadorConfiguration: IEntityTypeConfiguration<Prestador>
+    public class CategoryConfiguraration : IEntityTypeConfiguration<Category>
     {
-        public void Configure(EntityTypeBuilder<Prestador> entity)
+        public void Configure(EntityTypeBuilder<Category> entity)
         {
             entity.Property(x => x.Name)
                .IsRequired()
