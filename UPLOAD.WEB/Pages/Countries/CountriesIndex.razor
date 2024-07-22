@@ -51,7 +51,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var responseHttp = await repository.Get<List<Country>>("/api/countries");
+        var responseHttp = await repository.GetAsync<List<Country>>("/api/countries");
         Countries = responseHttp.Response;
     }
 }
