@@ -1,14 +1,13 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using UPLOAD.SHARE.Entities;
-using UPLOAD.WEB.Pages.Countries;
 using UPLOAD.WEB.Repositories;
 
 namespace UPLOAD.WEB.Pages.Categories
 {
-    public  partial class CategoryCreate
+    public partial class CategoryCreate
     {
-        private Category category= new();
+        private Category category = new();
 
 
         /// para referencias la no navegacion 

@@ -26,13 +26,15 @@ namespace UPLOAD.WEB.Pages.Categories
         protected override async Task OnParametersSetAsync()
         {
             //$ es interpolacion c# para pasar como parametro
-            var responseHttp = await Repository.GetAsync<Category>($"/api/countries/{Id}");
+            var responseHttp = await Repository.GetAsync<Category>($"/api/categories/{Id}");
+           
+
             if (responseHttp.Error)
             {
                 //si el usuario me cambio el pais por la qstring
                 if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
                 {
-                    NavigationManager.NavigateTo("/countries");
+                    NavigationManager.NavigateTo("/categories");
                 }
                 else
                 {
@@ -52,7 +54,7 @@ namespace UPLOAD.WEB.Pages.Categories
         ///cuadndo el usario dice que si va a cambiar
         private async Task EditAsync()
         {
-            var responseHttp = await Repository.PutAsync("/api/countries", category);
+            var responseHttp = await Repository.PutAsync("/api/categories", category);
             //si hay error al actualiza lo pintamos
             if (responseHttp.Error)
             {
