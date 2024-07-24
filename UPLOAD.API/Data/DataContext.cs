@@ -14,7 +14,7 @@ namespace UPLOAD.API.Data
 
         public DbSet<Country> Countries { get; set; }
 
-        public DbSet<Prestador> Prestadores { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Image> Images { get; set; }
        
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace UPLOAD.API.Data
             //modelBuilder.Entity<Country>().HasIndex(x => x.Name).IsUnique();
             modelBuilder.ApplyConfiguration(new ImageConfiguration());
             modelBuilder.ApplyConfiguration(new CountryConfiguration());
-            modelBuilder.ApplyConfiguration(new PrestadorConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguraration());
         }
 
 

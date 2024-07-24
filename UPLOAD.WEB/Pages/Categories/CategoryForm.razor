@@ -1,0 +1,20 @@
+﻿@* //para bloquera esto usamos NavigationLock OnBeforeInternalNavigation si va ha salir envia este metodo *@
+<NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation" />
+
+
+<EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    @* ///mb-3 que de bajo de esto va a ver botones y de 3 para que no esten pegados al formul *@
+    <div class="mb-3">
+        <label>Categoria:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Category.Name" />
+            <ValidationMessage For="@(() => Category.Name)" />
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+    <button class="btn btn-success" @onclick="ReturnAction">Regresar</button>
+</EditForm>
+
+
