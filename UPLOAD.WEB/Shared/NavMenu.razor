@@ -21,9 +21,17 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/clinicas">
+            <NavLink class="nav-link" href="/clinicas" @onclick="ToggleCategoriesSubMenu">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Clinicas
+              
             </NavLink>
+            <ul class="submenu" style="display: @(showCategoriesSubMenu ? "block" : "none")">
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="/categories">
+                        <span class="bi bi-globe" aria-hidden="true"></span> Categorías
+                    </NavLink>
+                </li>
+            </ul>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="/countries">
@@ -40,11 +48,28 @@
 
 @code {
     private bool collapseNavMenu = true;
+    private bool showCategoriesSubMenu = false;
+    
 
+    
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+        if (!collapseNavMenu)
+        {
+            showCategoriesSubMenu = false; // Oculta el submenú al cerrar el menú principal
+        }
+
+     
     }
+
+    private void ToggleCategoriesSubMenu()
+    {
+        showCategoriesSubMenu = !showCategoriesSubMenu;
+    }
+
+   
+
 }
