@@ -17,30 +17,30 @@
        
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="/document">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Imagenes
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Documentos
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="/clinicas" @onclick="ToggleCategoriesSubMenu">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Clinicas
+                <span class="bi bi-plus-hospital-fill-nav-menu" aria-hidden="true"></span> Clinicas
               
             </NavLink>
             <ul class="submenu" style="display: @(showCategoriesSubMenu ? "block" : "none")">
                 <li class="nav-item px-3">
                     <NavLink class="nav-link" href="/categories">
-                        <span class="bi bi-globe" aria-hidden="true"></span> Categorías
+                        <span class="bi bi-list-stars-fill-nav-menu" aria-hidden="true"></span> Categorías
                     </NavLink>
                 </li>
             </ul>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="/countries">
-              <span class="bi bi-globe" aria-hidden="true"></span> Paises
+                <span class="bi bi-globe-americas-fill-nav-menu" aria-hidden="true"></span> Paises
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="/categories">
-                <span class="bi bi-globe" aria-hidden="true"></span> Categorias Clinicas
+                <span class="bi bi-list-stars-fill-nav-menu" aria-hidden="true"></span> Categorias Clinicas
             </NavLink>
         </div>
     </nav>
