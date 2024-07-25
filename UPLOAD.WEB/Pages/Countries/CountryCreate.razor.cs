@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.WEB.Repositories;
+using UPLOAD.WEB.Shared;
 
 namespace UPLOAD.WEB.Pages.Countries
 {
@@ -12,7 +13,7 @@ namespace UPLOAD.WEB.Pages.Countries
 
 
         /// para referencias la no navegacion 
-        private CountryForm? countryForm;
+        private FormWihtName<Country>? countryForm;
 
 
         [Inject] private IRepository Repository { get; set; } = null!;
