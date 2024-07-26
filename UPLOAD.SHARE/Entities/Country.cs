@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using UPLOAD.SHARE.Interfaces;
 
 namespace UPLOAD.SHARE.Entities
@@ -12,6 +13,17 @@ namespace UPLOAD.SHARE.Entities
         [MaxLength(100, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Name { get; set; } = null!;
+
+        /// <summary>
+        /// 1 a varios
+        /// </summary>
+        public ICollection<Provincia>? Provincias { get; set; }
+
+        [Display(Name = "Provincia")]
+        ///para saber las cantidad de provincia que tienen el pais
+        public int ProvinciaNumer =>Provincias== null || Provincias.Count== 0 ? 0 : Provincias.Count;
+        
+
     }
 
 
