@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.WEB.Repositories;
+using UPLOAD.WEB.Shared;
 
 namespace UPLOAD.WEB.Pages.Categories
 {
@@ -11,7 +12,7 @@ namespace UPLOAD.WEB.Pages.Categories
 
 
         /// para referencias la no navegacion 
-        private CategoryForm? categoryForm;
+        private FormWihtName<Category>? categoryForm;
 
 
         [Inject] private IRepository Repository { get; set; } = null!;

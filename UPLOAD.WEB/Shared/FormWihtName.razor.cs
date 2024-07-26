@@ -1,19 +1,19 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components;
-using UPLOAD.SHARE.Entities;
+using UPLOAD.SHARE.Interfaces;
 
-namespace UPLOAD.WEB.Pages.Categories
+namespace UPLOAD.WEB.Shared
 {
-    public partial class CategoryForm
+    public partial class FormWihtName<TModel> where TModel : IEntityWithName
     {
         private EditContext editContext = null!;
 
 
 
-        [EditorRequired, Parameter] public Category Category { get; set; } = null!;
-
+        [EditorRequired, Parameter] public TModel Model { get; set; } = default!;
+        [EditorRequired, Parameter] public string Label { get; set; } = null!;
 
         ///apr <summary>
         ///si digo eventcallback significa que le avamos a pasar codigo
@@ -41,7 +41,7 @@ namespace UPLOAD.WEB.Pages.Categories
 
         protected override void OnInitialized()
         {
-            editContext = new(Category);
+            editContext = new(Model);
         }
 
         /// <summary>
@@ -79,3 +79,6 @@ namespace UPLOAD.WEB.Pages.Categories
         }
     }
 }
+
+   
+

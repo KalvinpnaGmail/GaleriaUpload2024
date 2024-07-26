@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using System.Net;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.WEB.Repositories;
+using UPLOAD.WEB.Shared;
 
 namespace UPLOAD.WEB.Pages.Countries
 {
@@ -12,7 +13,7 @@ namespace UPLOAD.WEB.Pages.Countries
 
         /// para referencias la no navegacion  <summary>
         /// para poder cambiar la propiedad FormPostedSuccessfully
-        private CountryForm? countryForm;
+        private FormWihtName<Country>? countryForm;
 
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
