@@ -1,3 +1,4 @@
+using Microsoft.Data.SqlClient.Server;
 using Microsoft.EntityFrameworkCore;
 using UPLOAD.API.Data;
 using UPLOAD.API.Repositories.Implementations;
@@ -13,7 +14,6 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddScoped<IApiService, ApiService>();
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
@@ -23,8 +23,6 @@ builder.Services.AddCors(options =>
                           policy.AllowAnyOrigin(); // add the allowed origins
                       });
 });
-
-
 
 
 
@@ -38,14 +36,27 @@ ServiceLifetime.Transient);
 builder.Services.AddScoped(typeof(IGenericUnitOfWork<>), typeof(GenericUnitOfWork<>));
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
+//scoped: la usamos cuando quiero que cree una nueva instancia cada vez que lo llamo
+//Transient:usamos solouna vez se injecta una vez---en el ciclo de vida del program
+//Singleton:la primera vez lo crea y lo deja en memoria  
+///alimientador base datos trnasiente si no lo usamos nunca que no quede en memoria
 
-
-//builder.Services.AddCors();
+builder.Services.AddTransient<AlimentadorBaseDeDatos>();
 var app = builder.Build();
+///como esta clase no tienen inyectcion lo hacemos manualmente
+SeedData(app);
 
+async void SeedData(WebApplication app)
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+    using (var scope = scopedFactory!.CreateScope())
+    {
+        var service = scope.ServiceProvider.GetService<AlimentadorBaseDeDatos>();
+        await service!.SeedAsync();
+    }
+}
 
-
-
+///como esta clase no tienen inyectcion lo hacemos manualmente
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -53,6 +64,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
+
 
 //builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=LocalConnection"));
 
