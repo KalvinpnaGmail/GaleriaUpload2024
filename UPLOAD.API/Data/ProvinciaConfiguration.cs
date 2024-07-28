@@ -4,9 +4,9 @@ using UPLOAD.SHARE.Entities;
 
 namespace UPLOAD.API.Data
 {
-    public class CountryConfiguration : IEntityTypeConfiguration<Country>
+    public class ProvinciaConfiguration:IEntityTypeConfiguration<Provincia>
     {
-        public void Configure(EntityTypeBuilder<Country> entity)
+        public void Configure(EntityTypeBuilder<Provincia> entity)
         {
             entity.Property(x => x.Name)
                .IsRequired()
@@ -14,13 +14,12 @@ namespace UPLOAD.API.Data
 
 
             // Configuración para el índice único en 'Name'
-            entity.HasIndex(x =>new {x.Id, x.Name }).IsUnique();
+            entity.HasIndex(x => x.Name).IsUnique();
 
 
 
-          
+
         }
 
-      
     }
 }

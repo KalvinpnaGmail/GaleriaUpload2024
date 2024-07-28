@@ -5,17 +5,18 @@ namespace UPLOAD.API.Data
 {
     public class DataContext : DbContext
     {
-
-
-
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
+
+
+
         }
 
-        public DbSet<Country> Countries { get; set; }
-
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Image> Images { get; set; }
+        public DbSet<Country>? Countries { get; set; }
+        public DbSet<Ciudad>? Ciudades { get; set; }
+        public DbSet<Provincia>? Provincias { get; set; }
+        public DbSet<Category>? Categories { get; set; }
+        public DbSet<Image>? Images { get; set; }
        
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
@@ -32,11 +33,24 @@ namespace UPLOAD.API.Data
             modelBuilder.ApplyConfiguration(new ImageConfiguration());
             modelBuilder.ApplyConfiguration(new CountryConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguraration());
+            modelBuilder.ApplyConfiguration(new ProvinciaConfiguration());
+            modelBuilder.ApplyConfiguration(new CiudadConfiguration());
+
+            ///desabilito el borrado den cascado
+            DisableCascadingDelete(modelBuilder);
+
+            //
+
         }
 
-
-
-
+        private void DisableCascadingDelete(ModelBuilder modelBuilder)
+        {
+            var relationships=modelBuilder.Model.GetEntityTypes().SelectMany(e=>e.GetForeignKeys());
+            foreach (var relationship in relationships)
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+        }
     }
 }
 

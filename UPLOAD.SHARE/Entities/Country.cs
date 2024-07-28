@@ -12,6 +12,10 @@ namespace UPLOAD.SHARE.Entities
         [MaxLength(100, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Name { get; set; } = null!;
+
+        [Display(Name="Provincias")]
+        public int ProvinciasNumber=> Provincias == null || Provincias.Count == 0 ? 0 : Provincias.Count;
+        public ICollection<Provincia>? Provincias { get; set; }   
     }
 
 
