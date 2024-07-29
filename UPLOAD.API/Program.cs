@@ -1,5 +1,6 @@
 using Microsoft.Data.SqlClient.Server;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using UPLOAD.API.Data;
 using UPLOAD.API.Repositories.Implementations;
 using UPLOAD.API.Repositories.Interfaces;
@@ -8,10 +9,15 @@ using UPLOAD.API.UnitsOfWork.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//importan pra que no hayas un ciclo en program agregar
+//cuando adiciono los controladores que me igrnore las referencias circulares
+builder.Services.
+    AddControllers().
+    AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+//importan pra que no hayas un ciclo en program agregar
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -35,6 +41,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 ServiceLifetime.Transient);
 builder.Services.AddScoped(typeof(IGenericUnitOfWork<>), typeof(GenericUnitOfWork<>));
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<ICountriesRepository, CountryRepository>();
+builder.Services.AddScoped<ICountriesUnitofWork, CountriesUnitOfWork>();
 
 //scoped: la usamos cuando quiero que cree una nueva instancia cada vez que lo llamo
 //Transient:usamos solouna vez se injecta una vez---en el ciclo de vida del program
@@ -64,18 +72,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-
-
-
-//builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=LocalConnection"));
-
-//app.UseCors(builder =>
-//{
-//    builder.AllowAnyOrigin()
-//           .AllowAnyHeader()
-//           .AllowAnyMethod();
-//});
 
 
 app.UseHttpsRedirection();

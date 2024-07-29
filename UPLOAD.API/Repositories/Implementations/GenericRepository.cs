@@ -5,6 +5,11 @@ using UPLOAD.SHARE.Response;
 
 namespace UPLOAD.API.Repositories.Implementations
 {
+    /// <summary>
+    /// virtual : son metodos que se pueden sobreescribir el get generegico no me sirve porque solo me trae nos nombrers de los paises
+    /// necetiso un get mas especialiaza un pais con los provinicas
+    /// </summary>
+    
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly DataContext _contex;
@@ -16,7 +21,7 @@ namespace UPLOAD.API.Repositories.Implementations
             _contex = contex;
             _entity = _contex.Set<T>();
         }
-        public async Task<ActionResponse<T>> AddAsync(T entity)
+        public virtual async Task<ActionResponse<T>> AddAsync(T entity)
         {
            _contex.Add(entity);
             try
@@ -41,7 +46,7 @@ namespace UPLOAD.API.Repositories.Implementations
           
         }
 
-        private ActionResponse<T> ExceptionActionResponse(Exception exception)
+        private  ActionResponse<T> ExceptionActionResponse(Exception exception)
         {
             return new ActionResponse<T>
             {
@@ -50,7 +55,7 @@ namespace UPLOAD.API.Repositories.Implementations
             };
         }
 
-        public async Task<ActionResponse<T>> DeleteAsync(int id)
+        public virtual async Task<ActionResponse<T>> DeleteAsync(int id)
         {
             var row = await _entity.FindAsync(id);
             if (row== null)
@@ -82,7 +87,7 @@ namespace UPLOAD.API.Repositories.Implementations
             }
         }
 
-        public async Task<ActionResponse<T>> GetAsync(int id)
+        public virtual async Task<ActionResponse<T>> GetAsync(int id)
         {
             var row = await _entity.FindAsync(id);
             if (row == null)
@@ -101,7 +106,7 @@ namespace UPLOAD.API.Repositories.Implementations
              };
         }
 
-        public async Task<ActionResponse<IEnumerable<T>>> GetAsync()
+        public virtual async Task<ActionResponse<IEnumerable<T>>> GetAsync()
         {
             return new ActionResponse<IEnumerable<T>>
             {
@@ -110,7 +115,7 @@ namespace UPLOAD.API.Repositories.Implementations
             };
         }
 
-        public async Task<ActionResponse<T>> UpdateAsync(T entity)
+        public virtual async Task<ActionResponse<T>> UpdateAsync(T entity)
         {
             _contex.Update(entity);
             try
