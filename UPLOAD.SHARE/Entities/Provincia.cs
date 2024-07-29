@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using UPLOAD.SHARE.Interfaces;
 
@@ -24,7 +25,10 @@ namespace UPLOAD.SHARE.Entities
         /// </summary>
         public int CountryId { get; set; }
         public Country? Country { get; set; }
-
+        //importan pra que no hayas un ciclo en program agregar
+             //    builder.Services.
+            //AddControllers().
+            //AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
         public ICollection<City>? Cities { get; set; }
 
 
