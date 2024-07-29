@@ -43,6 +43,8 @@ builder.Services.AddScoped(typeof(IGenericUnitOfWork<>), typeof(GenericUnitOfWor
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<ICountriesRepository, CountryRepository>();
 builder.Services.AddScoped<ICountriesUnitofWork, CountriesUnitOfWork>();
+builder.Services.AddScoped<IProvinciasRepository, ProvinciasRepository>();
+builder.Services.AddScoped<IProvinciasUnitOfWork, ProvinciasUnitOfWork>();
 
 //scoped: la usamos cuando quiero que cree una nueva instancia cada vez que lo llamo
 //Transient:usamos solouna vez se injecta una vez---en el ciclo de vida del program
