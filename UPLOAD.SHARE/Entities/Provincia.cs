@@ -26,16 +26,13 @@ namespace UPLOAD.SHARE.Entities
         public int CountryId { get; set; }
         public Country? Country { get; set; }
         //importan pra que no hayas un ciclo en program agregar
-             //    builder.Services.
-            //AddControllers().
-            //AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+        //    builder.Services.
+        //AddControllers().
+        //AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
         public ICollection<City>? Cities { get; set; }
-
-        public ICollection<Ciudad>? Ciudades { get; set; }
-
-        ///para saber las cantidad de provincia que tienen el pais <summary>
-        /// para saber las cantidad de provincia que tienen el pais
         [Display(Name = "Ciudades")]
+        public int CitiesNumber => Cities == null || Cities.Count == 0 ? 0 : Cities.Count;
+
 
     }
 }

@@ -35,11 +35,20 @@ namespace UPLOAD.API.Data
             modelBuilder.ApplyConfiguration(new ImageConfiguration());
             modelBuilder.ApplyConfiguration(new CountryConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguraration());
+            modelBuilder.ApplyConfiguration(new ProvinciaConfiguration());
+            modelBuilder.ApplyConfiguration(new CityConfiguration());
+
+            DisableCascadingDelete(modelBuilder);
         }
 
-
-
-
+        private void DisableCascadingDelete(ModelBuilder modelBuilder)
+        {
+            var relationships=modelBuilder.Model.GetEntityTypes().SelectMany(e=>e.GetForeignKeys());    
+            foreach (var relationship in relationships)
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+        }
     }
 }
 
