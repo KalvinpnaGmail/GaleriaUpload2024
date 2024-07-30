@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UPLOAD.API.UnitsOfWork.Implementations;
 using UPLOAD.API.UnitsOfWork.Interfaces;
 using UPLOAD.SHARE.Entities;
 
@@ -6,22 +7,21 @@ namespace UPLOAD.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Route("/api/countries")] antes se ponia asi es lo mismo siempre hablando del controlador  la llamada si o si /api/countries
-    public class CountriesController : GenericController<Country>
+    //[Route("/api/provincias")] antes se ponia asi es lo mismo siempre hablando del controlador  la llamada si o si /api/provincias
+    public class ProvinciasController : GenericController<Provincia>
     {
-        private readonly ICountriesUnitofWork _countriesUnitofWork;
+        private readonly IProvinciasUnitOfWork _provinciasUnitOfWork;
 
-        public CountriesController(IGenericUnitOfWork<Country> unitOfWork, ICountriesUnitofWork countriesUnitofWork) : base(unitOfWork)
+        public ProvinciasController(IGenericUnitOfWork<Provincia> unitOfWork, IProvinciasUnitOfWork  provinciasUnitOfWork) : base(unitOfWork)
         {
-          _countriesUnitofWork = countriesUnitofWork;
+            _provinciasUnitOfWork = provinciasUnitOfWork;
         }
-
 
 
         [HttpGet]
         public override async Task<IActionResult> GetAsync()
         {
-            var action = await _countriesUnitofWork.GetAsync();
+            var action = await _provinciasUnitOfWork.GetAsync();
             if (action.WasSuccess)
             {
                 return Ok(action.Result);
@@ -35,7 +35,7 @@ namespace UPLOAD.API.Controllers
         [HttpGet("{id}")]
         public override async Task<IActionResult> GetAsync(int id)
         {
-            var action = await _countriesUnitofWork.GetAsync(id);
+            var action = await _provinciasUnitOfWork.GetAsync(id);
             if (action.WasSuccess)
             {
                 return Ok(action.Result);
@@ -44,8 +44,5 @@ namespace UPLOAD.API.Controllers
 
 
         }
-
-
-
     }
 }

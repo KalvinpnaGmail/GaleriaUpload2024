@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 using UPLOAD.SHARE.Entities;
 
 namespace UPLOAD.API.Data
 {
-    public class ProvinciaConfiguration:IEntityTypeConfiguration<Provincia>
+    public class CityConfiguration:IEntityTypeConfiguration<City>
     {
-        public void Configure(EntityTypeBuilder<Provincia> entity)
+        public void Configure(EntityTypeBuilder<City> entity)
         {
             entity.Property(x => x.Name)
                .IsRequired()
@@ -14,8 +15,9 @@ namespace UPLOAD.API.Data
 
 
             // Configuración para el índice único en 'Name'
-            //una provincia
-            entity.HasIndex(x =>new {x.CountryId , x.Name}).IsUnique();
+            //no me va a permitir crear dos sana benito den Ciudadd
+            entity.HasIndex(x =>new {x.ProvinciaId, x.Name }).IsUnique();
+            
 
 
 
