@@ -85,7 +85,7 @@ namespace UPLOAD.WEB.Pages.Cities
         {
             //si lo grabo
             cityForm!.FormPostedSuccessfully = true;
-            NavigationManager.NavigateTo($"/countries/details/{city!.ProvinciaId}");
+            NavigationManager.NavigateTo($"/provincias/details/{city!.ProvinciaId}");
         }
     }
 }
