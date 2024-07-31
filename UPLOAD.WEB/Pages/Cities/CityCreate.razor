@@ -1,0 +1,10 @@
+﻿@page "/cities/create/{ProvinciaId:int}"
+
+<h3>Crear Nueva Provincia</h3>
+
+<FormWihtName @ref="cityForm"
+               Label="Nombre Provincia:" 
+               Model="city" 
+               OnValidSubmit="CreateAsync" 
+               ReturnAction="Return" />
+

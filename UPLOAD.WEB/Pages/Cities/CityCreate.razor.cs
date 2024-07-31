@@ -1,22 +1,21 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
-using System.Diagnostics.Metrics;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.WEB.Repositories;
 using UPLOAD.WEB.Shared;
 
-namespace UPLOAD.WEB.Pages.Provincias
+namespace UPLOAD.WEB.Pages.Cities
 {
-    public partial class ProvinciasCreate
+    public partial class CityCreate
     {
-        private Provincia provincia = new();
+        private City city = new();
 
-        [Parameter] public int CountryId { get; set; }
+        [Parameter] public int ProvinciaId { get; set; }
 
 
 
         /// para referencias la no navegacion 
-        private FormWihtName<Provincia>? provinciaForm;
+        private FormWihtName<City>? cityForm;
 
 
         [Inject] private IRepository Repository { get; set; } = null!;
@@ -25,8 +24,8 @@ namespace UPLOAD.WEB.Pages.Provincias
 
         private async Task CreateAsync()
         {
-            provincia.CountryId=CountryId;
-            var responseHttp = await Repository.PostAsync($"/api/provincias", provincia);
+            city.ProvinciaId = ProvinciaId;
+            var responseHttp = await Repository.PostAsync($"/api/cities", city);
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
@@ -52,10 +51,9 @@ namespace UPLOAD.WEB.Pages.Provincias
         private void Return()
         {
             //si lo grabo
-            provinciaForm!.FormPostedSuccessfully = true;
-            NavigationManager.NavigateTo($"/countries/details/{CountryId}");
-           
-        }
+            cityForm!.FormPostedSuccessfully = true;
+            NavigationManager.NavigateTo($"/countries/details/{ProvinciaId}");
 
+        }
     }
 }

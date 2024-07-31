@@ -1,0 +1,18 @@
+﻿@page "/provincias/edit/{ProvinciaId:int}"
+
+
+<h3>Editar Pais</h3>
+@* no puedo tirar el formulario de una porque el country es null se puede demorar un segundo por eso hago la pregunta *@
+@if (provincia is null)
+{
+    <Loading />
+}
+else
+{
+    <FormWihtName @ref="provinciaForm" Label="Nombre Provincia" Model="provincia" OnValidSubmit="SaveAsync" ReturnAction="Return" />
+    @*  <CountryForm @ref="countryForm" Country="country" OnValidSubmit="EditAsync" ReturnAction="Return" /> *@
+}
+
+
+
+
