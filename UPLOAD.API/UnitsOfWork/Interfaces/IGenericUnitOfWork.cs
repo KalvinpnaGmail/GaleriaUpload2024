@@ -1,4 +1,5 @@
-﻿using UPLOAD.SHARE.Response;
+﻿using UPLOAD.SHARE.DTOS;
+using UPLOAD.SHARE.Response;
 
 namespace UPLOAD.API.UnitsOfWork.Interfaces
 {
@@ -13,6 +14,12 @@ namespace UPLOAD.API.UnitsOfWork.Interfaces
         Task<ActionResponse<T>> DeleteAsync(int id);
 
         Task<ActionResponse<T>> GetAsync(int id);
-        
+
+
+        Task<ActionResponse<IEnumerable<T>>> GetAsync(PaginationDTO pagination);
+
+        Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
+
+
     }
 }

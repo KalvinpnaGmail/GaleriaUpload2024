@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UPLOAD.API.UnitsOfWork.Implementations;
 using UPLOAD.API.UnitsOfWork.Interfaces;
+using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
 
 namespace UPLOAD.API.Controllers
@@ -18,7 +20,7 @@ namespace UPLOAD.API.Controllers
 
 
 
-        [HttpGet]
+        [HttpGet("full")]
         public override async Task<IActionResult> GetAsync()
         {
             var action = await _countriesUnitofWork.GetAsync();
@@ -45,6 +47,17 @@ namespace UPLOAD.API.Controllers
 
         }
 
+
+        [HttpGet]
+        public override async Task<IActionResult> GetAsync(PaginationDTO pagination)
+        {
+            var response = await _countriesUnitofWork.GetAsync(pagination);
+            if (response.WasSuccess)
+            {
+                return Ok(response.Result);
+            }
+            return BadRequest();
+        }
 
 
     }

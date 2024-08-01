@@ -1,4 +1,5 @@
-﻿using UPLOAD.SHARE.Entities;
+﻿using UPLOAD.SHARE.DTOS;
+using UPLOAD.SHARE.Entities;
 using UPLOAD.SHARE.Response;
 
 namespace UPLOAD.API.UnitsOfWork.Interfaces
@@ -11,5 +12,8 @@ namespace UPLOAD.API.UnitsOfWork.Interfaces
 
         ///Lista de pais que venga con los provincias
         Task<ActionResponse<IEnumerable<Country>>> GetAsync();
+
+        Task<ActionResponse<IEnumerable<Country>>> GetAsync(PaginationDTO pagination);
+
     }
 }

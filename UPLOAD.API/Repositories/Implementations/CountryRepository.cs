@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UPLOAD.API.Data;
+using UPLOAD.API.Helpers;
 using UPLOAD.API.Repositories.Interfaces;
+using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.SHARE.Response;
 
@@ -37,14 +39,32 @@ namespace UPLOAD.API.Repositories.Implementations
            
         }
 
-        //tengo que override asi sobreescriboe el GenericRepository
-        public  override async Task<ActionResponse<IEnumerable<Country>>> GetAsync()
+        public override async Task<ActionResponse<IEnumerable<Country>>> GetAsync()
         {
-           var countries = await _contex.Countries.Include(c=>c.Provincias).ToListAsync();
+            var countries = await _contex.Countries
+                .OrderBy(x => x.Name)
+                .ToListAsync();
             return new ActionResponse<IEnumerable<Country>>
             {
                 WasSuccess = true,
                 Result = countries
+            };
+        }
+
+        //tengo que override asi sobreescriboe el GenericRepository
+        public override async Task<ActionResponse<IEnumerable<Country>>> GetAsync(PaginationDTO pagination)
+        {
+            var queryable = _contex.Countries
+       .Include(c => c.Provincias)
+       .AsQueryable();
+
+            return new ActionResponse<IEnumerable<Country>>
+            {
+                WasSuccess = true,
+                Result = await queryable
+                    .OrderBy(x => x.Name)
+                    .Paginate(pagination)
+                    .ToListAsync()
             };
 
         }

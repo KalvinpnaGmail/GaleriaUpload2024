@@ -44,6 +44,8 @@ builder.Services.AddScoped<ICountriesRepository, CountryRepository>();
 builder.Services.AddScoped<ICountriesUnitofWork, CountriesUnitOfWork>();
 builder.Services.AddScoped<IProvinciasRepository, ProvinciasRepository>();
 builder.Services.AddScoped<IProvinciasUnitOfWork, ProvinciasUnitOfWork>();
+builder.Services.AddScoped<ICitiesRepository,CitiesRepository>();
+builder.Services.AddScoped<ICitiesUnitOfWork, CitiesUnitOfWork>();
 
 //scoped: la usamos cuando quiero que cree una nueva instancia cada vez que lo llamo
 //Transient:usamos solouna vez se injecta una vez---en el ciclo de vida del program

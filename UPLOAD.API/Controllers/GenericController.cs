@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UPLOAD.API.UnitsOfWork.Interfaces;
+using UPLOAD.SHARE.DTOS;
 
 namespace UPLOAD.API.Controllers
 {
@@ -13,7 +14,7 @@ namespace UPLOAD.API.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("full")]
         public virtual async Task<IActionResult> GetAsync()
         {
             var action = await _unitOfWork.GetAsync();
@@ -41,6 +42,31 @@ namespace UPLOAD.API.Controllers
         }
 
 
+        //para la paginacion 
+        [HttpGet]
+        public virtual async Task<IActionResult> GetAsync([FromQuery] PaginationDTO pagination)
+        {
+            var action = await _unitOfWork.GetAsync(pagination);
+            if (action.WasSuccess)
+            {
+                return Ok(action.Result);
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("totalPages")]
+        public virtual async Task<IActionResult> GetPagesAsync([FromQuery] PaginationDTO pagination)
+        {
+            var action = await _unitOfWork.GetTotalPagesAsync(pagination);
+            if (action.WasSuccess)
+            {
+                return Ok(action.Result);
+            }
+            return BadRequest();
+        }
+
+
+        //para la paginacion 
 
         [HttpPost]
         public virtual async Task<IActionResult> PostAsync(T model)

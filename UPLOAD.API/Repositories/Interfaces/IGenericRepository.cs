@@ -1,4 +1,5 @@
-﻿using UPLOAD.SHARE.Response;
+﻿using UPLOAD.SHARE.DTOS;
+using UPLOAD.SHARE.Response;
 
 namespace UPLOAD.API.Repositories.Interfaces
 {
@@ -14,5 +15,13 @@ namespace UPLOAD.API.Repositories.Interfaces
 
         Task<ActionResponse<T>> UpdateAsync(T entity);
 
+
+        ///tengo qque hace un get para paginar <summary>
+       
+        Task<ActionResponse<IEnumerable<T>>> GetAsync(PaginationDTO pagination);
+       // yo te paso el objeto pagination y me devuelve cuantas paginas me genera ese objeto
+        Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
+
+       
     }
 }
