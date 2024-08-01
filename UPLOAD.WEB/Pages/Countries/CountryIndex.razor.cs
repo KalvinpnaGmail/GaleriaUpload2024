@@ -4,30 +4,34 @@ using System.Net;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.WEB.Repositories;
 
+
 namespace UPLOAD.WEB.Pages.Countries
 {
     public partial class CountryIndex
     {
+        /// para referencias la no navegacion 
+
         [Inject] private IRepository repository { get; set; } = null!;
         [Inject] private NavigationManager navigationManager { get; set; } = null!;
         [Inject] private SweetAlertService sweetAlertService { get; set; } = null!;
+
         public List<Country>? Countries { set; get; }
 
 
         protected override async Task OnInitializedAsync()
         {
             await LoadAsync();
-            
+
         }
 
         private async Task LoadAsync()
         {
-            
+
             var responseHttp = await repository.GetAsync<List<Country>>("/api/countries");
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
-                await sweetAlertService.FireAsync("Error", message,SweetAlertIcon.Error);
+                await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
                 return;
             }
             Countries = responseHttp.Response;
@@ -80,3 +84,5 @@ namespace UPLOAD.WEB.Pages.Countries
         }
     }
 }
+
+       

@@ -1,4 +1,3 @@
-using Microsoft.Data.SqlClient.Server;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using UPLOAD.API.Data;
@@ -35,7 +34,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
-    options.UseSqlServer(builder.Configuration.GetConnectionString("LocalConnection"),
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexionSql"),
         (a) => a.MigrationsAssembly("UPLOAD.API"));
 },
 ServiceLifetime.Transient);

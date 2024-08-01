@@ -5,6 +5,7 @@ using UPLOAD.WEB;
 using UPLOAD.WEB.Repositories;
 using UPLOAD.WEB.Services;
 
+
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
@@ -22,5 +23,4 @@ builder.Services.AddScoped<IRepository, Repository>();
 //scoped: cunado quiero que me cre una nueva instancia cada vez que 
 ///
 builder.Services.AddSweetAlert2();
-
 await builder.Build().RunAsync();
