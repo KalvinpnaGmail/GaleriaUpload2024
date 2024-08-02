@@ -20,6 +20,7 @@ namespace UPLOAD.WEB.Shared
         /// </summary>
         [Parameter] public EventCallback<int> SelectedPage { get; set; }
 
+       
         protected override void OnParametersSet()
         {
             //var previusLinkEnable = CurrentPage != 1;
@@ -54,7 +55,15 @@ namespace UPLOAD.WEB.Shared
                 });
             }
         }
-
+        private async Task InternalSelectedPage(PageModel pageModel)
+        {
+            if (pageModel.Page == CurrentPage || pageModel.Page == 0)
+            {
+                return;
+            }
+            ///invoque la interfaz y la refresque y cambio la pagina
+            await SelectedPage.InvokeAsync(pageModel.Page);
+        }
         private class PageModel
         {
             //representa los boones que tento que
