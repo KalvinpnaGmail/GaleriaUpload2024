@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System.Net.WebSockets;
 
 namespace UPLOAD.WEB.Shared
 {
@@ -9,7 +8,7 @@ namespace UPLOAD.WEB.Shared
         /// lista de todas las pagina Pagemodel 194 paise y pagino de 10 tengo 20 objteos
         /// 
         /// </summary>
-        private List<PageModel> links = new();
+        private List<PageModel> links = null!;
         [Parameter] public int CurrentPage { get; set; } = 1;
         [Parameter] public int TotalPages { get; set; } = 1;
         //Radio - controla la cant de pagina que debe mostrar el componente  botonera maximo de botones a mostrar
@@ -20,38 +19,39 @@ namespace UPLOAD.WEB.Shared
         /// </summary>
         [Parameter] public EventCallback<int> SelectedPage { get; set; }
 
-       
+
         protected override void OnParametersSet()
         {
             //var previusLinkEnable = CurrentPage != 1;
             //var previusLinkPage = CurrentPage - 1;
 
-
+            links = new List<PageModel>();
 
             links.Add(new PageModel
             {
-                Text="Anterior",
-                Page= CurrentPage - 1,
-                Enable= CurrentPage != 1
+                Text = "«",
+                Page = CurrentPage - 1,
+                Enable = CurrentPage != 1
 
             });
 
 
             links.Add(new PageModel
             {
-                Text = "Siguiente",
-                Page = CurrentPage + 1,
+                Text = "»",
+                Page = CurrentPage != TotalPages ? CurrentPage + 1 : CurrentPage,
                 Enable = CurrentPage != TotalPages
 
+
             });
 
-            for (int i=1; i<=TotalPages; i++)
+            for (int i = 1; i <= TotalPages; i++)
             {
                 links.Add(new PageModel
                 {
                     Text = $"{i}",
-                    Page =i,
-                    Active = i == CurrentPage
+                    Page = i,
+                    Enable = i == CurrentPage
                 });
             }
         }
@@ -80,7 +80,7 @@ namespace UPLOAD.WEB.Shared
             /// <summary>
             /// esta pagina esta activa?
             /// </summary>
-            public bool Active { get; set; }
+
 
         }
     }
