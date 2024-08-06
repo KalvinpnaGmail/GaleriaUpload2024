@@ -1,6 +1,7 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
 using UPLOAD.WEB;
 using UPLOAD.WEB.Repositories;
 using UPLOAD.WEB.Services;
@@ -23,4 +24,5 @@ builder.Services.AddScoped<IRepository, Repository>();
 //scoped: cunado quiero que me cre una nueva instancia cada vez que 
 ///
 builder.Services.AddSweetAlert2();
+builder.Services.AddMudServices();
 await builder.Build().RunAsync();

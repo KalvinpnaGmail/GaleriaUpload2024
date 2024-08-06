@@ -1,53 +1,35 @@
 ﻿@page "/categories"
-
-@* <h3>Listado de Categorias de Clinicas</h3>
-<div class="mb-3">
-    <a class="btn btn-primary mb-3" href="/category/create">Nueva Categoria</a>
-</div>
- *@
 <GenericList MyList="Categories">
     <Body>
-            <div class="card">
-        <div class="card-header">
-            <span>
-                    <i class="bi bi-tag" /> Categorias
-                    <a class="btn btn-sm btn-primary float-end" href="/countries/create"><i class="oi oi-plus" /> Nueva Categoria</a>
-
-            </span>
-        </div>
-        <div class="card-body">
-            <div class="mb-2" style="display: flex; flex-wrap:wrap; align-items: center;">
-                <div>
-                   
-                </div>
-                <div class="mx-1">
-                   
-                </div>
-            </div>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Categorias</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var category in Categories!)
-                {
-                    <tr>
-                        <td>
-                            @category.Name
-                            
-                        </td>
-                        <td>
-                            <a href="/categories/edit/@category.Id" class="btn btn-warning">Editar</a>
-                            <button @onclick=@(()=>DeleteAsync(category))  class="btn btn-danger">Borrar</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        </div>
-            </div>
+        <MudCard>
+            <MudCardHeader>
+                <MudText Typo="Typo.h6">
+                    <MudIcon Icon="@Icons.Material.Filled.Tag" /> Categorias
+                </MudText>
+                <MudSpacer />
+                <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Href="/category/create" Label="Nueva Categoria" Class=" float-end" />
+            </MudCardHeader>
+            <MudCardContent>
+                <MudTable Items="Categories" Hover="true" >
+                    
+                    <RowTemplate>
+                            <MudTr>
+                                <MudTd>
+                                Categoria: @context.Name
+                                </MudTd>
+                               
+                           
+                                <MudTd>
+                                    <MudButton Variant="Variant.Filled" Color="Color.Warning" Size="Size.Small"   StartIcon="@Icons.Material.Filled.Edit" Href="@($"/categories/edit/{context.Id}")">Editar</MudButton>
+                                      <MudButton Variant="Variant.Filled" Color="Color.Error" Size="Size.Small" StartIcon="@Icons.Material.Filled.Delete" OnClick="@(() => DeleteAsync(context))">Borrar</MudButton>
+                                </MudTd>
+                            </MudTr>
+                       
+                       
+                    </RowTemplate>
+              </MudTable>
+               
+            </MudCardContent>
+        </MudCard>
     </Body>
 </GenericList>
