@@ -5,12 +5,14 @@ using MudBlazor.Services;
 using UPLOAD.WEB;
 using UPLOAD.WEB.Repositories;
 using UPLOAD.WEB.Services;
+using UPLOAD.WEB.Utilidad;
 
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddSingleton<MenuService>();
 ///la uri es la que me das Swager
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7207/") });
 //formas de inyectar serviios
