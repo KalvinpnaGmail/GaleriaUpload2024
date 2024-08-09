@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\images\logo.PNG" />
+  </ItemGroup>
+
+  <ItemGroup>
     <OpenApiReference Include="Servicios\swaggerjson.json" CodeGenerator="NSwagCSharp" Namespace="clienteSwager" />
   </ItemGroup>
 
