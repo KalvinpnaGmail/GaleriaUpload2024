@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Clinicas\ClinicasIndex.razor" />
     <Content Remove="Servicios\swaggerjson.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\Clinicas\ClinicasIndex.razor" />
     <None Include="wwwroot\images\logo.PNG" />
   </ItemGroup>
 
@@ -36,6 +38,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UPLOAD.SHARE\UPLOAD.SHARE.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Clinicas\ClinicasIndex.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Clinicas\ClinicasIndex.razor" />
   </ItemGroup>
 
 </Project>

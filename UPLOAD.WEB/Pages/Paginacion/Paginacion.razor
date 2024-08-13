@@ -1,12 +1,5 @@
 ﻿@page "/paginacion"
-@inject MenuService _menuServicio;
 
-@inject IDialogService _dialogServicio
-@inject ISnackbar _snackBar
-@inject SweetAlertService Swal;
-@inject NavigationManager _navigationServicio;
-@inject IRepository repository;
-  
 
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-5">
@@ -17,15 +10,15 @@
                 <MudButton Variant="Variant.Filled"
                            StartIcon="@Icons.Material.Filled.Add"
                            Color="Color.Primary"
-                           OnClick="@(() => _navigationServicio.NavigateTo("/pages/libro"))">
-                    Nuevo Libro
+                           OnClick="@(() => navigationManager.NavigateTo("/pages/libro"))">
+                    Nueva
                 </MudButton>
             </MudItem>
             <MudItem xs="12">
 
                 <MudTable Items="@listaClinicas"
                           Dense="true"
-                          Striped="true" Bordered="true"
+                          Striped="false" Bordered="true"
                           Filter="new Func<Clinica,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1"
                           Loading="@_loading" LoadingProgressColor="Color.Info">
                     <ToolBarContent>
@@ -34,25 +27,26 @@
                     </ToolBarContent>
                     <HeaderContent>
                         <MudTh>Nombre</MudTh>
-                      
+                        <MudTh>Nro</MudTh>
+                        <MudTh>Opciones</MudTh>
                         <MudTh></MudTh>
                     </HeaderContent>
                     <RowTemplate Context="clinicaRow">
                       
                         <MudTd DataLabel="Titulo">@clinicaRow.DENOMINACION</MudTd>
-                        
-                        <MudTd DataLabel="">
+                        <MudTd DataLabel="Nro">@clinicaRow.MATRICULA</MudTd>
+                        <MudTd DataLabel="Opciones">
 
                             <MudFab Color="Color.Primary"
                                     StartIcon="@Icons.Material.Filled.Edit"
-                                    Size="Size.Small" Href="@("/pages/libro/" + clinicaRow.Id)"
+                                    Size="Size.Small" Href="@("/pages/Clinicas/" + clinicaRow.MATRICULA)"
                                     IconSize="Size.Small" />
-
-                            <MudFab Color="Color.Error"
+@*                            
+ *@                            <MudFab Color="Color.Error"
                                     StartIcon="@Icons.Material.Filled.Delete"
                                     Size="Size.Small"
                                     IconSize="Size.Small"
-                                    OnClick="@(() => EliminarLibro(clinicaRow))" />
+                                    OnClick="@(() => Delete(clinicaRow))" />
                         </MudTd>
                     </RowTemplate>
                     <PagerContent>
@@ -67,56 +61,3 @@
 
 </MudContainer>
 
-
-@code {
-
-    List<Clinica> listaClinicas = new List<Clinica>();
-    private string searchString1 = "";
-    private Clinica selectedItem1 = null;
-    private bool _loading = true;
-
-    private async Task LoadAsync()
-    {
-        var result = await repository.GetAsync<List<Clinica>>("/api/clinicas/DevuelveClinicas");
-        // var result = await _libroServicio.Lista();
-
-        if (!result.Error)
-        {
-            listaClinicas = result.Response!;
-        }
-    }
-    protected override async Task OnInitializedAsync()
-    {
-        // _menuServicio.SetMenu(new BreadcrumbItem("Clinicas", href: null));
-        await LoadAsync();
-        _loading = false;
-    }
-    private bool FilterFunc1(Clinica element) => FilterFunc(element, searchString1);
-
-    private bool FilterFunc(Clinica element, string searchString)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        
-        if (element.DENOMINACION.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-       
-        return false;
-    }
-
-
-    private async Task EliminarLibro(Clinica clinica)
-    {
-        SweetAlertResult result = await Swal.FireAsync(new SweetAlertOptions
-            {
-                Title = "Esta seguro?",
-                Text = $"Eliminar Clnica: {clinica.DENOMINACION}",
-                Icon = SweetAlertIcon.Warning,
-                ShowCancelButton = true,
-                ConfirmButtonText = "Si, eliminar",
-                CancelButtonText = "No, volver"
-            });
-
-        
-    }
-}

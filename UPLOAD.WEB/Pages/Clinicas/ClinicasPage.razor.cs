@@ -22,6 +22,8 @@ namespace UPLOAD.WEB.Pages.Clinicas
 
         private async Task LoadAsync()
         {
+            //var result = await repository.GetAsync<List<Clinica>>("/api/clinicas/DevuelveClinicas");
+
             var responseHppt = await repository.GetAsync<List<Clinica>>("/api/clinicas/DevuelveClinicas");
             if (responseHppt.Error)
             {

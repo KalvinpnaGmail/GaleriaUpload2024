@@ -38,7 +38,8 @@ namespace UPLOAD.API.Controllers
             try
             {
                 // Realizar la solicitud GET (o la solicitud que necesites)
-                HttpResponseMessage response = await _httpClient.GetAsync(url+"Clinicas.php");
+                HttpResponseMessage response = await _httpClient.GetAsync(url+"api.php?action=clinicas");
+                //HttpResponseMessage response = await _httpClient.GetAsync(url + "Clinicas.php");
 
                 // Verificar la respuesta
                 if (response.IsSuccessStatusCode)
