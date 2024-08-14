@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UPLOAD.SHARE\UPLOAD.SHARE.csproj" />
+    <ProjectReference Include="..\UPLOAD.WEB\UPLOAD.WEB.csproj" />
   </ItemGroup>
 
   <ItemGroup>
