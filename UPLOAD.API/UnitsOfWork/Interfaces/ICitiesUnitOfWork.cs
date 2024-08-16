@@ -13,3 +13,5 @@ namespace UPLOAD.API.UnitsOfWork.Interfaces
         Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
     }
 }
+
+

@@ -29,11 +29,7 @@ namespace UPLOAD.API.Controllers
             _contexto = contexto;
         }
 
-        //[HttpGet("DevuelveImagenes")]
-        //public async Task<IReadOnlyCollection<Image>> GetAll()
-        //{
-        //    return await _contexto.Images.ToArrayAsync(); ;
-        //}
+       
 
         [HttpGet("DevuelveImagenes")]
         public async Task<IActionResult> Get()

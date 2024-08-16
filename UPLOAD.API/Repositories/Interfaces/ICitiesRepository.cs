@@ -1,4 +1,5 @@
-﻿using UPLOAD.SHARE.DTOS;
+﻿using Microsoft.EntityFrameworkCore;
+using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.SHARE.Response;
 
@@ -10,6 +11,6 @@ namespace UPLOAD.API.Repositories.Interfaces
 
         Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
 
-
+        
     }
 }
