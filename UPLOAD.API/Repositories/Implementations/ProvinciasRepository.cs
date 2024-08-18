@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UPLOAD.API.Data;
+using UPLOAD.API.Helpers;
 using UPLOAD.API.Repositories.Interfaces;
+using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.SHARE.Response;
 
@@ -38,7 +40,10 @@ namespace UPLOAD.API.Repositories.Implementations
 
         public override async Task<ActionResponse<IEnumerable<Provincia>>> GetAsync()
         {
-            var provincias = await _contex.Provincias.Include(c => c.Cities).ToListAsync();
+            var provincias = await _contex.Provincias
+                .OrderBy(c => c.Name)
+                .Include(c => c.Cities)
+                .ToListAsync();
             return new ActionResponse<IEnumerable<Provincia>>
             {
                 WasSuccess = true,
@@ -46,5 +51,44 @@ namespace UPLOAD.API.Repositories.Implementations
             };
 
         }
+
+
+
+        public override async Task<ActionResponse<IEnumerable<Provincia>>> GetAsync(PaginationDTO pagination)
+        {
+            var queryable = _contex.Provincias
+                .Include(x => x.Cities)
+                .Where(x => x.Country!.Id == pagination.Id)
+                .AsQueryable();
+
+            return new ActionResponse<IEnumerable<Provincia>>
+            {
+                WasSuccess = true,
+                Result = await queryable
+                    .OrderBy(x => x.Name)
+                    .Paginate(pagination)
+                    .ToListAsync()
+            };
+        }
+
+        public async override Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination)
+        {
+            var queryable = _contex.Provincias
+                .Where(x => x.Country!.Id == pagination.Id)
+                .AsQueryable();
+
+            double count = await queryable.CountAsync();
+            int totalPages = (int)Math.Ceiling(count / pagination.RecordsNumber);
+            return new ActionResponse<int>
+            {
+                WasSuccess = true,
+                Result = totalPages
+            };
+        }
+
+
+
+
+
     }
 }

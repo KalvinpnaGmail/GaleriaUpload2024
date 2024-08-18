@@ -1,14 +1,18 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
 using UPLOAD.WEB;
 using UPLOAD.WEB.Repositories;
 using UPLOAD.WEB.Services;
+using UPLOAD.WEB.Utilidad;
+
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddSingleton<MenuService>();
 ///la uri es la que me das Swager
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7207/") });
 //formas de inyectar serviios
@@ -22,5 +26,5 @@ builder.Services.AddScoped<IRepository, Repository>();
 //scoped: cunado quiero que me cre una nueva instancia cada vez que 
 ///
 builder.Services.AddSweetAlert2();
-
+builder.Services.AddMudServices();
 await builder.Build().RunAsync();

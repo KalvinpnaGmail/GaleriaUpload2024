@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using System.Text.Json;
-
+using UPLOAD.API.Service;
 using UPLOAD.SHARE.Entities;
-using static UPLOAD.API.Helpers.AclerHelper;
 
 namespace UPLOAD.API.Controllers
 {
@@ -11,57 +8,27 @@ namespace UPLOAD.API.Controllers
     [Route("/api/clinicas")]
     public class ClinicasController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
-        private readonly string usuario;
-        private readonly string pass;
-        private readonly string url;
+        private readonly IClinicaService _clinicaService;
 
-        public ClinicasController(IConfiguration configuration)
+        public ClinicasController(IClinicaService clinicaService)
         {
-            _httpClient = new HttpClient(new HttpClientHandler { ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true });
-            usuario = configuration["AclerApi:usuario"]!;
-            pass= configuration["AclerApi:pass"]!;
-            url = configuration["AclerApi:url"]!;
+            _clinicaService = clinicaService;
         }
-
 
         [HttpGet("DevuelveClinicas")]
-        public async Task<Clinica[]> GetAsync()
+        public async Task<ActionResult<IEnumerable<Clinica>>> GetAsync()
         {
-          
+            var response = await _clinicaService.GetClinicasAsync();
 
-
-            string credencialesBase64 = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{usuario}:{pass}"));
-
-            // Agregar encabezado de autorización
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", credencialesBase64);
-            try
+            if (response.WasSuccess)
             {
-                // Realizar la solicitud GET (o la solicitud que necesites)
-                HttpResponseMessage response = await _httpClient.GetAsync(url+"Clinicas.php");
-
-                // Verificar la respuesta
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseData = await response.Content.ReadAsStringAsync();
-                    Acler acler = new Acler();
-                    var json = acler.ProcesarJsonInvalido2(responseData);
-                    var respuesta = JsonSerializer.Deserialize<List<Clinica>>(json).ToArray();
-                    return respuesta;
-
-                }
-                else
-                {
-                    return Array.Empty<Clinica>();
-                }
+                return Ok(response.Result);
             }
-            catch (Exception ex)
+            else
             {
-                throw new Exception($"Error: {ex.Message}");
+                return BadRequest(response.Message);
             }
         }
-
-
-
     }
+
 }

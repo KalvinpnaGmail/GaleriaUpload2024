@@ -1,6 +1,7 @@
 ﻿
 using System.Text;
 using System.Text.Json;
+using UPLOAD.SHARE.Entities;
 ///1/primero van atributos privados
 ///2-constructores
 // 3-prop publicas
@@ -117,7 +118,22 @@ namespace UPLOAD.WEB.Repositories
 
         }
 
-        
+
+        public async Task<Clinica[]> GetClinicasAsync()
+        {
+            // Llamar al método GetAsync<T> con la URL de la API de clínicas
+            var response = await GetAsync<Clinica[]>("api/clinicas/DevuelveClinicas");
+
+            if (!response.Error)
+            {
+                return response.Response!;
+            }
+
+            // Manejar el caso de error (puedes lanzar una excepción o devolver un arreglo vacío)
+            return Array.Empty<Clinica>();
+        }
+
+
     }
 
 }

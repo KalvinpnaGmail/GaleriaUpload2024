@@ -4,34 +4,83 @@ using System.Net;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.WEB.Repositories;
 
+
 namespace UPLOAD.WEB.Pages.Countries
 {
     public partial class CountryIndex
     {
+        //para la paginacion
+        private int currentPage = 1;
+        private int totalPages;
+
+        //para la paginacion
+
+        /// para referencias la no navegacion 
+
         [Inject] private IRepository repository { get; set; } = null!;
         [Inject] private NavigationManager navigationManager { get; set; } = null!;
         [Inject] private SweetAlertService sweetAlertService { get; set; } = null!;
+
         public List<Country>? Countries { set; get; }
 
 
         protected override async Task OnInitializedAsync()
         {
             await LoadAsync();
-            
+
         }
 
-        private async Task LoadAsync()
+        private async Task LoadAsync(int page = 1)
         {
-            
-            var responseHttp = await repository.GetAsync<List<Country>>("/api/countries");
+            var ok = await LoadListAsync(page);
+            if (ok)
+            {
+                await LoadPagesAsync();
+            }
+        }
+
+
+        private async Task<bool> LoadListAsync(int page)
+        {
+            //se pueden pasar varios parametors por qstring $"api/countries?page={page}&totalRecords=20
+            //var responseHttp = await repository.GetAsync<List<Country>>($"api/countries?page={page}&totalRecords=20");
+            var responseHttp = await repository.GetAsync<List<Country>>($"api/countries?page={page}");
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
-                await sweetAlertService.FireAsync("Error", message,SweetAlertIcon.Error);
-                return;
+                await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                return false;
             }
             Countries = responseHttp.Response;
+            return true;
         }
+
+        private async Task LoadPagesAsync()
+        {
+            var responseHttp = await repository.GetAsync<int>("api/countries/totalPages");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                return;
+            }
+            totalPages = responseHttp.Response;
+        }
+
+
+        //lo tengo que cambiar para la paginacion 
+        //private async Task LoadAsync()
+        //{
+
+        //    var responseHttp = await repository.GetAsync<List<Country>>("/api/countries");
+        //    if (responseHttp.Error)
+        //    {
+        //        var message = await responseHttp.GetErrorMessageAsync();
+        //        await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+        //        return;
+        //    }
+        //    Countries = responseHttp.Response;
+        //}
         private async Task DeleteAsync(Country country)
         {
             ///si fue editado saco un alerta
@@ -78,5 +127,17 @@ namespace UPLOAD.WEB.Pages.Countries
             await toast.FireAsync(icon: SweetAlertIcon.Warning, message: "Registro Borrado  con éxito.");
 
         }
+
+
+
+        private async Task SelectedPageAsync(int page)
+        {
+            currentPage = page;
+            await LoadAsync(page);
+        }
+
+
     }
 }
+
+       

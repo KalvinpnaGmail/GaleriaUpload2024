@@ -30,6 +30,8 @@ namespace UPLOAD.SHARE.Entities
         //AddControllers().
         //AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
         public ICollection<City>? Cities { get; set; }
+
+
         [Display(Name = "Ciudades")]
         public int CitiesNumber => Cities == null || Cities.Count == 0 ? 0 : Cities.Count;
 

@@ -36,9 +36,12 @@ namespace UPLOAD.WEB.Pages.Countries
                     NavigationManager.NavigateTo("/countries");
                     return;
                 }
+
+                
                 ///si hay otro tipo de error
                 var message = await responseHttp.GetErrorMessageAsync();
                 await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+               
                 return;
             }
             country = responseHttp.Response;

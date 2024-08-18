@@ -1,5 +1,6 @@
 ﻿using UPLOAD.API.Repositories.Interfaces;
 using UPLOAD.API.UnitsOfWork.Interfaces;
+using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.SHARE.Response;
 
@@ -23,5 +24,7 @@ namespace UPLOAD.API.UnitsOfWork.Implementations
 
 
         public override async Task<ActionResponse<Country>> GetAsync(int id) => await _countriesRepository.GetAsync(id);
+
+        public override async Task<ActionResponse<IEnumerable<Country>>> GetAsync(PaginationDTO pagination) => await _countriesRepository.GetAsync(pagination);
     }
 }

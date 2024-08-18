@@ -1,0 +1,26 @@
+﻿@page "/mudnavmenu"
+
+<MudNavMenu>
+    <MudNavLink Href="/" Icon="@Icons.Material.Filled.Home">
+        Home
+    </MudNavLink>
+    <MudNavLink Href="/document" Icon="@Icons.Material.Filled.DocumentScanner">
+        Documentos
+        <MudButton Variant="Variant.Filled" Color="Color.Primary"/>
+    </MudNavLink>
+
+    <MudNavLink Href="/clinicas" Icon="@Icons.Material.Filled.LocalHospital">
+        Clínicas
+        <MudMenu>
+            <MudMenuItem Href="/categories" Icon="@Icons.Material.Filled.Category">
+                Categorías
+            </MudMenuItem>
+        </MudMenu>
+    </MudNavLink>
+    <MudNavLink Href="/countries" Icon="@Icons.Material.Filled.Language">
+        Países
+    </MudNavLink>
+    <MudNavLink Href="/categories" Icon="@Icons.Material.Filled.Category">
+        Categorias Clínicas
+    </MudNavLink>
+</MudNavMenu>

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UPLOAD.API.Data;
+using UPLOAD.API.Helpers;
 using UPLOAD.API.Repositories.Interfaces;
+using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Response;
 
 namespace UPLOAD.API.Repositories.Implementations
@@ -147,6 +149,35 @@ namespace UPLOAD.API.Repositories.Implementations
                 Message = "Ya Existe el Registro no se pudo grabar"
             };
         }
+
+
+
+        ///para la paginacion
+        public virtual async Task<ActionResponse<IEnumerable<T>>> GetAsync(PaginationDTO pagination)
+        {
+            var queryable = _entity.AsQueryable();
+
+            return new ActionResponse<IEnumerable<T>>
+            {
+                WasSuccess = true,
+                Result = await queryable
+                    .Paginate(pagination)
+                    .ToListAsync()
+            };
+        }
+
+        public virtual async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination)
+        {
+            var queryable = _entity.AsQueryable();
+            var count = await queryable.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)count / pagination.RecordsNumber);
+            return new ActionResponse<int>
+            {
+                WasSuccess = true,
+                Result = totalPages
+            };
+        }
+
 
     }
 }

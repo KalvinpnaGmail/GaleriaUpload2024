@@ -1,0 +1,36 @@
+﻿@* <nav>
+    <ul class="pagination">
+        @foreach (var link in links)
+        {
+            <li @onclick=@(()=>InternalSelectedPage(link)) 
+                style="cursor : pointer" 
+                class="page-item @(link.Enable ? null : "disabled") @(link.Enable ? "active" : null)">
+
+                <a class="page-link">@link.Text</a>
+            </li>
+        }  
+
+    </ul>
+</nav> *@
+<nav>
+    <ul class="pagination">
+        <li @onclick=@(() => InternalSelectedPage(links.First()))
+            style="cursor: pointer; margin-right: 5px;"
+            class="page-item @(links.First().Enable ? "" : "disabled")">
+            <a class="page-link">@links.First().Text</a>
+        </li>
+        @foreach (var link in links.Skip(1).SkipLast(1))
+        {
+            <li @onclick=@(() => InternalSelectedPage(link))
+                style="cursor: pointer; margin-right: 5px;"
+                class="page-item @(link.Enable ? "" : "disabled") @(link.Enable ? "active" : "")">
+                <a class="page-link">@link.Text</a>
+            </li>
+        }
+        <li @onclick=@(() => InternalSelectedPage(links.Last()))
+            style="cursor: pointer; margin-right: 5px;"
+            class="page-item @(links.Last().Enable ? "" : "disabled")">
+            <a class="page-link">@links.Last().Text</a>
+        </li>
+    </ul>
+</nav>

@@ -1,5 +1,6 @@
 ﻿using UPLOAD.API.Repositories.Interfaces;
 using UPLOAD.API.UnitsOfWork.Interfaces;
+using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.SHARE.Response;
 
@@ -14,11 +15,19 @@ namespace UPLOAD.API.UnitsOfWork.Implementations
            _provinciasRepository = provinciasRepository;
         }
 
+
+       
         public override async Task<ActionResponse<IEnumerable<Provincia>>> GetAsync() => await _provinciasRepository.GetAsync();
 
 
-
+        //para 
         public override async Task<ActionResponse<Provincia>> GetAsync(int id) => await _provinciasRepository.GetAsync(id);
+
+        public override async Task<ActionResponse<IEnumerable<Provincia>>> GetAsync(PaginationDTO pagination) => await _provinciasRepository.GetAsync(pagination);
+
+        public override async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination) => await _provinciasRepository.GetTotalPagesAsync(pagination);
+
+
 
     }
 }
