@@ -23,7 +23,7 @@ namespace UPLOAD.API.Data
             await checkCountriesAsync();
             await checkCateforiesAsync();
             await CheckRolesAsync();
-            await CheckUserAsync("1010", "Juan", "Zuluaga", "zulu@yopmail.com", "322 311 4620", "Calle Luna Calle Sol", UserType.Admin);
+            await CheckUserAsync("1010", "Gabriel", "Lopez", "lopez.gabriel@yopmail.com", "3434564831", "Venezuela 1165", UserType.Admin);
 
         }
 
