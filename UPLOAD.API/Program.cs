@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using UPLOAD.API.Data;
@@ -6,6 +7,7 @@ using UPLOAD.API.Repositories.Interfaces;
 using UPLOAD.API.Service;
 using UPLOAD.API.UnitsOfWork.Implementations;
 using UPLOAD.API.UnitsOfWork.Interfaces;
+using UPLOAD.SHARE.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,8 +49,21 @@ builder.Services.AddScoped<IProvinciasRepository, ProvinciasRepository>();
 builder.Services.AddScoped<IProvinciasUnitOfWork, ProvinciasUnitOfWork>();
 builder.Services.AddScoped<ICitiesRepository,CitiesRepository>();
 builder.Services.AddScoped<ICitiesUnitOfWork, CitiesUnitOfWork>();
-
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IUsersUnitOfWork, UsersUnitOfWork>();
 builder.Services.AddScoped<IClinicaService, ClinicaService>();
+
+builder.Services.AddIdentity<User, IdentityRole>(x =>
+{
+    x.User.RequireUniqueEmail = true;
+    x.Password.RequireDigit = false;
+    x.Password.RequiredUniqueChars = 0;
+    x.Password.RequireLowercase = false;
+    x.Password.RequireNonAlphanumeric = false;
+    x.Password.RequireUppercase = false;
+})
+    .AddEntityFrameworkStores<DataContext>()
+    .AddDefaultTokenProviders();
 
 
 //scoped: la usamos cuando quiero que cree una nueva instancia cada vez que lo llamo
