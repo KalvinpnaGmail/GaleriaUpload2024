@@ -1,8 +1,10 @@
 using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using UPLOAD.WEB;
+using UPLOAD.WEB.AuthenticationProviders;
 using UPLOAD.WEB.Repositories;
 using UPLOAD.WEB.Services;
 using UPLOAD.WEB.Utilidad;
@@ -14,7 +16,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddSingleton<MenuService>();
 ///la uri es la que me das Swager
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7207/") });
+builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7207/") });
 //formas de inyectar serviios
 //scoped: la usamos cuando quiero que cree una nueva instancia cada vez que lo llamo
 //Transient:usamos solouna vez se injecta una vez---en el ciclo de vida del program
@@ -27,4 +29,9 @@ builder.Services.AddScoped<IRepository, Repository>();
 ///
 builder.Services.AddSweetAlert2();
 builder.Services.AddMudServices();
+//autorizaciones
+builder.Services.AddAuthorizationCore();
+builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProviderTest>();
+//autorizaciones
+
 await builder.Build().RunAsync();
