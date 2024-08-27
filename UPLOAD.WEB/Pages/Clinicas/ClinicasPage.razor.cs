@@ -1,10 +1,12 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.WEB.Repositories;
 
 namespace UPLOAD.WEB.Pages.Clinicas
 {
+    [Authorize(Roles = "Admin")]
     public partial class ClinicasPage
     {
 

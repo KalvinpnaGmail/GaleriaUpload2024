@@ -1,4 +1,5 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Net;
 using UPLOAD.SHARE.Entities;
@@ -7,6 +8,7 @@ using UPLOAD.WEB.Shared;
 
 namespace UPLOAD.WEB.Pages.Countries
 {
+    [Authorize(Roles = "Admin")]
     public partial class CountryEdit
     {
         private Country? country;

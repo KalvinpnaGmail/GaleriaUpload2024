@@ -1,4 +1,5 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics.Metrics;
 using System.Net;
@@ -8,6 +9,7 @@ using UPLOAD.WEB.Shared;
 
 namespace UPLOAD.WEB.Pages.Provincias
 {
+    [Authorize(Roles = "Admin")]
     public partial class ProvinciaEdit
     {
         private Provincia? provincia;

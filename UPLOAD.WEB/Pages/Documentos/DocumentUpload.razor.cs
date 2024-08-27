@@ -5,9 +5,11 @@ using UPLOAD.WEB.Repositories;
 using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
 using System.Diagnostics.Metrics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UPLOAD.WEB.Pages.Documentos
 {
+    [Authorize(Roles = "Admin")]
     public partial class DocumentUpload
     {
         

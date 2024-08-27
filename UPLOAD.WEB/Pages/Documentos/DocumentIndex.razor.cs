@@ -1,4 +1,5 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -7,6 +8,7 @@ using UPLOAD.WEB.Repositories;
 
 namespace UPLOAD.WEB.Pages.Documentos
 {
+    [Authorize(Roles = "Admin")]
     public partial class DocumentIndex
     {
         [Inject] private IRepository repository { get; set; } = null!;

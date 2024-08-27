@@ -12,10 +12,17 @@
     <MudNavLink Href="countries" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Paises</MudNavLink>
     <MudNavLink Href="paginacion" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">EjemploPAginacion</MudNavLink>
 
-    <MudNavGroup Title="Clinicas" Expanded="true">
-        <MudNavLink Href="clinicas" Icon="@Icons.Material.Filled.LocalHospital">Listado de Clinicas</MudNavLink>
-        <MudNavLink Href="categories" Icon="@Icons.Material.Filled.Category">Listado de Categorías</MudNavLink>
-    </MudNavGroup>
+    <AuthorizeView Roles="Admin">
+        <Authorized>
+            <MudNavGroup Title="Clinicas" Expanded="true">
+                <MudNavLink Href="clinicas" Icon="@Icons.Material.Filled.LocalHospital">Listado de Clinicas</MudNavLink>
+                <MudNavLink Href="categories" Icon="@Icons.Material.Filled.Category">Listado de Categorías</MudNavLink>
+            </MudNavGroup>
+           
+        </Authorized>
+       
+    </AuthorizeView>
+  
     
 </MudNavMenu>
 

@@ -1,4 +1,5 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Routing;
@@ -6,6 +7,7 @@ using UPLOAD.SHARE.Entities;
 
 namespace UPLOAD.WEB.Pages.Documentos
 {
+    [Authorize(Roles = "Admin")]
     public partial class DocumentForm
     {
         private EditContext editContext =null!;
