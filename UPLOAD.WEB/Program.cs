@@ -7,6 +7,7 @@ using UPLOAD.WEB;
 using UPLOAD.WEB.AuthenticationProviders;
 using UPLOAD.WEB.Repositories;
 using UPLOAD.WEB.Services;
+using UPLOAD.WEB.Servicios;
 using UPLOAD.WEB.Utilidad;
 
 
@@ -31,7 +32,12 @@ builder.Services.AddSweetAlert2();
 builder.Services.AddMudServices();
 //autorizaciones
 builder.Services.AddAuthorizationCore();
-builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProviderTest>();
+builder.Services.AddScoped<AuthenticationProviderJWT>();
+builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProviderJWT>(x => x.GetRequiredService<AuthenticationProviderJWT>());
+builder.Services.AddScoped<ILoginService, AuthenticationProviderJWT>(x => x.GetRequiredService<AuthenticationProviderJWT>());
+
+//builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProviderTest>();
+
 //autorizaciones
 
 await builder.Build().RunAsync();

@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using UPLOAD.API.UnitsOfWork.Implementations;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using UPLOAD.API.UnitsOfWork.Interfaces;
 using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
@@ -7,6 +8,7 @@ using UPLOAD.SHARE.Entities;
 namespace UPLOAD.API.Controllers
 {
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     //[Route("/api/countries")] antes se ponia asi es lo mismo siempre hablando del controlador  la llamada si o si /api/countries
     public class CountriesController : GenericController<Country>
@@ -15,7 +17,7 @@ namespace UPLOAD.API.Controllers
 
         public CountriesController(IGenericUnitOfWork<Country> unitOfWork, ICountriesUnitofWork countriesUnitofWork) : base(unitOfWork)
         {
-          _countriesUnitofWork = countriesUnitofWork;
+            _countriesUnitofWork = countriesUnitofWork;
         }
 
 

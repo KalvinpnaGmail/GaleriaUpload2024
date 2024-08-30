@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using UPLOAD.API.Repositories.Interfaces;
 using UPLOAD.API.UnitsOfWork.Interfaces;
+using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
 
 namespace UPLOAD.API.UnitsOfWork.Implementations
@@ -23,6 +24,13 @@ namespace UPLOAD.API.UnitsOfWork.Implementations
         public async Task<User> GetUserAsync(string email) => await _usersRepository.GetUserAsync(email);
 
         public async Task<bool> IsUserInRoleAsync(User user, string roleName) => await _usersRepository.IsUserInRoleAsync(user, roleName);
+
+        public async Task<SignInResult> LoginAsync(LoginDTO model) => await _usersRepository.LoginAsync(model);
+
+        public async Task LogoutAsync() => await _usersRepository.LogoutAsync();
+
+
+
     }
 
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
 
 namespace UPLOAD.API.UnitsOfWork.Interfaces
@@ -14,6 +15,13 @@ namespace UPLOAD.API.UnitsOfWork.Interfaces
         Task AddUserToRoleAsync(User user, string roleName);
 
         Task<bool> IsUserInRoleAsync(User user, string roleName);
+
+
+        //para loguearse
+        Task<SignInResult> LoginAsync(LoginDTO model);
+
+        //desloguearse
+        Task LogoutAsync();
 
     }
 }
