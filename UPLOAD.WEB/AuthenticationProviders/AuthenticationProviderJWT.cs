@@ -37,6 +37,24 @@ namespace UPLOAD.WEB.AuthenticationProviders
 
         }
 
+
+        public async Task LogoutAsync()
+        {
+            await _jSRuntime.RemoveLocalStorage(_tokenKey);
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+            NotifyAuthenticationStateChanged(Task.FromResult(_anonimous));
+
+        }
+
+        public async Task LoginAsync(string token)
+        {
+            await _jSRuntime.SetLocalStorage(_tokenKey, token);
+            var authState = BuildAuthenticationState(token);
+            NotifyAuthenticationStateChanged(Task.FromResult(authState));
+
+        }
+
+
         private AuthenticationState BuildAuthenticationState(string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
@@ -52,20 +70,6 @@ namespace UPLOAD.WEB.AuthenticationProviders
         }
 
 
-        public async Task LoginAsync(string token)
-        {
-            await _jSRuntime.SetLocalStorage(_tokenKey, token);
-            var authState = BuildAuthenticationState(token);
-            NotifyAuthenticationStateChanged(Task.FromResult(authState));
-
-        }
-
-        public async Task LogoutAsync()
-        {
-            await _jSRuntime.RemoveLocalStorage(_tokenKey);
-            _httpClient.DefaultRequestHeaders.Authorization = null;
-            NotifyAuthenticationStateChanged(Task.FromResult(_anonimous));
-
-        }
+     
     }
 }
