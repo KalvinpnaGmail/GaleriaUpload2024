@@ -1,25 +1,20 @@
 ﻿@page "/Login"
 
-<EditForm Model="loginDTO" OnValidSubmit="LoginAsync">
-    <DataAnnotationsValidator />
+<MudPaper Class="mx-auto my-6 p-4" MaxWidth="400px">
+    <MudText Typo="Typo.h5" Align="Align.Center">Login</MudText>
+    <EditForm Model="loginDTO" OnValidSubmit="LoginAsync">
+        <DataAnnotationsValidator />
 
-    <div class="row">
-        <div class="col-4">
-            <div class="mb-3">
-                <label>Email:</label>
-                <div>
-                    <InputText class="form-control" @bind-Value="@loginDTO.Email" />
-                    <ValidationMessage For="@(() => loginDTO.Email)" />
-                </div>
-            </div>
-            <div class="mb-3">
-                <label>Contraseña:</label>
-                <div>
-                    <InputText type="password" class="form-control" @bind-Value="@loginDTO.Password" />
-                    <ValidationMessage For="@(() => loginDTO.Password)" />
-                </div>
-            </div>
-            <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
-        </div>
-    </div>
-</EditForm>
+        <MudForm>
+            <MudTextField Label="Email" @bind-Value="loginDTO.Email" Variant="Variant.Filled" FullWidth="true" Required="true" />
+            <ValidationMessage For="@(() => loginDTO.Email)" />
+
+            <MudTextField Label="Contraseña" @bind-Value="loginDTO.Password" Variant="Variant.Filled" FullWidth="true" Required="true" InputType="InputType.Password" />
+            <ValidationMessage For="@(() => loginDTO.Password)" />
+
+            <MudButton Type="Submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Class="mt-4">
+                Iniciar Sesión
+            </MudButton>
+        </MudForm>
+    </EditForm>
+</MudPaper>
