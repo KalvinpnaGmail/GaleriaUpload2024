@@ -14,8 +14,7 @@ using UPLOAD.WEB.Utilidad;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
-builder.Services.AddScoped<IImageService, ImageService>();
-builder.Services.AddSingleton<MenuService>();
+
 ///la uri es la que me das Swager
 builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7207/") });
 //formas de inyectar serviios
@@ -28,6 +27,8 @@ builder.Services.AddScoped<IRepository, Repository>();
 //singleton: solo lo crea una solo vez pero queda en memoria ( peligroso de usar consumen memoria) general brecha de seguridad
 //scoped: cunado quiero que me cre una nueva instancia cada vez que 
 ///
+builder.Services.AddScoped<IImageService, ImageService>();
+//builder.Services.AddSingleton<MenuService>();
 builder.Services.AddSweetAlert2();
 builder.Services.AddMudServices();
 //autorizaciones
