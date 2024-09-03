@@ -8,7 +8,8 @@ using UPLOAD.WEB.AuthenticationProviders;
 using UPLOAD.WEB.Repositories;
 using UPLOAD.WEB.Services;
 using UPLOAD.WEB.Servicios;
-using UPLOAD.WEB.Utilidad;
+
+
 
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -30,6 +31,8 @@ builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IImageService, ImageService>();
 //builder.Services.AddSingleton<MenuService>();
 builder.Services.AddSweetAlert2();
+
+
 builder.Services.AddMudServices();
 //autorizaciones
 builder.Services.AddAuthorizationCore();

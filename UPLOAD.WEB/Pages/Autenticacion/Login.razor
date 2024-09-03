@@ -1,6 +1,56 @@
 ﻿@page "/Login"
 
-<MudPaper Class="mx-auto my-6 p-4" MaxWidth="400px">
+<h3>Iniciar Sesión</h3>
+@* <MudPaper Class="mx-auto my-6 p-4" MaxWidth="400px">
+    <MudText Typo="Typo.h5" Align="Align.Center">Login</MudText>
+<EditForm Model="loginDTO" OnValidSubmit="LoginAsync">
+    <DataAnnotationsValidator />
+
+    <div class="row">
+        <div class="col-4">
+            <div class="mb-3">
+                <label>Email:</label>
+                <div>
+                    
+            <MudTextField Label="Email" @bind-Value="loginDTO.Email" Variant="Variant.Filled" FullWidth="true" Required="true" />
+            <ValidationMessage For="@(() => loginDTO.Email)" />
+                  
+                </div>
+            </div>
+            <div class="mb-3">
+                <label>Contraseña:</label>
+                <div>
+                      <MudTextField Label="Contraseña" @bind-Value="loginDTO.Password" Variant="Variant.Filled" FullWidth="true" Required="true" InputType="InputType.Password" />
+        <ValidationMessage For="@(() => loginDTO.Password)" />
+
+               
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
+        </div>
+    </div>
+</EditForm> 
+</MudPaper>  *@
+
+ <MudPaper Class="mx-auto my-6 p-4" MaxWidth="400px">
+    <MudText Typo="Typo.h5" Align="Align.Center">Login</MudText>
+    <EditForm Model="loginDTO" OnValidSubmit="LoginAsync">
+        <DataAnnotationsValidator />
+
+        <MudTextField Label="Email" @bind-Value="loginDTO.Email" Variant="Variant.Filled" FullWidth="true" Required="true" />
+        <ValidationMessage For="@(() => loginDTO.Email)" />
+
+        <MudTextField Label="Contraseña" @bind-Value="loginDTO.Password" Variant="Variant.Filled" FullWidth="true" Required="true" InputType="InputType.Password" />
+        <ValidationMessage For="@(() => loginDTO.Password)" />
+
+    <div>
+         <button class="btn btn-primary w-100" type="submit">Iniciar Sesión</button>
+    </div>
+       
+    </EditForm>
+</MudPaper> 
+
+@* <MudPaper Class="mx-auto my-6 p-4" MaxWidth="400px">
     <MudText Typo="Typo.h5" Align="Align.Center">Login</MudText>
     <EditForm Model="loginDTO" OnValidSubmit="LoginAsync">
         <DataAnnotationsValidator />
@@ -17,4 +67,4 @@
             </MudButton>
         </MudForm>
     </EditForm>
-</MudPaper>
+</MudPaper> *@
