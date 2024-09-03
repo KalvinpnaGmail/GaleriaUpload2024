@@ -11,7 +11,7 @@ namespace UPLOAD.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AccountsController:ControllerBase
+    public class AccountsController : ControllerBase
     {
         private readonly IUsersUnitOfWork _usersUnitOfWork;
         private readonly IConfiguration _configuration;
@@ -63,7 +63,7 @@ namespace UPLOAD.API.Controllers
                 new("LastName", user.LastName),
                 new("Address", user.Address),
                 new("Photo", user.Photo ?? string.Empty),
-                
+
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwtKey"]!));
