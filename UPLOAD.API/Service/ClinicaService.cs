@@ -69,7 +69,46 @@ public class ClinicaService : IClinicaService
             };
         }
     }
+
+
+    public async Task<IEnumerable<Clinica>> GetComboAsync()
+    {
+        try
+        {
+            // Configura la autenticación básica
+            string credencialesBase64 = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_usuario}:{_pass}"));
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", credencialesBase64);
+
+            // Realiza la solicitud HTTP GET
+            HttpResponseMessage response = await _httpClient.GetAsync(_url + "api.php?action=clinicas");
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Si la solicitud es exitosa, deserializa la respuesta en una lista de clínicas
+                string responseData = await response.Content.ReadAsStringAsync();
+                Acler acler = new Acler();
+                var json = acler.ProcesarJsonInvalido2(responseData);
+                var clinicas = JsonSerializer.Deserialize<List<Clinica>>(json);
+
+                // Retorna la lista de clínicas
+                return clinicas;
+            }
+
+            // Manejo de errores: puedes retornar una lista vacía si prefieres no lanzar una excepción
+            return new List<Clinica>();
+        }
+        catch (Exception ex)
+        {
+            // Manejo de excepciones
+            // Dependiendo del uso, puedes registrar el error y/o lanzar una excepción
+            throw new Exception($"Error al obtener datos: {ex.Message}", ex);
+        }
+    }
+
+
+
+
 }
-    
+
 
 

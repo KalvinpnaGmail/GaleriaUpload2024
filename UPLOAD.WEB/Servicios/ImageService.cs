@@ -15,9 +15,12 @@ namespace UPLOAD.WEB.Services
         public ImageService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://localhost:7207/");
+            // _httpClient.BaseAddress = new Uri("https://localhost:7207/");
+            //httpcliente en el programs en la web lo inyectamos las api
         }
 
+
+    
 
         public async Task<IReadOnlyCollection<Image>> GetAllImages()
         {

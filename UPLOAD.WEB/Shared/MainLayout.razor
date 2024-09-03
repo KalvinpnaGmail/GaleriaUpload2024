@@ -12,7 +12,7 @@
         <AuthLinks />
 
         <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Inherit" OnClick="@DarkModeToggle" />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+        <MudIconButton Icon="@Icons.Material.Filled.Info" Color="Color.Inherit" Edge="Edge.End" OnClick="ShowToast" />
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu />
@@ -33,6 +33,9 @@
     private bool _drawerOpen = true;
     private bool _isDarkMode = false;
     private MudTheme? _theme = null;
+
+    [Inject] ISnackbar Snackbar { get; set; }
+
 
     protected override void OnInitialized()
     {
@@ -101,6 +104,16 @@
         true => Icons.Material.Rounded.AutoMode,
         false => Icons.Material.Outlined.DarkMode,
     };
+
+    private void ShowToast()
+    {
+        Snackbar.Add("App. Lopez Gabriel - Acler 1.0", Severity.Info, config =>
+      {
+          config.BackgroundBlurred = true;
+          config.Icon = Icons.Material.Filled.Person;
+       
+      });
 }
 
 
+}
