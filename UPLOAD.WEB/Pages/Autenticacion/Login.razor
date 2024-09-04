@@ -42,6 +42,7 @@
 
         <MudTextField Label="Contraseña" @bind-Value="loginDTO.Password" Variant="Variant.Filled" FullWidth="true" Required="true" InputType="InputType.Password" />
         <ValidationMessage For="@(() => loginDTO.Password)" />
+        <MudSpacer /> <!-- Añade un espaciador aquí -->
 
     <div>
          <button class="btn btn-primary w-100" type="submit">Iniciar Sesión</button>

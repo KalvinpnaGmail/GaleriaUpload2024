@@ -34,6 +34,9 @@
             <ValidationMessage For="@(() => userDTO.Photo)" />
         </MudItem>
         <MudItem xs="12" md="6">
+            <MudSpacer /> <!-- Añade un espaciador aquí -->
+        </MudItem>
+        <MudItem xs="12" md="6">
             <MudTextField @bind-Value="userDTO.Password" Label="Contraseña" Variant="Variant.Text" Type="password" FullWidth />
             <ValidationMessage For="@(() => userDTO.Password)" />
         </MudItem>
@@ -46,8 +49,10 @@
         <MudGrid>
             <MudItem xs="12">
                 <MudSpacer /> <!-- Añade un espaciador aquí -->
-                <MudButton Type="submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth Style="margin-top: 40px;">Registrar</MudButton>
-
+@*                 <MudButton Type="submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth Style="margin-top: 40px;">Registrar</MudButton>
+ *@                <div>
+                    <button class="btn btn-primary w-100" type="submit">Registrar</button>
+                </div>
                @*  <MudButton Type="submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth>Registrar</MudButton> *@
             </MudItem>
         </MudGrid>
