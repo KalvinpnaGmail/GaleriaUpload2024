@@ -25,6 +25,8 @@ namespace UPLOAD.API.UnitsOfWork.Implementations
 
         public override async Task<ActionResponse<IEnumerable<Provincia>>> GetAsync(PaginationDTO pagination) => await _provinciasRepository.GetAsync(pagination);
 
+        public  async Task<IEnumerable<Provincia>> GetComboAsync(int countryId) => await _provinciasRepository.GetComboAsync(countryId);
+     
         public override async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination) => await _provinciasRepository.GetTotalPagesAsync(pagination);
 
 

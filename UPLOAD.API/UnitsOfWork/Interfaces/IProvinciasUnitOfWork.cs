@@ -17,5 +17,7 @@ namespace UPLOAD.API.UnitsOfWork.Interfaces
 
         Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
 
+        Task<IEnumerable<Provincia>> GetComboAsync(int countryId);
+
     }
 }

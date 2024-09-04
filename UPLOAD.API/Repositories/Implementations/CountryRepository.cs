@@ -68,5 +68,10 @@ namespace UPLOAD.API.Repositories.Implementations
             };
 
         }
+
+        public async Task<IEnumerable<Country>> GetComboAsync()
+        {
+            return await _contex.Countries.OrderBy(x => x.Name).ToListAsync();
+        }
     }
 }

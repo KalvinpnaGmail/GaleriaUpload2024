@@ -35,6 +35,14 @@ namespace UPLOAD.API.Repositories.Implementations
 
         }
 
+        public async Task<IEnumerable<City>> GetComboAsync(int provinciaId)
+        {
+            return await _context.Cities
+                .Where(c=> c.ProvinciaId== provinciaId)
+                .OrderBy(c => c.Name)
+                .ToListAsync();
+        }
+
         public override async  Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination)
         {
             var queryable = _context.Cities

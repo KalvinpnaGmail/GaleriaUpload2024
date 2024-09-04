@@ -15,5 +15,7 @@ namespace UPLOAD.API.Repositories.Interfaces
         Task<ActionResponse<IEnumerable<Country>>> GetAsync();
 
         Task<ActionResponse<IEnumerable<Country>>> GetAsync(PaginationDTO pagination);
+
+        Task<IEnumerable<Country>> GetComboAsync();
     }
 }
