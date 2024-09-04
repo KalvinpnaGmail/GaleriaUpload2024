@@ -41,5 +41,15 @@ namespace UPLOAD.API.Controllers
             return BadRequest();
         }
 
+
+
+        [AllowAnonymous]
+        [HttpGet("combo/{provinciaId:int}")]
+        public async Task<IActionResult> GetComboAsync(int provinciaId)
+        {
+            return Ok(await _citiesUnitOfWork.GetComboAsync(provinciaId));
+        }
+
+
     }
 }

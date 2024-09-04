@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using UPLOAD.API.UnitsOfWork.Implementations;
 using UPLOAD.API.UnitsOfWork.Interfaces;
 using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
@@ -59,6 +60,15 @@ namespace UPLOAD.API.Controllers
                 return Ok(response.Result);
             }
             return BadRequest();
+        }
+
+
+
+        [AllowAnonymous]
+        [HttpGet("combo")]
+        public async Task<IActionResult> GetComboAsync()
+        {
+            return Ok(await _countriesUnitofWork.GetComboAsync());
         }
 
 

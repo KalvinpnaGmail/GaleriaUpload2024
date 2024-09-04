@@ -98,6 +98,10 @@ builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IUsersUnitOfWork, UsersUnitOfWork>();
 builder.Services.AddScoped<IClinicaService, ClinicaService>();
 
+builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+builder.Services.AddScoped<ICategoriesUnitOfWork, CategoriesUnitOfWork>();
+
+
 builder.Services.AddIdentity<User, IdentityRole>(x =>
 {
     x.User.RequireUniqueEmail = true;
