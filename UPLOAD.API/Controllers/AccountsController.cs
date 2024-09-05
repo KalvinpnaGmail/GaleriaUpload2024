@@ -63,7 +63,7 @@ namespace UPLOAD.API.Controllers
                 new("LastName", user.LastName),
                 new("Address", user.Address),
                 new("Photo", user.Photo ?? string.Empty),
-
+                new("CityId", user.CityId.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwtKey"]!));

@@ -49,7 +49,7 @@ namespace UPLOAD.API.Data
                     PhoneNumber = phone,
                     Address = address,
                     Document = document,
-                    
+                    CityId = 1,
                     UserType = userType,
                 };
 
