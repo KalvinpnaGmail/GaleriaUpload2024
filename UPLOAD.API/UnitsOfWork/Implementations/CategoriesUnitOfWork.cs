@@ -7,12 +7,12 @@ namespace UPLOAD.API.UnitsOfWork.Implementations
 {
     public class CategoriesUnitOfWork : GenericUnitOfWork<Category>, ICategoriesUnitOfWork
     {
-        private readonly IGenericRepository<Category> _repository;
-        private readonly CategoriesRepository _categoriesRepository;
+       
+        private readonly ICategoriesRepository _categoriesRepository;
 
-        public CategoriesUnitOfWork(IGenericRepository<Category> repository, CategoriesRepository categoriesRepository) : base(repository)
+        public CategoriesUnitOfWork(IGenericRepository<Category> repository, ICategoriesRepository categoriesRepository) : base(repository)
         {
-            _repository = repository;
+           
             _categoriesRepository = categoriesRepository;
         }
 
