@@ -29,7 +29,7 @@ builder.Services.AddSwaggerGen();
 ///modificamos swagger para poder mandarle el swagger y no usar postman
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Orders Backend", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Upload Generica Api-Backend", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = @"JWT Authorization header using the Bearer scheme. <br /> <br />

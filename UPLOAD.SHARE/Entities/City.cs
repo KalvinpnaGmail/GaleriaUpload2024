@@ -24,5 +24,9 @@ namespace UPLOAD.SHARE.Entities
         /// </summary>
         public int ProvinciaId { get; set; }
         public Provincia? Provincia { get; set; }
+
+
+        public ICollection<User>? Users { get; set; }
+
     }
 }
