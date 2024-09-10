@@ -30,7 +30,7 @@ public class ClinicaService : IClinicaService
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", credencialesBase64);
 
             // Realiza la solicitud HTTP GET
-            HttpResponseMessage response = await _httpClient.GetAsync(_url + "api.php?action=clinicas");
+            HttpResponseMessage response = await _httpClient.GetAsync(_url + "api_acler.php?action=clinicas");
 
             if (response.IsSuccessStatusCode)
             {
@@ -80,7 +80,7 @@ public class ClinicaService : IClinicaService
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", credencialesBase64);
 
             // Realiza la solicitud HTTP GET
-            HttpResponseMessage response = await _httpClient.GetAsync(_url + "api.php?action=clinicas");
+            HttpResponseMessage response = await _httpClient.GetAsync(_url + "api_acler.php?action=clinicas");
 
             if (response.IsSuccessStatusCode)
             {
