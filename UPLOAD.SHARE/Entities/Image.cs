@@ -4,7 +4,7 @@ namespace UPLOAD.SHARE.Entities
 {
     public class Image
     {
-        public int Id { get; set; }
+       
 
         [Display(Name = "Nombre")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
@@ -31,7 +31,8 @@ namespace UPLOAD.SHARE.Entities
             return Periodo.ToString("MM/yyyy");
         }
 
-
+        public int ImageId { get; set; }
+        public Image? Upload { get; set; }
 
     }
 }

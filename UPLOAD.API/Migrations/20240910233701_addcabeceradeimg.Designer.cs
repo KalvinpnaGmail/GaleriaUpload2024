@@ -12,8 +12,8 @@ using UPLOAD.API.Data;
 namespace UPLOAD.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240905021028_adduserentidades")]
-    partial class adduserentidades
+    [Migration("20240910233701_addcabeceradeimg")]
+    partial class addcabeceradeimg
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -226,11 +226,11 @@ namespace UPLOAD.API.Migrations
 
             modelBuilder.Entity("UPLOAD.SHARE.Entities.Image", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ImageId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -244,14 +244,19 @@ namespace UPLOAD.API.Migrations
                     b.Property<DateTime>("Periodo")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("UploadImageId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("ImageId");
 
-                    b.HasIndex("Id")
+                    b.HasIndex("ImageId")
                         .IsUnique();
+
+                    b.HasIndex("UploadImageId");
 
                     b.ToTable("Images");
                 });
@@ -436,6 +441,16 @@ namespace UPLOAD.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Provincia");
+                });
+
+            modelBuilder.Entity("UPLOAD.SHARE.Entities.Image", b =>
+                {
+                    b.HasOne("UPLOAD.SHARE.Entities.Image", "Upload")
+                        .WithMany()
+                        .HasForeignKey("UploadImageId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Upload");
                 });
 
             modelBuilder.Entity("UPLOAD.SHARE.Entities.Provincia", b =>

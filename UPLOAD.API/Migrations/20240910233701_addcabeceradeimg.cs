@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UPLOAD.API.Migrations
 {
     /// <inheritdoc />
-    public partial class adduserentidades : Migration
+    public partial class addcabeceradeimg : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,16 +55,23 @@ namespace UPLOAD.API.Migrations
                 name: "Images",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    ImageId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Url = table.Column<string>(type: "text", nullable: false),
                     ObraSocial = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Periodo = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Periodo = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UploadImageId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.PrimaryKey("PK_Images", x => x.ImageId);
+                    table.ForeignKey(
+                        name: "FK_Images_Images_UploadImageId",
+                        column: x => x.UploadImageId,
+                        principalTable: "Images",
+                        principalColumn: "ImageId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -314,10 +321,15 @@ namespace UPLOAD.API.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Images_Id",
+                name: "IX_Images_ImageId",
                 table: "Images",
-                column: "Id",
+                column: "ImageId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Images_UploadImageId",
+                table: "Images",
+                column: "UploadImageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Provincias_CountryId_Name",
