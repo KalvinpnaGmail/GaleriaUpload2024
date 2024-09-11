@@ -21,5 +21,12 @@ namespace UPLOAD.SHARE.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
         public string? DENOMINACION { get; set; }
+
+        [Display(Name = "Categoria")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string? CATEGORIA { get; set; }
+
+
     }
 }
