@@ -4,6 +4,7 @@ namespace UPLOAD.SHARE.Entities
 {
     public class Image
     {
+
         public int Id { get; set; }
 
         [Display(Name = "Nombre")]
@@ -31,7 +32,8 @@ namespace UPLOAD.SHARE.Entities
             return Periodo.ToString("MM/yyyy");
         }
 
-
+        public int CabeceraImageId { get; set; }
+        public CabeceraImage? CabeceraImage { get; set; }
 
     }
 }

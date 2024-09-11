@@ -34,6 +34,14 @@ namespace UPLOAD.SHARE.Entities
         public UserType UserType { get; set; }
 
        
+        public City? City { get; set; }
+
+        [Display(Name = "Ciudad")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una {0}.")]
+        public int CityId { get; set; }
+
+
+
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
     }

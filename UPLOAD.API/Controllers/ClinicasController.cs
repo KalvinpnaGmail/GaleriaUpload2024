@@ -32,6 +32,16 @@ namespace UPLOAD.API.Controllers
                 return BadRequest(response.Message);
             }
         }
+
+
+
+       
+        [HttpGet("combo")]
+        public async Task<IActionResult> GetComboAsync()
+        {
+            return Ok(await _clinicaService.GetComboAsync());
+        }
+
     }
 
 }

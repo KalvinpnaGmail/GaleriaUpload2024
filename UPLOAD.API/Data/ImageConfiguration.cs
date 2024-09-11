@@ -8,16 +8,26 @@ namespace UPLOAD.API.Data
     {
         public void Configure(EntityTypeBuilder<Image> entity)
         {
+        
+
+
+            // Configuración de la clave primaria (Id)
+            entity.HasKey(x => x.Id);
+
+            // Configura la columna Id como Identity
+            entity.Property(x => x.Id)
+                  .ValueGeneratedOnAdd(); // Asegura que Id es generado automáticamente por la base de datos
+
+
+
+
+
             entity.Property(x => x.Name)
                .IsRequired()
                .HasMaxLength(100);
 
 
-            // Configuración para el índice único en 'Name'
-            entity.HasIndex(x => x.Id).IsUnique();
-
-
-
+            
 
             entity.Property(x => x.Url)
                 .IsRequired()

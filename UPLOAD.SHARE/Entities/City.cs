@@ -17,7 +17,7 @@ namespace UPLOAD.SHARE.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Name { get; set; } = null!;
 
-
+        public ICollection<User>? Users { get; set; }
         /// <summary>
         /// de uno a varios
         /// con Countryid va a saberlo mapear  puedo agregar provincia directamente qeu pertenes a un pais directamente 

@@ -81,6 +81,7 @@ namespace UPLOAD.API.Controllers
 
             await _contexto.Images.AddAsync(image);
             await _contexto.SaveChangesAsync();
+          
 
 
            
