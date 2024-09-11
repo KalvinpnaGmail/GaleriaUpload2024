@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using UPLOAD.API.UnitsOfWork.Interfaces;
+﻿using UPLOAD.API.UnitsOfWork.Interfaces;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.SHARE.Enums;
 
@@ -50,8 +49,7 @@ namespace UPLOAD.API.Data
                     PhoneNumber = phone,
                     Address = address,
                     Document = document,
-                    //CityId = 1,
-                    City = await _context.Cities.FirstOrDefaultAsync(),
+                    
                     UserType = userType,
                 };
 
@@ -60,7 +58,6 @@ namespace UPLOAD.API.Data
             }
 
             return user;
-
         }
 
 
