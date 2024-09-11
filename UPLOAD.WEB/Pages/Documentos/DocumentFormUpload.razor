@@ -1,0 +1,35 @@
+﻿<NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation" />
+<EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label>Carga Documentación Obra Social</label>
+    </div>
+    <div>
+        <InputText class="form-control" @bind-Value="Image.Name" />
+        <ValidationMessage For="@(() => Image.Name)" />
+
+        <div class="form-group">
+            <label for="obraSocial">Seleccione una Obra Social</label>
+            <select class="form-select" id="obraSocial" @bind="Image.ObraSocial">
+                <option value="">-- Seleccione una Obra Social --</option>
+                @if (clinicas != null)
+                {
+                    @foreach (var clinica in clinicas)
+                    {
+                        <option value="@clinica.DENOMINACION">@clinica.DENOMINACION</option>
+                    }
+                }
+            </select>
+            <ValidationMessage For="@(() => Image.ObraSocial)" />
+        </div>
+
+        <div class="mb-3">
+            <label>Periodo:</label>
+            <InputDate class="form-control" @bind-Value="Image.Periodo" />
+            <ValidationMessage For="@(() => Image.Periodo)" />
+        </div>
+
+        <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+        
+    </div>
+</EditForm>
