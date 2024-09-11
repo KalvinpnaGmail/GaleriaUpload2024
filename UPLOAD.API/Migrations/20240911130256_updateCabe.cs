@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UPLOAD.API.Migrations
 {
     /// <inheritdoc />
-    public partial class addcabeceradeimg : Migration
+    public partial class updateCabe : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,6 +23,18 @@ namespace UPLOAD.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CabeceraImages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CabeceraImages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,29 +64,6 @@ namespace UPLOAD.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Images",
-                columns: table => new
-                {
-                    ImageId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Url = table.Column<string>(type: "text", nullable: false),
-                    ObraSocial = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Periodo = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UploadImageId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Images", x => x.ImageId);
-                    table.ForeignKey(
-                        name: "FK_Images_Images_UploadImageId",
-                        column: x => x.UploadImageId,
-                        principalTable: "Images",
-                        principalColumn: "ImageId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -91,6 +80,29 @@ namespace UPLOAD.API.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Url = table.Column<string>(type: "text", nullable: false),
+                    ObraSocial = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Periodo = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CabeceraImageId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_CabeceraImages_CabeceraImageId",
+                        column: x => x.CabeceraImageId,
+                        principalTable: "CabeceraImages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -321,15 +333,9 @@ namespace UPLOAD.API.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Images_ImageId",
+                name: "IX_Images_CabeceraImageId",
                 table: "Images",
-                column: "ImageId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Images_UploadImageId",
-                table: "Images",
-                column: "UploadImageId");
+                column: "CabeceraImageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Provincias_CountryId_Name",
@@ -367,6 +373,9 @@ namespace UPLOAD.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "CabeceraImages");
 
             migrationBuilder.DropTable(
                 name: "Cities");

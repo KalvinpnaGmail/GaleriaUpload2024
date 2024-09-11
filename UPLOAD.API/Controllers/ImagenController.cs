@@ -46,7 +46,7 @@ namespace UPLOAD.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var imagen = await _contexto.Images.FirstOrDefaultAsync(x => x.ImageId == id);
+            var imagen = await _contexto.Images.FirstOrDefaultAsync(x => x.Id == id);
             if (imagen is null)
             {
                 return NotFound();

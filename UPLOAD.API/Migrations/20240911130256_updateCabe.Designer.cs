@@ -12,8 +12,8 @@ using UPLOAD.API.Data;
 namespace UPLOAD.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240910233803_addcabeceradeimg2")]
-    partial class addcabeceradeimg2
+    [Migration("20240911130256_updateCabe")]
+    partial class updateCabe
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,6 +158,19 @@ namespace UPLOAD.API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("UPLOAD.SHARE.Entities.CabeceraImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CabeceraImages");
+                });
+
             modelBuilder.Entity("UPLOAD.SHARE.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -226,11 +239,14 @@ namespace UPLOAD.API.Migrations
 
             modelBuilder.Entity("UPLOAD.SHARE.Entities.Image", b =>
                 {
-                    b.Property<int>("ImageId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CabeceraImageId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -244,19 +260,13 @@ namespace UPLOAD.API.Migrations
                     b.Property<DateTime>("Periodo")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UploadImageId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("ImageId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("ImageId")
-                        .IsUnique();
-
-                    b.HasIndex("UploadImageId");
+                    b.HasIndex("CabeceraImageId");
 
                     b.ToTable("Images");
                 });
@@ -445,12 +455,13 @@ namespace UPLOAD.API.Migrations
 
             modelBuilder.Entity("UPLOAD.SHARE.Entities.Image", b =>
                 {
-                    b.HasOne("UPLOAD.SHARE.Entities.Image", "Upload")
-                        .WithMany()
-                        .HasForeignKey("UploadImageId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasOne("UPLOAD.SHARE.Entities.CabeceraImage", "CabeceraImage")
+                        .WithMany("Images")
+                        .HasForeignKey("CabeceraImageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("Upload");
+                    b.Navigation("CabeceraImage");
                 });
 
             modelBuilder.Entity("UPLOAD.SHARE.Entities.Provincia", b =>
@@ -473,6 +484,11 @@ namespace UPLOAD.API.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
+                });
+
+            modelBuilder.Entity("UPLOAD.SHARE.Entities.CabeceraImage", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("UPLOAD.SHARE.Entities.City", b =>

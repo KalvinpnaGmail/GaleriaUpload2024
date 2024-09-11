@@ -60,7 +60,7 @@ namespace UPLOAD.WEB.Pages.Documentos
                 return;
             }
 
-            var responseHppt = await repository.DeleteAsync<Image>($"api/imagenes/{image.ImageId}");
+            var responseHppt = await repository.DeleteAsync<Image>($"api/imagenes/{image.Id}");
             if (responseHppt.Error)
             {
                 if(responseHppt.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound) 
