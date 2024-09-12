@@ -13,9 +13,10 @@ namespace UPLOAD.WEB.Pages.Documentos
     public partial class DocumentFormUpload
     {
         
-        private EditContext editContext = null!;
+      
         private List<Clinica> clinicas;
-        
+        private EditContext editContext = null!;
+        [Parameter, EditorRequired] public Image Image { get; set; } = null!;
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
         [Inject] private IRepository Repository { get; set; } = null!;
