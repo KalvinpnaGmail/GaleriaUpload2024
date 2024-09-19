@@ -71,12 +71,7 @@ namespace UPLOAD.API.Repositories.Implementations
             };
         }
 
-        public async Task<IEnumerable<Provincia>> GetComboAsync(int countryId)
-        {
-           return await _contex.Provincias.Where(s=> s.CountryId==countryId)
-                .OrderBy(x => x.Name)   
-                .ToListAsync();
-        }
+      
 
         public async override Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination)
         {
@@ -93,7 +88,12 @@ namespace UPLOAD.API.Repositories.Implementations
             };
         }
 
-
+        public async Task<IEnumerable<Provincia>> GetComboAsync(int countryId)
+        {
+            return await _contex.Provincias.Where(s => s.CountryId == countryId)
+                 .OrderBy(x => x.Name)
+                 .ToListAsync();
+        }
 
 
 
