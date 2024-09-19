@@ -1,67 +1,113 @@
 ﻿@page "/Register"
 
 <h3>Registrar Nuevo Usuario</h3>
+@if (loading)
+{
+    <Loading />
+}
+else
+{
 
-<EditForm Model="userDTO" OnValidSubmit="CreteUserAsync">
-    <DataAnnotationsValidator />
-    <MudGrid>
-        <MudItem xs="12" md="6">
-            <MudTextField @bind-Value="userDTO.FirstName" Label="Nombres" Variant="Variant.Text" FullWidth />
-            <ValidationMessage For="@(() => userDTO.FirstName)" />
-        </MudItem>
-        <MudItem xs="12" md="6">
-            <MudTextField @bind-Value="userDTO.LastName" Label="Apellidos" Variant="Variant.Text" FullWidth />
-            <ValidationMessage For="@(() => userDTO.LastName)" />
-        </MudItem>
-        <MudItem xs="12" md="6">
-            <MudTextField @bind-Value="userDTO.Document" Label="Documento" Variant="Variant.Text" FullWidth />
-            <ValidationMessage For="@(() => userDTO.Document)" />
-        </MudItem>
-        <MudItem xs="12" md="6">
-            <MudTextField @bind-Value="userDTO.PhoneNumber" Label="Teléfono" Variant="Variant.Text" FullWidth />
-            <ValidationMessage For="@(() => userDTO.PhoneNumber)" />
-        </MudItem>
-        <MudItem xs="12" md="6">
-            <MudTextField @bind-Value="userDTO.Address" Label="Dirección" Variant="Variant.Text" FullWidth />
-            <ValidationMessage For="@(() => userDTO.Address)" />
-        </MudItem>
-        <MudItem xs="12" md="6">
-            <MudTextField @bind-Value="userDTO.Email" Label="Email" Variant="Variant.Text" FullWidth />
-            <ValidationMessage For="@(() => userDTO.Email)" />
-        </MudItem>
-        <MudItem xs="12" md="6">
-            <MudTextField @bind-Value="userDTO.Photo" Label="Foto" Variant="Variant.Text" FullWidth />
-            <ValidationMessage For="@(() => userDTO.Photo)" />
-        </MudItem>
-        <MudItem xs="12" md="6">
-            <MudSpacer /> <!-- Añade un espaciador aquí -->
-        </MudItem>
-        <MudItem xs="12" md="6">
-            <MudTextField @bind-Value="userDTO.Password" Label="Contraseña" Variant="Variant.Text" Type="password" FullWidth />
-            <ValidationMessage For="@(() => userDTO.Password)" />
-        </MudItem>
-        <MudItem xs="12" md="6">
-            <MudTextField @bind-Value="userDTO.PasswordConfirm" Label="Confirmación de contraseña" Variant="Variant.Text" Type="password" FullWidth Class="mb-4" />
-            <ValidationMessage For="@(() => userDTO.PasswordConfirm)" />
-        </MudItem>
-    </MudGrid>
-    <MudContainer>
+    <EditForm Model="userDTO" OnValidSubmit="CreteUserAsync">
+        <DataAnnotationsValidator />
         <MudGrid>
-            <MudItem xs="12">
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="userDTO.FirstName" Label="Nombres" Variant="Variant.Text" FullWidth />
+                <ValidationMessage For="@(() => userDTO.FirstName)" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="userDTO.LastName" Label="Apellidos" Variant="Variant.Text" FullWidth />
+                <ValidationMessage For="@(() => userDTO.LastName)" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="userDTO.Document" Label="Documento" Variant="Variant.Text" FullWidth />
+                <ValidationMessage For="@(() => userDTO.Document)" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="userDTO.PhoneNumber" Label="Teléfono" Variant="Variant.Text" FullWidth />
+                <ValidationMessage For="@(() => userDTO.PhoneNumber)" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="userDTO.Address" Label="Dirección" Variant="Variant.Text" FullWidth />
+                <ValidationMessage For="@(() => userDTO.Address)" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="userDTO.Email" Label="Email" Variant="Variant.Text" FullWidth />
+                <ValidationMessage For="@(() => userDTO.Email)" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+
+                <MudSelect T="string" Label="País" Value="@selectedCountryId" ValueChanged="CountryChangedAsync" Placeholder="Seleccione un país ..." Required="true">
+                   
+                    @if (countries is not null)
+                    {
+                        @foreach (var country in countries)
+                        {
+                            <MudSelectItem Value="@country.Id">@country.Name</MudSelectItem>
+                        }
+                    }
+                </MudSelect>
+
+            </MudItem>
+
+            <MudItem xs="12" md="4">
+                <MudSelect T="int" Label="Provincia" @bind-Value="selectedStateId" OnChange="ProvinciaChangedAsync" Required="true">
+                    <MudSelectItem Value="0">-- Seleccione una provincia --</MudSelectItem>
+                    @if (provincias is not null)
+                    {
+                        @foreach (var provincia in provincias)
+                        {
+                            <MudSelectItem Value="@provincia.Id">@provincia.Name</MudSelectItem>
+                        }
+                    }
+                </MudSelect>
+            </MudItem>
+
+            <MudItem xs="12" md="4">
+                <MudSelect T="int" Label="Ciudad" @bind-Value="userDTO.CityId" Required="true">
+                    <MudSelectItem Value="0">-- Seleccione una ciudad --</MudSelectItem>
+                    @if (cities is not null)
+                    {
+                        @foreach (var city in cities)
+                        {
+                            <MudSelectItem Value="@city.Id">@city.Name</MudSelectItem>
+                        }
+                    }
+                </MudSelect>
+                <MudText Error="@(() => userDTO.CityId == 0)" ErrorText="Debe seleccionar una ciudad" />
+            </MudItem>
+             
+         
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="userDTO.Photo" Label="Foto" Variant="Variant.Text" FullWidth />
+                <ValidationMessage For="@(() => userDTO.Photo)" />
+            </MudItem>
+            <MudItem xs="12" md="6">
                 <MudSpacer /> <!-- Añade un espaciador aquí -->
-@*                 <MudButton Type="submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth Style="margin-top: 40px;">Registrar</MudButton>
- *@                <div>
-                    <button class="btn btn-primary w-100" type="submit">Registrar</button>
-                </div>
-               @*  <MudButton Type="submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth>Registrar</MudButton> *@
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="userDTO.Password" Label="Contraseña" Variant="Variant.Text" Type="password" FullWidth />
+                <ValidationMessage For="@(() => userDTO.Password)" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="userDTO.PasswordConfirm" Label="Confirmación de contraseña" Variant="Variant.Text" Type="password" FullWidth Class="mb-4" />
+                <ValidationMessage For="@(() => userDTO.PasswordConfirm)" />
             </MudItem>
         </MudGrid>
-    </MudContainer>
+        <MudContainer>
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudSpacer /> <!-- Añade un espaciador aquí -->
+                    @*                 <MudButton Type="submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth Style="margin-top: 40px;">Registrar</MudButton>
+                *@                <div>
+                        <button class="btn btn-primary w-100" type="submit">Registrar</button>
+                    </div>
+                    @*  <MudButton Type="submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth>Registrar</MudButton> *@
+                </MudItem>
+            </MudGrid>
+        </MudContainer>
+
+    </EditForm>
 
 
-   
-
-
-    
-</EditForm>
-
+}
