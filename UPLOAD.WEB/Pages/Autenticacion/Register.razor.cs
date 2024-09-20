@@ -5,11 +5,10 @@ using UPLOAD.SHARE.Entities;
 using UPLOAD.SHARE.Enums;
 using UPLOAD.WEB.Repositories;
 using UPLOAD.WEB.Servicios;
-using static MudBlazor.Colors;
 
 namespace UPLOAD.WEB.Pages.Autenticacion
 {
-    public  partial class Register
+    public partial class Register
     {
         private UserDTO userDTO = new();
         private List<Country>? countries;
@@ -20,15 +19,15 @@ namespace UPLOAD.WEB.Pages.Autenticacion
         private int selectedStateId = 0;  // Define e inicializa el valor del país seleccionado
         private int selectedCountryId = 0;  // Define e inicializa el valor del país seleccionado
 
-       // private string? selectedCountryId { get; set; }
+        // private string? selectedCountryId { get; set; }
 
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private ILoginService LoginService { get; set; } = null!;
 
-        
-        
+
+
         protected override async Task OnInitializedAsync()
         {
             await LoadCountriesAsync();
@@ -72,7 +71,7 @@ namespace UPLOAD.WEB.Pages.Autenticacion
             await LoadCitiesAsyn(selectedStateId);
         }
 
-      
+
 
 
 
