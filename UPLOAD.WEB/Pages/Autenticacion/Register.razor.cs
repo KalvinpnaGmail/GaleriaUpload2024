@@ -18,31 +18,32 @@ namespace UPLOAD.WEB.Pages.Autenticacion
         private bool loading;
 
         private int selectedStateId = 0;  // Define e inicializa el valor del país seleccionado
-        //private int selectedCountryId = 0;  // Define e inicializa el valor del país seleccionado
+        private int selectedCountryId = 0;  // Define e inicializa el valor del país seleccionado
 
-        private string? selectedCountryId { get; set; }
+       // private string? selectedCountryId { get; set; }
 
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private ILoginService LoginService { get; set; } = null!;
 
-
+        
+        
         protected override async Task OnInitializedAsync()
         {
             await LoadCountriesAsync();
         }
 
-        private async Task CountryChangedAsync(string id)
+        private async Task CountryChangedAsync(int newValue)
         {
-            // var selectedCountry = Convert.ToInt32(id);
-            int.TryParse(id, out int selectedCountry);
-           // selectedCountryId = value;
+            //var selectedCountry = Convert.ToInt32(e.Value);
+            // int.TryParse(e, out int selectedCountry);
+            selectedCountryId = newValue;  // Actualizamos el valor seleccionado.
             Console.WriteLine($"CountryChangedAsync called with value: {selectedCountryId}");
             provincias = null;
             cities = null;
             userDTO.CityId = 0;
-            await LoadStatesAsyn(selectedCountry);
+            await LoadStatesAsyn(selectedCountryId);
             //await InvokeAsync(StateHasChanged);
         }
 
@@ -62,12 +63,13 @@ namespace UPLOAD.WEB.Pages.Autenticacion
             countries = responseHttp.Response;
         }
 
-        private async Task ProvinciaChangedAsync(int selectedState)
+        private async Task ProvinciaChangedAsync(int newValue)
         {
             //var selectedState = Convert.ToInt32(e.Value!);
+            selectedStateId = newValue;  // A
             cities = null;
             userDTO.CityId = 0;
-            await LoadCitiesAsyn(selectedState);
+            await LoadCitiesAsyn(selectedStateId);
         }
 
       
