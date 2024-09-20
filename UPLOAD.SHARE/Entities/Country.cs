@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
 using UPLOAD.SHARE.Interfaces;
 
 namespace UPLOAD.SHARE.Entities
@@ -21,8 +20,8 @@ namespace UPLOAD.SHARE.Entities
 
         [Display(Name = "Provincia")]
         ///para saber las cantidad de provincia que tienen el pais
-        public int ProvinciaNumer =>Provincias== null || Provincias.Count== 0 ? 0 : Provincias.Count;
-        
+        public int ProvinciaNumer => Provincias == null || Provincias.Count == 0 ? 0 : Provincias.Count;
+
 
     }
 
