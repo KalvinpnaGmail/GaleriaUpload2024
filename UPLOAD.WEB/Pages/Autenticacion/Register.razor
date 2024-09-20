@@ -92,18 +92,17 @@ else
                 <ValidationMessage For="@(() => userDTO.PasswordConfirm)" />
             </MudItem>
         </MudGrid>
-        <MudContainer>
-            <MudGrid>
-                <MudItem xs="12">
-                    <MudSpacer /> <!-- Añade un espaciador aquí -->
-                    @*                 <MudButton Type="submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth Style="margin-top: 40px;">Registrar</MudButton>
-                *@                <div>
-                        <button class="btn btn-primary w-100" type="submit">Registrar</button>
-                    </div>
-                    @*  <MudButton Type="submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth>Registrar</MudButton> *@
-                </MudItem>
-            </MudGrid>
-        </MudContainer>
+        <MudItem xs="12" md="3">
+            <MudSpacer /> <!-- Añade un espaciador aquí -->
+            @*                 <MudButton Type="submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth Style="margin-top: 40px;">Registrar</MudButton>
+        *@                <div style="margin-left: 10px;">
+                <button class="btn btn-primary w-100" type="submit">Registrar</button>
+
+
+            </div>
+            @*  <MudButton Type="submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth>Registrar</MudButton> *@
+        </MudItem>
+       
         <MudItem xs="12" md="6">
             <MudSpacer /> <!-- Añade un espaciador aquí -->
         </MudItem>
