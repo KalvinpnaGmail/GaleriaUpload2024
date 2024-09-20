@@ -7,11 +7,12 @@
     <EditForm Model="loginDTO" OnValidSubmit="LoginAsync">
         <DataAnnotationsValidator />
 
-        <MudTextField Label="Email" @bind-Value="loginDTO.Email" Variant="Variant.Filled" FullWidth="true" Required="true" />
+        <MudTextField Label="Email" @bind-Value="loginDTO.Email" Variant="Variant.Outlined" FullWidth="true" Required="true" />
         <ValidationMessage For="@(() => loginDTO.Email)" />
 
-        <MudTextField Label="Contraseña" @bind-Value="loginDTO.Password" Variant="Variant.Filled" FullWidth="true" Required="true" InputType="InputType.Password" />
-        <ValidationMessage For="@(() => loginDTO.Password)" />
+        <MudTextField Label="Contraseña" @bind-Value="loginDTO.Password" Variant="Variant.Outlined" FullWidth="true" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" Required="true" InputType="@PasswordInput" OnAdornmentClick="ViewPassword" />
+@*         <MudTextField @bind-Value="Password" Label="Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
+ *@        <ValidationMessage For="@(() => loginDTO.Password)" />
         <MudSpacer /> <!-- Añade un espaciador aquí -->
 
     <div>

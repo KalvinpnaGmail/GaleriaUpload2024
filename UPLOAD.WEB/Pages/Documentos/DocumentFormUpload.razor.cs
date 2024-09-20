@@ -12,9 +12,10 @@ namespace UPLOAD.WEB.Pages.Documentos
     [Authorize(Roles = "Admin")]
     public partial class DocumentFormUpload
     {
-        
-      
-        private List<Clinica> clinicas;
+
+       
+
+        private List<Clinica>? clinicas { set; get; }
         private EditContext editContext = null!;
         [Parameter, EditorRequired] public Image Image { get; set; } = null!;
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
@@ -49,7 +50,7 @@ namespace UPLOAD.WEB.Pages.Documentos
         }
 
        
-        private async Task CreteUserAsync()
+        private async Task CreateUserAsync()
         {
 
 
