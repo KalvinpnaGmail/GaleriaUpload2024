@@ -5,7 +5,7 @@
         <span>
             <i class="bi bi-map"></i> Paises
         </span>
-        <a class="btn btn-sm btn-primary" href="/countries/create"><i class="oi oi-plus"></i> Nuevo Pais</a>
+        <a class="btn btn-sm btn-primary float-end" href="/countries/create"><i class="oi oi-plus"></i> Nuevo Pais</a>
     </div>
     <div class="card-body">
         <GenericList MyList="Countries">
@@ -31,12 +31,16 @@
                         @foreach (var country in Countries!)
                         {
                             <tr>
-                                <td>@country.Name</td>
+                                <td><a href="/countries/details/@country.Id"> @country.Name</a></td>
+                                @* <td>@country.Name</td> *@
                                 <td>@country.ProvinciaNumer</td>
                                 <td>
-                                    <a href="/countries/edit/@country.Id" class="btn btn-warning btn-sm">Editar</a>
-                                    <a class="btn btn-info btn-sm" href="/countries/details/@country.Id">Detalles</a>
-                                    <button @onclick=@(()=>DeleteAsync(country)) class="btn btn-danger btn-sm">Borrar</button>
+                                   @*  <a href="/countries/edit/@country.Id" class="btn btn-warning btn-sm">Editar</a> *@
+                                    <a href="/countries/edit/@country.Id" class="btn btn-sm btn-warning"><i class="bi bi-pencil" /> Editar</a>
+
+                                   @*  <a class="btn btn-info btn-sm" href="/countries/details/@country.Id">Detalles</a> *@
+                                    <button @onclick=@(() => DeleteAsync(country)) class="btn btn-sm btn-danger"><i class="bi bi-trash" /> Borrar</button>
+
                                 </td>
                             </tr>
                         }
