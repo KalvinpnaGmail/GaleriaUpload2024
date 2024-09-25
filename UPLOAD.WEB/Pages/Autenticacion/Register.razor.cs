@@ -15,6 +15,7 @@ namespace UPLOAD.WEB.Pages.Autenticacion
         private List<Provincia>? provincias;
         private List<City>? cities;
         private bool loading;
+        private string? imageUrl;
 
         private int selectedStateId = 0;  // Define e inicializa el valor del país seleccionado
         private int selectedCountryId = 0;  // Define e inicializa el valor del país seleccionado
@@ -31,6 +32,12 @@ namespace UPLOAD.WEB.Pages.Autenticacion
         protected override async Task OnInitializedAsync()
         {
             await LoadCountriesAsync();
+        }
+
+        private void ImageSelected(string imagenBase64)
+        {
+            userDTO.Photo = imagenBase64;
+            imageUrl = null;
         }
 
         private async Task CountryChangedAsync(int newValue)
