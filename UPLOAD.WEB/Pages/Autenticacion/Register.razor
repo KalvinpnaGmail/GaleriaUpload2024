@@ -78,10 +78,6 @@ else
             </MudItem>
              
          
-            <MudItem xs="12" md="6">
-                <MudTextField @bind-Value="userDTO.Photo" Label="Foto" Variant="Variant.Text"  Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AddAPhoto" AdornmentColor="Color.Tertiary"/>
-                <ValidationMessage For="@(() => userDTO.Photo)" />
-            </MudItem>
            
             <MudItem xs="12" md="6">
                 <MudTextField @bind-Value="userDTO.Password" Label="Contraseña" Variant="Variant.Text" Type="password" FullWidth />
@@ -91,6 +87,16 @@ else
                 <MudTextField @bind-Value="userDTO.PasswordConfirm" Label="Confirmación de contraseña" Variant="Variant.Text" Type="password" FullWidth Class="mb-4" />
                 <ValidationMessage For="@(() => userDTO.PasswordConfirm)" />
             </MudItem>
+
+          @*   <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="userDTO.Photo" Label="Foto" Variant="Variant.Text" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AddAPhoto" AdornmentColor="Color.Tertiary" />
+                <ValidationMessage For="@(() => userDTO.Photo)" />
+            </MudItem> *@
+            <MudItem xs="12" md="6">
+              <InputImg Label="Foto" ImageSelected="ImageSelected" ImageURL="@imageUrl"/>
+            </MudItem>
+           
+
         </MudGrid>
         <MudItem xs="12" md="3">
             <MudSpacer /> <!-- Añade un espaciador aquí -->

@@ -1,0 +1,40 @@
+﻿<div>
+    <label>@Label</label>
+    <div>
+        <MudFileUpload T="IReadOnlyList<IBrowserFile>" FilesChanged="UploadFiles">
+            <ActivatorContent>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.CloudUpload">
+                    Multiple Files
+                </MudButton>
+            </ActivatorContent>
+        </MudFileUpload>
+
+
+    </div>
+
+
+</div>
+
+<div>
+    @if (imageBase64 is not null)
+    {
+        <div>
+            <div style="margin: 10px">
+                <img src="data:image/jpeg;base64, @imageBase64" style="width:400px" />
+            </div>
+        </div>
+    }
+
+    @if (ImageURL is not null)
+    {
+        <div>
+            <div style="margin: 10px">
+                <img src="@ImageURL" style="width:400px" />
+            </div>
+        </div>
+    }
+</div>
+
+
