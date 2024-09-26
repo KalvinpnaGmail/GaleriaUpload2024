@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
 using UPLOAD.API.Data;
+using UPLOAD.API.Helpers;
 using UPLOAD.API.Repositories.Implementations;
 using UPLOAD.API.Repositories.Interfaces;
 using UPLOAD.API.Service;
@@ -86,6 +87,9 @@ builder.Services.AddDbContext<DataContext>(options =>
         (a) => a.MigrationsAssembly("UPLOAD.API"));
 },
 ServiceLifetime.Transient);
+
+builder.Services.AddScoped<IFileStorage, FileStorage>();
+
 builder.Services.AddScoped(typeof(IGenericUnitOfWork<>), typeof(GenericUnitOfWork<>));
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<ICountriesRepository, CountryRepository>();
@@ -100,6 +104,7 @@ builder.Services.AddScoped<IClinicaService, ClinicaService>();
 
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 builder.Services.AddScoped<ICategoriesUnitOfWork, CategoriesUnitOfWork>();
+
 
 
 builder.Services.AddIdentity<User, IdentityRole>(x =>
