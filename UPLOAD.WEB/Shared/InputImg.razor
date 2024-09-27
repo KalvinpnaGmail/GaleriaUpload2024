@@ -1,7 +1,7 @@
 ﻿<div>
     <label>@Label</label>
     <div>
-        <MudFileUpload T="IReadOnlyList<IBrowserFile>" FilesChanged="UploadFiles">
+        <MudFileUpload T="IReadOnlyList<IBrowserFile>" FilesChanged="UploadFiles" Accept=".png, .jpg, .pdf"  MaximumFileCount="100">
             <ActivatorContent>
                 <MudButton Variant="Variant.Filled"
                            Color="Color.Primary"
@@ -10,7 +10,17 @@
                 </MudButton>
             </ActivatorContent>
         </MudFileUpload>
-
+        @if (_files != null)
+        {
+        <MudList T="string">
+                @foreach (var file in _files)
+                {
+                    <MudListItem Icon="@Icons.Material.Filled.AttachFile">
+                        @file.Name <code>@file.Size bytes</code>
+                    </MudListItem>
+                }
+        </MudList>
+        }
 
     </div>
 
@@ -18,7 +28,7 @@
 </div>
 
 <div>
-    @if (imageBase64 is not null)
+    @if (imageBase64 is not null) // si la seleccion una nueva pintamos la imgaen
     {
         <div>
             <div style="margin: 10px">
@@ -27,7 +37,7 @@
         </div>
     }
 
-    @if (ImageURL is not null)
+    @if (ImageURL is not null) //si ya tiene imagen o foto o sea editar
     {
         <div>
             <div style="margin: 10px">
