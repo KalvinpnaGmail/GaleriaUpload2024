@@ -23,15 +23,15 @@ namespace UPLOAD.WEB.Shared
 
             foreach (var file in files)
             {
-                this._files.Add(file);
+               
                 // Validar si el tamaño del archivo excede el tamaño máximo permitido
                 if (file.Size > maxFileSize)
                 {
                     // Si excede, puedes mostrar un mensaje o manejarlo según sea necesario
-                    await SweetAlertService.FireAsync("Error", "El archivo excede el tamaño máximo permitido de 15MB", "error");
+                    await SweetAlertService.FireAsync("Error", "El archivo excede el tamaño máximo permitido de 3 MB", "error");
                     continue; // Pasar al siguiente archivo
                 }
-
+                this._files.Add(file);
                 // Procesar el archivo si está dentro del límite de tamaño
                 var arrBytes = new byte[file.Size];
                 await file.OpenReadStream().ReadAsync(arrBytes);
