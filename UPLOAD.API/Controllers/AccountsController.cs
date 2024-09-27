@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -97,6 +99,55 @@ namespace UPLOAD.API.Controllers
                 Expiration = expiration
             };
         }
+
+
+        [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> PutAsync(User user)
+        {
+            try
+            {
+                var currentUser = await _usersUnitOfWork.GetUserAsync(User.Identity!.Name!);
+                if (currentUser == null)
+                {
+                    return NotFound();
+                }
+
+                if (!string.IsNullOrEmpty(user.Photo))    ///si el usuario tiene foto
+                {
+                    var photoUser = Convert.FromBase64String(user.Photo);
+                    user.Photo = await _fileStorage.SaveFileAsync(photoUser, ".jpg", _container);
+                }
+
+                currentUser.Document = user.Document;
+                currentUser.FirstName = user.FirstName;
+                currentUser.LastName = user.LastName;
+                currentUser.Address = user.Address;
+                currentUser.PhoneNumber = user.PhoneNumber;
+                currentUser.Photo = !string.IsNullOrEmpty(user.Photo) && user.Photo != currentUser.Photo ? user.Photo : currentUser.Photo;
+                currentUser.CityId = user.CityId;
+
+                var result = await _usersUnitOfWork.UpdateUserAsync(currentUser);
+                if (result.Succeeded)
+                {
+                    return NoContent();
+                }
+
+                return BadRequest(result.Errors.FirstOrDefault());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> GetAsync()
+        {
+            return Ok(await _usersUnitOfWork.GetUserAsync(User.Identity!.Name!));
+        }
+
     }
 
 
