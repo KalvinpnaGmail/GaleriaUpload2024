@@ -1,6 +1,7 @@
 ﻿<AuthorizeView>
     <Authorized>
-        <span>Bienvenido/a, @context.User.Identity!.Name</span>
+        <span class="d-flex align-items-center">Bienvenido, <a href="EditUser" class="nav-link btn btn-link">@context.User.Identity!.Name</a></span>
+
         @if (!string.IsNullOrEmpty(photoUser))
         {
             <div class="mx-2">
