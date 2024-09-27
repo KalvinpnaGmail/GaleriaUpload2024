@@ -23,7 +23,7 @@ namespace UPLOAD.WEB.Shared
 
             foreach (var file in files)
             {
-
+                this._files.Add(file);
                 // Validar si el tamaño del archivo excede el tamaño máximo permitido
                 if (file.Size > maxFileSize)
                 {
