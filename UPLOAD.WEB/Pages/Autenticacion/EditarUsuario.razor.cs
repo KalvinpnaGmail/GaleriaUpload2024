@@ -1,7 +1,5 @@
 using CurrieTechnologies.Razor.SweetAlert2;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
-using MudBlazor;
 using System.Net;
 using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
@@ -10,20 +8,13 @@ using UPLOAD.WEB.Servicios;
 
 namespace UPLOAD.WEB.Pages.Autenticacion
 {
-    [Authorize]
-    public partial class EditUser
+    public partial class EditarUsuario
     {
-       
         private User? user;
         private List<Country>? countries;
-        private List<Provincia>? provincias;
+        private List<Provincia>? states;
         private List<City>? cities;
         private string? imageUrl;
-        private bool loading;
-        private int selectedStateId = 0;  // Define e inicializa el valor del país seleccionado
-        private int selectedCountryId = 0;  // Define e inicializa el valor del país seleccionado
-
-        // private string? selectedCountryId { get; set; }
 
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
@@ -37,14 +28,12 @@ namespace UPLOAD.WEB.Pages.Autenticacion
             await LoadStatesAsyn(user!.City!.Provincia!.Country!.Id);
             await LoadCitiesAsyn(user!.City!.Provincia!.Id);
 
-            if (!string.IsNullOrEmpty(user!.Photo))   ///si el usuario tienen foto para no mnad en update si el usuari on cambio la foto
+            if (!string.IsNullOrEmpty(user!.Photo))
             {
                 imageUrl = user.Photo;
                 user.Photo = null;
             }
         }
-
-
 
         private async Task LoadUserAsyc()
         {
@@ -69,23 +58,21 @@ namespace UPLOAD.WEB.Pages.Autenticacion
             imageUrl = null;
         }
 
-        private async Task CountryChangedAsync(int newValue)
+        private async Task CountryChangedAsync(ChangeEventArgs e)
         {
-           // var selectdCountry = newValue;
-            selectedCountryId = newValue;
-            provincias = null;
+            var selectedCountry = Convert.ToInt32(e.Value!);
+            states = null;
             cities = null;
             user!.CityId = 0;
-            await LoadStatesAsyn(selectedCountryId);
+            await LoadStatesAsyn(selectedCountry);
         }
 
-        private async Task ProvinciaChangedAsync(int newValue)
+        private async Task StateChangedAsync(ChangeEventArgs e)
         {
-           // var selectedState = newValue;
-            selectedStateId = newValue;
+            var selectedState = Convert.ToInt32(e.Value!);
             cities = null;
             user!.CityId = 0;
-            await LoadCitiesAsyn(selectedStateId);
+            await LoadCitiesAsyn(selectedState);
         }
 
         private async Task LoadCountriesAsync()
@@ -109,7 +96,7 @@ namespace UPLOAD.WEB.Pages.Autenticacion
                 await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
                 return;
             }
-            provincias = responseHttp.Response;
+            states = responseHttp.Response;
         }
 
         private async Task LoadCitiesAsyn(int stateId)
@@ -135,9 +122,20 @@ namespace UPLOAD.WEB.Pages.Autenticacion
                 return;
             }
 
+            ///tostadita abajo y final informativo se usa tostadita
+            var toast = SweetAlertService.Mixin(new SweetAlertOptions
+            {
+                Toast = true,
+                Position = SweetAlertPosition.BottomEnd,
+                ShowConfirmButton = true,
+                Timer = 3000
+            });
+            await toast.FireAsync(icon: SweetAlertIcon.Success, message: "Se ha actualizado la informaciòn del Usuario.");
+
             NavigationManager.NavigateTo("/");
         }
     }
+
 
 
 }

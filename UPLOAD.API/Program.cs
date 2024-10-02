@@ -83,8 +83,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
-    options.UseSqlServer(builder.Configuration.GetConnectionString("LocalConnection"),
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexionSql"),
         (a) => a.MigrationsAssembly("UPLOAD.API"));
+    // Solo habilitar durante el desarrollo
+    if (builder.Environment.IsDevelopment())
+    {
+        options.EnableSensitiveDataLogging();
+    }
 },
 ServiceLifetime.Transient);
 
@@ -142,6 +147,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ClockSkew = TimeSpan.Zero
     });
 
+
+// Configuración del logging para consola
+//builder.Logging.ClearProviders();
+//builder.Logging.AddConsole();
 
 /////inyectamos para token autenticacion
 

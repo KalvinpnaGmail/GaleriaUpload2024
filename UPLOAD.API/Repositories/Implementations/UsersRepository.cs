@@ -88,8 +88,11 @@ namespace UPLOAD.API.Repositories.Implementations
             return await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
         }
 
-        public async Task<IdentityResult> UpdateUserAsync(User user)
+        public async Task<IdentityResult> UpdateUserAsync(User user) 
         {
+           
+
+
             return await _userManager.UpdateAsync(user);
         }
 

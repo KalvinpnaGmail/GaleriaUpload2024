@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
+using UPLOAD.WEB.Pages.Autenticacion;
 
 namespace UPLOAD.WEB.Shared
 {
     public partial class AuthLinks
     {
         private string? photoUser;
+        [Inject] private IDialogService DialogService { get; set; } = null!;
 
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
@@ -21,5 +24,10 @@ namespace UPLOAD.WEB.Shared
             }
         }
 
+        private void ShowModalLogOut()
+        {
+            var closeOnEscapeKey = new DialogOptions() { CloseOnEscapeKey = true };
+            DialogService.Show<Logout>("Cerrar su Sesiòn", closeOnEscapeKey);
+        }
     }
 }

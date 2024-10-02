@@ -9,7 +9,7 @@ namespace UPLOAD.API.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
 
-
+            Database.SetCommandTimeout(600);
 
         }
 
