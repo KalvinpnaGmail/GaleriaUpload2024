@@ -8,8 +8,9 @@
                 <img src="@photoUser" width="50" height="50" style="border-radius:50%" />
             </div>
         }
-        <a href="Logout" class="nav-link btn btn-link">Cerrar Sesión</a>
-    </Authorized>
+        <MudButton Variant="Variant.Text" OnClick="ShowModalLogOut">Cerrar Sesion <MudIcon Icon="@Icons.Material.Filled.Login" /> </MudButton>
+@*         <a href="Logout" class="nav-link btn btn-link">Cerrar Sesión</a>
+ *@    </Authorized>
     <NotAuthorized>
         <a href="Register" class="nav-link btn btn-link">Registro</a>
         <a href="Login" class="nav-link btn btn-link">Iniciar Sesión</a>
