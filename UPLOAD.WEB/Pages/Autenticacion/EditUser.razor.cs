@@ -12,17 +12,13 @@ namespace UPLOAD.WEB.Pages.Autenticacion
     [Authorize]
     public partial class EditUser
     {
-       
-
         private User? user;
         private List<Country>? countries;
         private List<Provincia>? provincias;
         private List<City>? cities;
         private string? imageUrl;
 
-
         private bool loading;
-       
 
         private int selectedStateId = 0;  // Define e inicializa el valor del país seleccionado
         private int selectedCountryId = 0;  // Define e inicializa el valor del país seleccionado
@@ -47,8 +43,6 @@ namespace UPLOAD.WEB.Pages.Autenticacion
                 user.Photo = null;
             }
         }
-
-
 
         private async Task LoadUserAsyc()
         {
@@ -140,6 +134,4 @@ namespace UPLOAD.WEB.Pages.Autenticacion
             NavigationManager.NavigateTo("/");
         }
     }
-
-
 }
