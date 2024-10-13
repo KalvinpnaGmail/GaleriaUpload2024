@@ -1,24 +1,27 @@
-ï»¿using CurrieTechnologies.Razor.SweetAlert2;
+using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
+using System.Net;
 using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
-using UPLOAD.SHARE.Enums;
 using UPLOAD.WEB.Repositories;
 using UPLOAD.WEB.Servicios;
 
 namespace UPLOAD.WEB.Pages.Autenticacion
 {
-    public partial class Register
+    [Authorize]
+    public partial class EditUser
     {
-        private UserDTO userDTO = new();
+       
+        private User? user;
         private List<Country>? countries;
         private List<Provincia>? provincias;
         private List<City>? cities;
-        private bool loading;
         private string? imageUrl;
-
-        private int selectedStateId = 0;  // Define e inicializa el valor del paÃ­s seleccionado
-        private int selectedCountryId = 0;  // Define e inicializa el valor del paÃ­s seleccionado
+        private bool loading;
+        private int selectedStateId = 0;  // Define e inicializa el valor del país seleccionado
+        private int selectedCountryId = 0;  // Define e inicializa el valor del país seleccionado
 
         // private string? selectedCountryId { get; set; }
 
@@ -27,34 +30,63 @@ namespace UPLOAD.WEB.Pages.Autenticacion
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private ILoginService LoginService { get; set; } = null!;
 
-
-
         protected override async Task OnInitializedAsync()
         {
+            await LoadUserAsyc();
             await LoadCountriesAsync();
+            await LoadStatesAsyn(user!.City!.Provincia!.Country!.Id);
+            await LoadCitiesAsyn(user!.City!.Provincia!.Id);
+
+            if (!string.IsNullOrEmpty(user!.Photo))   ///si el usuario tienen foto para no mnad en update si el usuari on cambio la foto
+            {
+                imageUrl = user.Photo;
+                user.Photo = null;
+            }
+        }
+
+
+
+        private async Task LoadUserAsyc()
+        {
+            var responseHttp = await Repository.GetAsync<User>($"/api/accounts");
+            if (responseHttp.Error)
+            {
+                if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
+                {
+                    NavigationManager.NavigateTo("/");
+                    return;
+                }
+                var messageError = await responseHttp.GetErrorMessageAsync();
+                await SweetAlertService.FireAsync("Error", messageError, SweetAlertIcon.Error);
+                return;
+            }
+            user = responseHttp.Response;
         }
 
         private void ImageSelected(string imagenBase64)
         {
-            userDTO.Photo = imagenBase64;
+            user!.Photo = imagenBase64;
             imageUrl = null;
         }
 
         private async Task CountryChangedAsync(int newValue)
         {
-            //var selectedCountry = Convert.ToInt32(e.Value);
-            // int.TryParse(e, out int selectedCountry);
-            selectedCountryId = newValue;  // Actualizamos el valor seleccionado.
-            //Console.WriteLine($"CountryChangedAsync called with value: {selectedCountryId}");
+           // var selectdCountry = newValue;
+            selectedCountryId = newValue;
             provincias = null;
             cities = null;
-            userDTO.CityId = 0;
+            user!.CityId = 0;
             await LoadStatesAsyn(selectedCountryId);
-            //await InvokeAsync(StateHasChanged);
         }
 
-
-
+        private async Task ProvinciaChangedAsync(int newValue)
+        {
+           // var selectedState = newValue;
+            selectedStateId = newValue;
+            cities = null;
+            user!.CityId = 0;
+            await LoadCitiesAsyn(selectedStateId);
+        }
 
         private async Task LoadCountriesAsync()
         {
@@ -65,22 +97,8 @@ namespace UPLOAD.WEB.Pages.Autenticacion
                 await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
                 return;
             }
-
             countries = responseHttp.Response;
         }
-
-        private async Task ProvinciaChangedAsync(int newValue)
-        {
-            //var selectedState = Convert.ToInt32(e.Value!);
-            selectedStateId = newValue;  // A
-            cities = null;
-            userDTO.CityId = 0;
-            await LoadCitiesAsyn(selectedStateId);
-        }
-
-
-
-
 
         private async Task LoadStatesAsyn(int countryId)
         {
@@ -91,13 +109,12 @@ namespace UPLOAD.WEB.Pages.Autenticacion
                 await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
                 return;
             }
-
             provincias = responseHttp.Response;
         }
 
-        private async Task LoadCitiesAsyn(int selectedState)
+        private async Task LoadCitiesAsyn(int stateId)
         {
-            var responseHttp = await Repository.GetAsync<List<City>>($"/api/cities/combo/{selectedState}");
+            var responseHttp = await Repository.GetAsync<List<City>>($"/api/cities/combo/{stateId}");
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
@@ -108,17 +125,9 @@ namespace UPLOAD.WEB.Pages.Autenticacion
             cities = responseHttp.Response;
         }
 
-
-
-        private async Task CreteUserAsync()
+        private async Task SaveUserAsync()
         {
-            userDTO.UserName = userDTO.Email;
-            userDTO.UserType = UserType.User;
-            loading = true;
-
-            var responseHttp = await Repository.PostAsync<UserDTO, TokenDTO>("/api/accounts/CreateUser", userDTO);
-            loading = false;
-
+            var responseHttp = await Repository.PutAsync<User, TokenDTO>("/api/accounts", user!);
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
@@ -126,11 +135,9 @@ namespace UPLOAD.WEB.Pages.Autenticacion
                 return;
             }
 
-            await LoginService.LoginAsync(responseHttp.Response!.Token);
             NavigationManager.NavigateTo("/");
         }
     }
 
 
 }
-

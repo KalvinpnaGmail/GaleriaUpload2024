@@ -5,16 +5,19 @@
     <DataAnnotationsValidator />
     @* ///mb-3 que de bajo de esto va a ver botones y de 3 para que no esten pegados al formul *@
     <MudCardContent>
-        <label>@Label</label>
+        <MudTextField Label=@Label For="@(() => Model.Name)" @bind-Value="@Model.Name" />
+       @*  <label>@Label</label>
         <div>
             <InputText class="form-control" @bind-Value="@Model.Name" />
             <ValidationMessage For="@(() => Model.Name)" />
-        </div>
+        </div> *@
     </MudCardContent>
 
     <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Guardar Cambios</MudButton>
     <MudButton Variant="Variant.Filled" Color="Color.Success" @onclick="ReturnAction">Regresar</MudButton>
   
+
+
 </EditForm>
 
 

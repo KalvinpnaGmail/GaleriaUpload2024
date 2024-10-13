@@ -1,0 +1,95 @@
+﻿@page "/EditUser"
+
+@if (user is null)
+{
+    <Loading />
+}
+else
+{
+    <EditForm Model="user" OnValidSubmit="SaveUserAsync">
+        <DataAnnotationsValidator />
+        <MudCard>
+            <MudCardHeader>
+                <MudText Typo="Typo.h5">
+                    <MudIcon Icon="Icons.Material.Filled.Person" /> Editar Usuario
+                </MudText>
+            </MudCardHeader>
+            <MudCardActions>
+                    <MudButton Color="Color.Secondary" Variant="Variant.Outlined" Class="mx-2 float-end" Href="/changePassword">
+                        <MudIcon Icon="Icons.Material.Filled.Key" /> Cambiar Contraseña
+                    </MudButton>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mx-2 float-end">Guardar Cambios</MudButton>
+                </MudCardActions>
+                 <MudCardContent>
+                <MudGrid>
+                    <MudItem xs="6" md="3">
+                        <MudTextField @bind-Value="user.FirstName" Label="Nombres" Variant="Variant.Text" FullWidth />
+                        <ValidationMessage For="@(() => user.FirstName)" />
+                    </MudItem>
+                    <MudItem xs="6" md="3">
+                        <MudTextField @bind-Value="user.LastName" Label="Apellidos" Variant="Variant.Text" FullWidth />
+                        <ValidationMessage For="@(() => user.LastName)" />
+                    </MudItem>
+                    <MudItem xs="6" md="3">
+                        <MudTextField @bind-Value="user.Document" Label="Documento" Variant="Variant.Text" FullWidth />
+                        <ValidationMessage For="@(() => user.Document)" />
+                    </MudItem>
+                    <MudItem xs="6" md="3">
+                        <MudTextField @bind-Value="user.PhoneNumber" Label="Teléfono" Variant="Variant.Text" FullWidth />
+                        <ValidationMessage For="@(() => user.PhoneNumber)" />
+                    </MudItem>
+                    <MudItem xs="6" md="3">
+                        <MudTextField @bind-Value="user.Address" Label="Dirección" Variant="Variant.Text" FullWidth />
+                        <ValidationMessage For="@(() => user.Address)" />
+                    </MudItem>
+                    <MudItem xs="6" md="3">
+                        <MudTextField @bind-Value="user.Email" Label="Email" Variant="Variant.Text" FullWidth />
+                        <ValidationMessage For="@(() => user.Email)" />
+                    </MudItem>
+                    <MudItem xs="6" md="3">
+                        <MudSelect T="int" Label="País" Value="selectedCountryId" ValueChanged="CountryChangedAsync" AdornmentIcon="@Icons.Material.Filled.Flag" AdornmentColor="Color.Primary" Required="true">
+                            <MudSelectItem Value="0">Seleccione un país...</MudSelectItem>
+                            @if (countries is not null)
+                            {
+                                @foreach (var country in countries)
+                                {
+                                    <MudSelectItem Value="@country.Id">@country.Name</MudSelectItem>
+                                }
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="6" md="3">
+                        <MudSelect T="int" Label="Provincia" Value="selectedStateId" ValueChanged="ProvinciaChangedAsync" Required="true">
+                            <MudSelectItem Value="0">Seleccione una provincia...</MudSelectItem>
+                            @if (provincias is not null)
+                            {
+                                @foreach (var provincia in provincias)
+                                {
+                                    <MudSelectItem Value="@provincia.Id">@provincia.Name</MudSelectItem>
+                                }
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="6" md="3">
+                        <MudSelect T="int" Label="Ciudad" @bind-Value="user.CityId" Required="true" AdornmentIcon="@Icons.Material.Filled.LocationCity" AdornmentColor="Color.Primary">
+                            <MudSelectItem Value="0">Seleccione una ciudad...</MudSelectItem>
+                            @if (cities is not null)
+                            {
+                                @foreach (var city in cities)
+                                {
+                                    <MudSelectItem Value="@city.Id">@city.Name</MudSelectItem>
+                                }
+                            }
+                        </MudSelect>
+                        <MudText Error="@(() => user.CityId == 0)" ErrorText="Debe seleccionar una ciudad" />
+                    </MudItem>
+                    <MudItem xs="12" md="3">
+                        <InputImg Label="Foto" ImageSelected="ImageSelected" ImageURL="@imageUrl" />
+                    </MudItem>
+                </MudGrid>
+            </MudCardContent>
+        </MudCard>
+
+
+    </EditForm>
+}

@@ -1,4 +1,15 @@
-﻿<MudCardContent>
+﻿@* <MudCardContent>
   <MudCenter>
     <MudImage Src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" Height="100" Width="100" />  </MudCenter>
 </MudCardContent>
+ *@
+
+<MudCard>
+    <MudCardContent>
+    <div class="overlay d-flex flex-column justify-content-center align-items-center p-3">
+        <MudProgressCircular Indeterminate="true" Color="Color.Primary" Class="mb-3" />
+            <MudText Typo="Typo.h4">Espere por favor...</MudText>
+    </div>
+    </MudCardContent>
+
+</MudCard>

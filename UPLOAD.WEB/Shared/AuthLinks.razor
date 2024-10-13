@@ -1,8 +1,16 @@
 ﻿<AuthorizeView>
     <Authorized>
-        <span>Bienvenido, @context.User.Identity!.Name</span>
-        <a href="logout" class="nav-link btn btn-link">Cerrar Sesión</a>
-    </Authorized>
+        <span class="d-flex align-items-center">Bienvenido, <a href="EditarUsuario" class="nav-link btn btn-link">@context.User.Identity!.Name</a></span>
+
+        @if (!string.IsNullOrEmpty(photoUser))
+        {
+            <div class="mx-2">
+                <img src="@photoUser" width="50" height="50" style="border-radius:50%" />
+            </div>
+        }
+        <MudButton Variant="Variant.Text" OnClick="ShowModalLogOut">Cerrar Sesion <MudIcon Icon="@Icons.Material.Filled.Login" /> </MudButton>
+@*         <a href="Logout" class="nav-link btn btn-link">Cerrar Sesión</a>
+ *@    </Authorized>
     <NotAuthorized>
         <a href="Register" class="nav-link btn btn-link">Registro</a>
         <a href="Login" class="nav-link btn btn-link">Iniciar Sesión</a>
