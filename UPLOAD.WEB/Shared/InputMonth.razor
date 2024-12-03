@@ -1,0 +1,46 @@
+﻿<div>
+    <InputText @bind-Value="FormattedValue" @attributes="AdditionalAttributes" class="form-control" />
+    @if (!IsValid)
+    {
+        <div class="text-danger">@ErrorMessage</div>
+    }
+</div>
+
+@code {
+    [Parameter] public DateTime Value { get; set; }
+    [Parameter] public EventCallback<DateTime> ValueChanged { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string FormattedValue
+    {
+        get => Value.ToString("yyyy-MM");
+        set
+        {
+            if (ValidateInput(value))
+            {
+                Value = DateTime.ParseExact(value + "-01", "yyyy-MM-dd", null);
+                ValueChanged.InvokeAsync(Value);
+            }
+        }
+    }
+
+    private bool IsValid { get; set; } = true;
+    private string ErrorMessage { get; set; } = string.Empty;
+
+    private bool ValidateInput(string input)
+    {
+        // Verifica si el formato es válido (yyyy-MM)
+        if (DateTime.TryParseExact(input + "-01", "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out _))
+        {
+            IsValid = true;
+            ErrorMessage = string.Empty;
+            return true;
+        }
+        else
+        {
+            IsValid = false;
+            ErrorMessage = "Formato inválido. Usa MM/yyyy.";
+            return false;
+        }
+    }
+}

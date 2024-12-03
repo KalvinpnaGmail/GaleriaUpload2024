@@ -1,36 +1,82 @@
 ﻿@page "/document/imageupload2"
-<NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation" />
-<EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
-    <DataAnnotationsValidator />
-    <div class="mb-3">
-        <label>Carga Documentación Obra Social</label>
-    </div>
-    <div>
-        <InputText class="form-control" @bind-Value="Image.Name" />
-        <ValidationMessage For="@(() => Image.Name)" />
 
-        <div class="form-group">
-            <label for="obraSocial">Seleccione una Obra Social</label>
-            <select class="form-select" id="obraSocial" @bind="Image.ObraSocial">
-                <option value="">-- Seleccione una Obra Social --</option>
-                @if (clinicas != null)
-                {
-                    @foreach (var clinica in clinicas)
-                    {
-                        <option value="@clinica.DENOMINACION">@clinica.DENOMINACION</option>
-                    }
-                }
-            </select>
-            <ValidationMessage For="@(() => Image.ObraSocial)" />
-        </div>
-
+@if (Image == null || clinicas == null)
+{
+    <Loading />
+}
+else
+{
+    <NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation" />
+    <EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator />
         <div class="mb-3">
-            <label>Periodo:</label>
-            <InputDate class="form-control" @bind-Value="Image.Periodo" />
-            <ValidationMessage For="@(() => Image.Periodo)" />
+            <label>Carga Documentación Obra Social</label>
         </div>
+        <div>
+            <InputText class="form-control" @bind-Value="Image.Name" />
+            <ValidationMessage For="@(() => Image.Name)" />
 
-        <button class="btn btn-primary" type="submit">Guardar Cambios</button>
-        
-    </div>
-</EditForm>
+            <div class="form-group">
+                <label for="obraSocial">Seleccione una Obra Social</label>
+                <select class="form-select" id="obraSocial" @bind="Image.ObraSocial">
+                    <option value="">-- Seleccione una Obra Social --</option>
+                    @if (clinicas != null)
+                    {
+                        @foreach (var clinica in clinicas)
+                        {
+                            <option value="@clinica.DENOMINACION">@clinica.DENOMINACION</option>
+                        }
+                    }
+                </select>
+                <ValidationMessage For="@(() => Image.ObraSocial)" />
+            </div>
+            <div class="mb-3">
+                <label>Periodo:</label>
+                <InputMonth @bind-Value="Image.Periodo" class="form-control" />
+                <ValidationMessage For="@(() => Image.Periodo)" />
+            </div>
+           
+            <div class="card">
+                <div class="card-header">
+                    <span>
+                        <i class="oi oi-data-transfer-upload" />Carga Documentos
+                        <div class="upload-section">
+                            <h3 class="upload-heading">Selecciona tus imágenes</h3>
+                            <div class="file-input-container">
+                                <InputFile OnChange="LoadFiles" multiple />
+                                @*    <span class="file-input-label">Haz clic aquí para seleccionar archivos</span> *@
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </div>
+
+            @if (uploading)
+            {
+                <div class="spinner" />
+            }
+
+            @if (!string.IsNullOrEmpty(uploadMessage))
+            {
+                <p>@uploadMessage</p>
+            }
+            @if (loadedImages != null && loadedImages.Any())
+            {
+                <h3>Imágenes Cargadas</h3>
+                <table class="image-table">
+                    <tr>
+                        @foreach (var image in loadedImages)
+                        {
+                            <td>
+                                <img src="@image.Name" alt="Imagen a Subir" />
+                            </td>
+                        }
+                    </tr>
+                </table>
+            }
+
+            <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+
+        </div>
+    </EditForm>
+}
