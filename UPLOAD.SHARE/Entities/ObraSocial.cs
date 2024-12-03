@@ -19,6 +19,16 @@ namespace UPLOAD.SHARE.Entities
         [Display(Name = "Nombre Fantasia")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
-        public string? C03 { get; set; }
+        public string? F01 { get; set; }
+
+        [Display(Name = "Cuenta")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string? CUENTA { get; set; }
+
+        [Display(Name = "Gerenciadora")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string? PGC03 { get; set; }
     }
 }

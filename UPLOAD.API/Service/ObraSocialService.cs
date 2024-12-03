@@ -31,7 +31,7 @@ namespace UPLOAD.API.Service
 
                 // Realiza la solicitud HTTP GET
 
-                HttpResponseMessage response = await _httpClient.GetAsync(_url + "api_acler.php?action=os_vigentes");
+                HttpResponseMessage response = await _httpClient.GetAsync(_url + "api_acler.php?action=os_vigentes_gral");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -66,7 +66,7 @@ namespace UPLOAD.API.Service
 
                 // Realiza la solicitud HTTP GET
 
-                HttpResponseMessage response = await _httpClient.GetAsync(_url + "api_acler.php?action=os_vigentes");
+                HttpResponseMessage response = await _httpClient.GetAsync(_url + "api_acler.php?action=os_vigentes_gral");
                 if (response.IsSuccessStatusCode)
                 {
                     // Si la solicitud es exitosa, deserializa la respuesta en una lista de clínicas
