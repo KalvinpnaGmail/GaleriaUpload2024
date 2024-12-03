@@ -1,0 +1,66 @@
+﻿@page "/obraSociales"
+
+
+<h3>Obras Sociales</h3>
+
+
+@* @inject SweetAlertService sweetAlertService
+ *@
+
+@if (ObraSociales is null)
+{
+    <Loading />
+}
+else
+{
+    <GenericList MyList="ObraSociales">
+        <Body>
+            <div class="card">
+                <div class="card-header">
+                    <span>
+                        <i class="oi oi-star" />Listado de las Obras Sociales Vigentes
+                        <a class="btn btn-sm btn-primary float-end" href="/obraSociales/create"><i class="oi oi-plus" /> Nueva O.S</a>
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="mb-2" style="display: flex; flex-wrap:wrap; align-items: center;">
+                        <div>
+                        </div>
+                        <div class="mx-1">
+                        </div>
+                    </div>
+
+
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Nombre</th>
+                                <th>Fantasia</th>
+                                <th style="width:200px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obrasocial in ObraSociales)
+                            {
+                                <tr>
+                                    <td>
+                                        @obrasocial.C01
+                                    </td>
+                                    <td>
+                                        @obrasocial.C02
+                                    </td>
+                                    <td>
+                                        @obrasocial.C03
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </Body>
+    </GenericList>
+}
+

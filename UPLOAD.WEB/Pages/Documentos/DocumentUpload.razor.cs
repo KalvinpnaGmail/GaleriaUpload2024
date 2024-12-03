@@ -12,12 +12,9 @@ namespace UPLOAD.WEB.Pages.Documentos
     [Authorize(Roles = "Admin")]
     public partial class DocumentUpload
     {
-        
-     
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
-      
 
         private bool uploading = false;
         private string uploadMessage = "";
@@ -25,10 +22,6 @@ namespace UPLOAD.WEB.Pages.Documentos
         private string? base64Image;
         private readonly List<ImagenDTO> loadedImages = new();
 
-
-       
-
-      
         private async Task LoadFiles(InputFileChangeEventArgs e)
         {
             uploading = true;
@@ -48,10 +41,22 @@ namespace UPLOAD.WEB.Pages.Documentos
                     // Llamar al método de la API para cargar la imagen
                     await UploadImage(imageName, base64Image);
                 }
+                // Mensaje único al final
+                var toast = SweetAlertService.Mixin(new SweetAlertOptions
+                {
+                    Toast = true,
+                    Position = SweetAlertPosition.BottomEnd,
+                    ShowConfirmButton = true,
+                    Timer = 3000
+                });
+                await toast.FireAsync(icon: SweetAlertIcon.Success, message: "Todas las imagenes se han cargado.");
+                //await SweetAlertService.FireAsync("Éxito", "Todas las imágenes se han cargado correctamente.", SweetAlertIcon.Success);
+                // Redirigir solo después de procesar todas las imágenes
+                Return();
             }
             catch (Exception ex)
             {
-                uploadMessage = $"Error al cargar la imagen: {ex.Message}";
+                uploadMessage = $"Error al cargar la imagen en la nube: {ex.Message}";
             }
 
             uploading = false;
@@ -65,7 +70,7 @@ namespace UPLOAD.WEB.Pages.Documentos
                 var imagenDTO = new ImagenDTO(imageName, base64Image);
 
                 // Llamar a la API para cargar la imagen utilizando
-                // 
+                //
                 var response = await Repository.PostAsync("api/imagenes", imagenDTO);
                 //var response = await Repository.PostAsync<ImagenDTO>("api/imagenes", imagenDTO);
                 if (response.Error)
@@ -76,30 +81,17 @@ namespace UPLOAD.WEB.Pages.Documentos
                 }
 
                 loadedImages.Add(imagenDTO);
-                Return();
-                var toast = SweetAlertService.Mixin(new SweetAlertOptions
-                {
-                    Toast = true,
-                    Position = SweetAlertPosition.BottomEnd,
-                    ShowConfirmButton = true,
-                    Timer = 3000
-                });
-                await toast.FireAsync(icon: SweetAlertIcon.Success, message: "Imagen guardada.");
-
+                //Return();
             }
             catch (Exception ex)
             {
                 uploadMessage = $"Error al cargar la imagen: {ex.Message}";
-               
             }
         }
-
 
         private void Return()
         {
             NavigationManager.NavigateTo("/document");
         }
-
-
     }
 }

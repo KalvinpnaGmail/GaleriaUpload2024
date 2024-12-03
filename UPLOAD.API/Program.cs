@@ -16,7 +16,6 @@ using UPLOAD.SHARE.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 //importan pra que no hayas un ciclo en program agregar
 //cuando adiciono los controladores que me igrnore las referencias circulares
 builder.Services.
@@ -60,13 +59,7 @@ builder.Services.AddSwaggerGen(c =>
         });
 });
 
-
-
 ///modificamos swagger para poder mandarle el swagger y no usar postman
-
-
-
-
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
@@ -77,8 +70,6 @@ builder.Services.AddCors(options =>
                           policy.AllowAnyOrigin(); // add the allowed origins
                       });
 });
-
-
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
@@ -101,16 +92,15 @@ builder.Services.AddScoped<ICountriesRepository, CountryRepository>();
 builder.Services.AddScoped<ICountriesUnitofWork, CountriesUnitOfWork>();
 builder.Services.AddScoped<IProvinciasRepository, ProvinciasRepository>();
 builder.Services.AddScoped<IProvinciasUnitOfWork, ProvinciasUnitOfWork>();
-builder.Services.AddScoped<ICitiesRepository,CitiesRepository>();
+builder.Services.AddScoped<ICitiesRepository, CitiesRepository>();
 builder.Services.AddScoped<ICitiesUnitOfWork, CitiesUnitOfWork>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IUsersUnitOfWork, UsersUnitOfWork>();
 builder.Services.AddScoped<IClinicaService, ClinicaService>();
+builder.Services.AddScoped<IObraSocialService, ObraSocialService>();
 
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 builder.Services.AddScoped<ICategoriesUnitOfWork, CategoriesUnitOfWork>();
-
-
 
 builder.Services.AddIdentity<User, IdentityRole>(x =>
 {
@@ -124,15 +114,12 @@ builder.Services.AddIdentity<User, IdentityRole>(x =>
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
 
-
 //scoped: la usamos cuando quiero que cree una nueva instancia cada vez que lo llamo
 //Transient:usamos solouna vez se injecta una vez---en el ciclo de vida del program
-//Singleton:la primera vez lo crea y lo deja en memoria  
+//Singleton:la primera vez lo crea y lo deja en memoria
 ///alimientador base datos trnasiente si no lo usamos nunca que no quede en memoria
 
 builder.Services.AddTransient<AlimentadorBaseDeDatos>();
-
-
 
 /////inyectamos para token autenticacion
 
@@ -147,13 +134,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ClockSkew = TimeSpan.Zero
     });
 
-
 // Configuración del logging para consola
 //builder.Logging.ClearProviders();
 //builder.Logging.AddConsole();
 
 /////inyectamos para token autenticacion
-
 
 var app = builder.Build();
 ///como esta clase no tienen inyectcion lo hacemos manualmente
@@ -177,7 +162,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 
 app.UseHttpsRedirection();
 
