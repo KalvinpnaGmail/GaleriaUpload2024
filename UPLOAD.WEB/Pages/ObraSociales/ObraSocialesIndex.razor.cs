@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.WEB.Repositories;
 
-namespace UPLOAD.WEB.Pages.ObraSociaels
+namespace UPLOAD.WEB.Pages.ObraSociales
 {
     public partial class ObraSocialesIndex
     {

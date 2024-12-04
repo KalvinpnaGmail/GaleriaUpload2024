@@ -9,15 +9,17 @@
 
    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
     <MudNavLink Href="document" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.DocumentScanner">Document</MudNavLink>
-    <MudNavLink Href="countries" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Paises</MudNavLink>
-    <MudNavLink Href="clinicasIndex" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">EjemploPAginacion</MudNavLink>
+  
+    
 
     <AuthorizeView Roles="Admin">
         <Authorized>
             <MudNavGroup Title="Listados" Expanded="true">
-                <MudNavLink Href="clinicas" Icon="@Icons.Material.Filled.LocalHospital">Clinicas</MudNavLink>
-                <MudNavLink Href="obraSociales" Icon="@Icons.Material.Filled.LocalHospital">Obras Sociales</MudNavLink>
+                <MudNavLink Href="clinicasIndex" Icon="@Icons.Material.Filled.LocalHospital">Clinicas</MudNavLink>
+                
+                <MudNavLink Href="obraSocialesIndex" Icon="@Icons.Material.Filled.LocalHospital">Obras Sociales</MudNavLink>
                  <MudNavLink Href="categories" Icon="@Icons.Material.Filled.Category">Categorías</MudNavLink>
+                <MudNavLink Href="countries" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Paises</MudNavLink>
             </MudNavGroup>
            
         </Authorized>

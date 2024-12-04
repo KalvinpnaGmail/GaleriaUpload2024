@@ -1,0 +1,77 @@
+﻿@page "/obraSocialesIndex"
+
+@if (ObraSociales is null)
+{
+    <Loading/>
+}
+else
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-5">
+
+        <MudPaper Elevation="3" Class="pa-4" Width="100%">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudButton Variant="Variant.Filled"
+                               StartIcon="@Icons.Material.Filled.Add"
+                               Color="Color.Primary"
+                               OnClick="@(() => navigationManager.NavigateTo("/"))"
+                               Disabled="true">
+                               Nueva
+                    </MudButton>
+                </MudItem>
+                <MudItem xs="12">
+
+                    <MudTable Items="@ObraSociales"
+                              Dense="true"
+                              Striped="false" Bordered="true"
+                              Filter="new Func<ObraSocial,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1"
+                              Loading="@_loading" LoadingProgressColor="Color.Info"
+                              RowsPerPage="int.MaxValue">
+                        <ToolBarContent>
+                            <MudSpacer />
+                            <MudTextField @bind-Value="searchString1" Placeholder="Buscar" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                        </ToolBarContent>
+                        <HeaderContent>
+                            <MudTh>Nombre</MudTh>
+                            <MudTh>Fantasia</MudTh>
+                            <MudTh>Cuenta</MudTh>
+                            <MudTh>Cod.Interno</MudTh>
+                            <MudTh>Opciones</MudTh>
+                            <MudTh></MudTh>
+                        </HeaderContent>
+                        <RowTemplate Context="obrasocialRow">
+
+                            <MudTd DataLabel="Titulo">@obrasocialRow.C02</MudTd>
+                            <MudTd DataLabel="Nro">@obrasocialRow.F01</MudTd>
+                            <MudTd DataLabel="Nro">@obrasocialRow.CUENTA</MudTd>
+                            <MudTd DataLabel="Nro">@obrasocialRow.C01</MudTd>
+                            <MudTd DataLabel="Opciones">
+
+                                <MudFab Color="Color.Primary"
+                                        StartIcon="@Icons.Material.Filled.Edit"
+                                        Size="Size.Small"
+                                        IconSize="Size.Small" />
+                                @*
+                            *@                            <MudFab Color="Color.Error"
+                                                                      StartIcon="@Icons.Material.Filled.Delete"
+                                                                      Size="Size.Small"
+                                                                      IconSize="Size.Small" />
+                            </MudTd>
+                        </RowTemplate>
+                        <PagerContent>
+                            <MudTablePager PageSizeOptions="new int[] { 10, 25, 50, 100, int.MaxValue }"
+                                           RowsPerPageString="@rowsPerPageString"
+                                           />
+                        </PagerContent>
+                    </MudTable>
+
+
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+    </MudContainer>
+
+
+
+}
