@@ -133,6 +133,7 @@ namespace UPLOAD.API.Controllers
         {
             try
             {
+                // var currentUser = await _userManager.FindByNameAsync(User.Identity!.Name!);
                 var currentUser = await _usersUnitOfWork.GetUserAsync(User.Identity!.Name!);
                 if (currentUser == null)
                 {
@@ -144,6 +145,9 @@ namespace UPLOAD.API.Controllers
                     var photoUser = Convert.FromBase64String(user.Photo);
                     user.Photo = await _fileStorage.SaveFileAsync(photoUser, ".jpg", _container);
                 }
+
+                // Adjunta el usuario actual al contexto, ya que EF ya está rastreando este usuario
+                _context.Entry(currentUser).State = EntityState.Modified;
 
                 currentUser.Document = user.Document;
                 currentUser.FirstName = user.FirstName;

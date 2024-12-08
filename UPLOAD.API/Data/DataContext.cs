@@ -8,9 +8,7 @@ namespace UPLOAD.API.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-
             Database.SetCommandTimeout(600);
-
         }
 
         public DbSet<Country> Countries { get; set; }
@@ -18,20 +16,20 @@ namespace UPLOAD.API.Data
         public DbSet<Provincia> Provincias { get; set; }
 
         public DbSet<Category> Categories { get; set; }
+
         public DbSet<Image> Images { get; set; }
         public DbSet<CabeceraImage> CabeceraImages { get; set; }
-       
+
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
         //    base.OnModelCreating(modelBuilder);
         //    modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
         //}
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-          
+
             modelBuilder.ApplyConfiguration(new ImageConfiguration());
             modelBuilder.ApplyConfiguration(new CountryConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguraration());
@@ -43,7 +41,7 @@ namespace UPLOAD.API.Data
 
         private void DisableCascadingDelete(ModelBuilder modelBuilder)
         {
-            var relationships=modelBuilder.Model.GetEntityTypes().SelectMany(e=>e.GetForeignKeys());    
+            var relationships = modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys());
             foreach (var relationship in relationships)
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
@@ -51,8 +49,3 @@ namespace UPLOAD.API.Data
         }
     }
 }
-
-
-
-
-
