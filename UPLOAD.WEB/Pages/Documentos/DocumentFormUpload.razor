@@ -1,6 +1,6 @@
 ﻿@page "/document/imageupload2"
 
-@if (Image == null || clinicas == null)
+@if (Image == null || ObraSociales == null)
 {
     <Loading />
 }
@@ -10,21 +10,21 @@ else
     <EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
         <DataAnnotationsValidator />
         <div class="mb-3">
-            <label>Carga Documentación Obra Social</label>
+            <h2>Carga Documentación Obra Social</h2>
         </div>
         <div>
-            <InputText class="form-control" @bind-Value="Image.Name" />
-            <ValidationMessage For="@(() => Image.Name)" />
+            @* <InputText class="form-control" @bind-Value="Image.Name" />
+            <ValidationMessage For="@(() => Image.Name)" /> *@
 
             <div class="form-group">
                 <label for="obraSocial">Seleccione una Obra Social</label>
                 <select class="form-select" id="obraSocial" @bind="Image.ObraSocial">
                     <option value="">-- Seleccione una Obra Social --</option>
-                    @if (clinicas != null)
+                    @if (ObraSociales != null)
                     {
-                        @foreach (var clinica in clinicas)
+                        @foreach (var obraSocial in ObraSociales)
                         {
-                            <option value="@clinica.DENOMINACION">@clinica.DENOMINACION</option>
+                            <option value="@obraSocial.C01">@obraSocial.F01</option>
                         }
                     }
                 </select>
@@ -35,7 +35,12 @@ else
                 <InputMonth @bind-Value="Image.Periodo" class="form-control" />
                 <ValidationMessage For="@(() => Image.Periodo)" />
             </div>
-           
+            @* <MudDatePicker Label="Periodo yyyy-MM" Editable="true" @bind-Date="_date3" Mask="@(new DateMask("0000-00"))" DateFormat="yyyy-MM" Placeholder="ISO Date" /> *@
+            <MudDatePicker Label="Periodo yyyy-MM" Editable="true"
+                           @bind-Date="_date3"
+                           Mask="@(new DateMask("0000-00"))"
+                           DateFormat="yyyy-MM"
+                           Placeholder="YYYY-MM" />
             <div class="card">
                 <div class="card-header">
                     <span>
@@ -49,6 +54,9 @@ else
                         </div>
                     </span>
                 </div>
+                <MudItem xs="12" md="3">
+                    <InputImg Label="Foto"  />
+                </MudItem>
             </div>
 
             @if (uploading)

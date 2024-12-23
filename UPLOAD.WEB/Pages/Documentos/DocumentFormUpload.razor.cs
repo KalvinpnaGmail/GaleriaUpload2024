@@ -13,7 +13,7 @@ namespace UPLOAD.WEB.Pages.Documentos
     [Authorize(Roles = "Admin")]
     public partial class DocumentFormUpload
     {
-        private List<Clinica>? clinicas { set; get; }
+        public List<ObraSocial>? ObraSociales { get; set; }
         private EditContext editContext = null!;
         [Parameter, EditorRequired] public Image Image { get; set; } = null!;
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
@@ -26,6 +26,10 @@ namespace UPLOAD.WEB.Pages.Documentos
         private string? imageName;
         private string? base64Image;
         private readonly List<ImagenDTO> loadedImages = new();
+
+        private DateTime? _date3 = null;
+        //private DateTime _date3;
+
         public bool FormPostedSuccessfully { get; set; }
 
         protected override void OnInitialized()
@@ -49,12 +53,15 @@ namespace UPLOAD.WEB.Pages.Documentos
         protected override async Task OnInitializedAsync()
         {
             // Cargar las clínicas de forma asíncrona
-            await LoadClinicasAsync();
+            await LoadObraSocialesAsync();
+            var now = DateTime.Now;
+            _date3 = new DateTime(now.Year, now.Month, 1).AddMonths(-1);
         }
 
-        private async Task LoadClinicasAsync()
+        private async Task LoadObraSocialesAsync()
         {
-            var responseHttp = await Repository.GetAsync<List<Clinica>>("/api/clinicas/DevuelveClinicas");
+            var responseHttp = await Repository.GetAsync<List<ObraSocial>>("/api/obraSociales/DevuelveObraSociales");
+
             // var responseHttp = await repository.GetAsync<List<Clinica>>("/api/clinicas/combo");
             if (responseHttp.Error)
             {
@@ -63,7 +70,7 @@ namespace UPLOAD.WEB.Pages.Documentos
                 return;
             }
 
-            clinicas = responseHttp.Response;
+            ObraSociales = responseHttp.Response;
         }
 
         private async Task CreateUserAsync()

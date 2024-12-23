@@ -10,17 +10,20 @@ namespace UPLOAD.WEB.Pages.Documentos
     [Authorize(Roles = "Admin")]
     public partial class DocumentForm
     {
-        private EditContext editContext =null!;
+        private EditContext editContext = null!;
         [Parameter, EditorRequired] public Image Image { get; set; } = null!;
         [EditorRequired, Parameter] public EventCallback OnvalidSubmit { get; set; }
-        [EditorRequired, Parameter]public EventCallback ReturnAction {  get; set; }
+        [EditorRequired, Parameter] public EventCallback ReturnAction { get; set; }
         public bool FormPostedSuccessfully { get; set; }
-        
+
         [Inject] public SweetAlertService SweetAlertService { get; set; } = null!;
 
         protected override void OnInitialized()
         {
-            editContext = new (Image);
+            editContext = new(Image);
+            // Establecer el valor predeterminado para el período como el mes anterior
+            var now = DateTime.Now;
+            Image.Periodo = new DateTime(now.Year, now.Month, 1).AddMonths(-1);
         }
 
         private async Task OnBeforeInternalNavigation(LocationChangingContext context)
@@ -48,7 +51,5 @@ namespace UPLOAD.WEB.Pages.Documentos
             }
             context.PreventNavigation();
         }
-
-
     }
 }
