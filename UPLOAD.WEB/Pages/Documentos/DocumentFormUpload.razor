@@ -30,13 +30,13 @@ else
                 </select>
                 <ValidationMessage For="@(() => Image.ObraSocial)" />
             </div>
-            <div class="mb-3">
+           @*  <div class="mb-3">
                 <label>Periodo:</label>
                 <InputMonth @bind-Value="Image.Periodo" class="form-control" />
                 <ValidationMessage For="@(() => Image.Periodo)" />
-            </div>
+            </div> *@
             @* <MudDatePicker Label="Periodo yyyy-MM" Editable="true" @bind-Date="_date3" Mask="@(new DateMask("0000-00"))" DateFormat="yyyy-MM" Placeholder="ISO Date" /> *@
-            <MudDatePicker Label="Periodo yyyy-MM" Editable="true"
+            <MudDatePicker Label="Periodo:" Editable="true"
                            @bind-Date="_date3"
                            Mask="@(new DateMask("0000-00"))"
                            DateFormat="yyyy-MM"

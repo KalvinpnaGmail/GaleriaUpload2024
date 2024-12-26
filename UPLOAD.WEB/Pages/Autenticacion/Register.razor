@@ -7,10 +7,19 @@
 }
 else
 {
-
+       <MudCard>
     <EditForm Model="userDTO" OnValidSubmit="CreteUserAsync">
         <DataAnnotationsValidator />
+         
+
         <MudGrid>
+             <MudItem xs="12" Style="display: flex; justify-content: flex-end; align-items: center;">
+                        <button class="btn btn-primary" type="submit" style="min-width: 150px;">
+                        <i class="bi bi-person-up" style="margin-right: 8px;"></i>
+                         Registrar
+                    </button>
+            </MudItem>
+          
             <MudItem xs="12" md="6">
                 <MudTextField @bind-Value="userDTO.FirstName" Label="Nombres" Variant="Variant.Text" FullWidth />
                 <ValidationMessage For="@(() => userDTO.FirstName)" />
@@ -77,7 +86,9 @@ else
                 <MudText Error="@(() => userDTO.CityId == 0)" ErrorText="Debe seleccionar una ciudad" />
             </MudItem>
              
-         
+         <MudItem xs="12" md="6">
+              <MudSpacer />
+            </MudItem>
            
             <MudItem xs="12" md="6">
                 <MudTextField @bind-Value="userDTO.Password" Label="Contraseña" Variant="Variant.Text" Type="password" FullWidth />
@@ -98,21 +109,10 @@ else
            
 
         </MudGrid>
-        <MudItem xs="12" md="3">
-            <MudSpacer /> <!-- Añade un espaciador aquí -->
-            @*                 <MudButton Type="submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth Style="margin-top: 40px;">Registrar</MudButton>
-        *@                <div style="margin-left: 10px;">
-                <button class="btn btn-primary w-100" type="submit">Registrar</button>
-
-
-            </div>
-            @*  <MudButton Type="submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth>Registrar</MudButton> *@
-        </MudItem>
        
-        <MudItem xs="12" md="6">
-            <MudSpacer /> <!-- Añade un espaciador aquí -->
-        </MudItem>
     </EditForm>
+
+    </MudCard>
 
 
 }

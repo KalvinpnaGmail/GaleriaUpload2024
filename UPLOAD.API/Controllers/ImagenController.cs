@@ -10,19 +10,15 @@ using UPLOAD.SHARE.Entities;
 
 namespace UPLOAD.API.Controllers
 {
-
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/imagenes")]
-
     public class ImageController : ControllerBase
     {
-
         private readonly string _usuario;
         private readonly string _pass;
         private readonly string _llave;
         private readonly DataContext _contexto;
-
 
         public ImageController(DataContext contexto, IConfiguration configuration)
         {
@@ -32,8 +28,6 @@ namespace UPLOAD.API.Controllers
             _contexto = contexto;
         }
 
-       
-
         [HttpGet("DevuelveImagenes")]
         public async Task<IActionResult> Get()
         {
@@ -41,7 +35,6 @@ namespace UPLOAD.API.Controllers
 
             return Ok(await _contexto.Images.AsNoTracking().ToListAsync());
         }
-
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -63,10 +56,8 @@ namespace UPLOAD.API.Controllers
         //    return Ok(image);
         //}
 
-
-
         [HttpPost]
-        public async Task<IActionResult> Create(ImagenDTO request)
+        public async Task<IActionResult> PostAsync(ImagenDTO request)
         {
             var obraSocial = "Sancor";
             //var periodo = DateTime.Now;
@@ -77,21 +68,13 @@ namespace UPLOAD.API.Controllers
                 //Periodo = periodo,
                 Url = await Upload(request.Base64, obraSocial)
             };
-           
 
             await _contexto.Images.AddAsync(image);
             await _contexto.SaveChangesAsync();
-          
-
-
-           
-
 
             return Ok(image);
         }
 
-
-       
         //[HttpPost]
         //public async Task<Image> Create(ImagenDTO request)
         //{
@@ -120,7 +103,6 @@ namespace UPLOAD.API.Controllers
         //    return image;
         //}
 
-
         [HttpPut]
         public async Task<IActionResult> Put(Image image)
         {
@@ -143,8 +125,6 @@ namespace UPLOAD.API.Controllers
             await _contexto.SaveChangesAsync();
             return NoContent();
         }
-
-
 
         //private async Task<string> Upload(ImagenDTO request, string type, string tags, string folder)
         //{
@@ -220,16 +200,10 @@ namespace UPLOAD.API.Controllers
         //    return Convert.FromBase64String(base64String);
         //}
 
-
-
         private async Task<string> Upload(string base64, string obraSocial)
         {
-
-
             // Es esta parte deben poner sus credenciales de Cloudinary: username, api_key, api_secret
             var cloudinary = new Cloudinary(new Account(_usuario, _pass, _llave));
-
-
 
             cloudinary.Api.Secure = true;
             var uploadParams = new ImageUploadParams()
@@ -238,9 +212,8 @@ namespace UPLOAD.API.Controllers
 
                 Type = "upload",
                 //Tags = $"{obraSocial},{periodo:yyyyMMdd}",
-                Tags =obraSocial,
+                Tags = obraSocial,
                 Folder = "Os"
-            
             };
             var respuesta = await cloudinary.UploadAsync(uploadParams);
             return respuesta.SecureUrl.AbsoluteUri;
@@ -309,27 +282,4 @@ namespace UPLOAD.API.Controllers
             }
         }
     }
-
-
-
-  
-
-
 }
-
-    
-
-
-
-
-
-
-
-
-      
-
-
-
-
-
-

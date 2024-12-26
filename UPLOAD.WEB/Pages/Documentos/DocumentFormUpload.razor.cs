@@ -161,7 +161,9 @@ namespace UPLOAD.WEB.Pages.Documentos
 
                 // Llamar a la API para cargar la imagen utilizando
                 //
+                //var response = await Repository.PostAsync("api/imagenes", imagenDTO);
                 var response = await Repository.PostAsync("api/imagenes", imagenDTO);
+
                 //var response = await Repository.PostAsync<ImagenDTO>("api/imagenes", imagenDTO);
                 if (response.Error)
                 {
