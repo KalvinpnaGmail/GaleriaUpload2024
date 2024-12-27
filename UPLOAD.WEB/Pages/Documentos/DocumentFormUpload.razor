@@ -9,10 +9,13 @@ else
     <NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation" />
     <EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
         <DataAnnotationsValidator />
+         <ValidationSummary />
+
+    <!-- Aquí van los campos del formulario -->
         <div class="mb-3">
             <h2>Carga Documentación Obra Social</h2>
         </div>
-        <div>
+      
             @* <InputText class="form-control" @bind-Value="Image.Name" />
             <ValidationMessage For="@(() => Image.Name)" /> *@
 
@@ -30,12 +33,7 @@ else
                 </select>
                 <ValidationMessage For="@(() => Image.ObraSocial)" />
             </div>
-           @*  <div class="mb-3">
-                <label>Periodo:</label>
-                <InputMonth @bind-Value="Image.Periodo" class="form-control" />
-                <ValidationMessage For="@(() => Image.Periodo)" />
-            </div> *@
-            @* <MudDatePicker Label="Periodo yyyy-MM" Editable="true" @bind-Date="_date3" Mask="@(new DateMask("0000-00"))" DateFormat="yyyy-MM" Placeholder="ISO Date" /> *@
+         
             <MudDatePicker Label="Periodo:" Editable="true"
                            @bind-Date="_date3"
                            Mask="@(new DateMask("0000-00"))"
@@ -49,19 +47,17 @@ else
                             <h3 class="upload-heading">Selecciona tus imágenes</h3>
                             <div class="file-input-container">
                                 <InputFile OnChange="LoadFiles" multiple />
-                                @*    <span class="file-input-label">Haz clic aquí para seleccionar archivos</span> *@
+                               
                             </div>
                         </div>
                     </span>
                 </div>
-                <MudItem xs="12" md="3">
-                    <InputImg Label="Foto"  />
-                </MudItem>
-            </div>
+
+           
 
             @if (uploading)
             {
-                <div class="spinner" />
+                    <Loading />
             }
 
             @if (!string.IsNullOrEmpty(uploadMessage))
@@ -70,21 +66,64 @@ else
             }
             @if (loadedImages != null && loadedImages.Any())
             {
-                <h3>Imágenes Cargadas</h3>
-                <table class="image-table">
-                    <tr>
-                        @foreach (var image in loadedImages)
-                        {
-                            <td>
-                                <img src="@image.Name" alt="Imagen a Subir" />
-                            </td>
-                        }
-                    </tr>
-                </table>
+                <MudTable Items="loadedImages" Striped="true">
+                    <HeaderContent>
+                        <MudTh>Nombre</MudTh>
+                        <MudTh>Vista Previa</MudTh>
+                        <MudTh>Acción</MudTh>
+                    </HeaderContent>
+
+                    <RowTemplate Context="image">
+                        <MudTd DataLabel="Nombre">@image.Name</MudTd>
+                        <MudTd DataLabel="Vista Previa">
+                            <!-- Vista previa de la imagen, al hacer clic se abre el modal -->
+                            <MudImage Src="@($"data:image/jpeg;base64,{image.Base64}")"
+                                      Alt="@image.Name"
+                                      Width="50"
+                                      Height="50"
+                                      Style="cursor:pointer;"
+                                      @onclick="() => OpenModal(image.Base64)"></MudImage>
+                        </MudTd>
+                        <MudTd DataLabel="Acción">
+                            
+                            <MudButton Color="Color.Error"
+                                       StartIcon="@Icons.Material.Filled.Delete"
+                                       OnClick="() => DeleteImage(image)"
+                                       
+                                       Style="cursor:pointer;">
+                                Eliminar
+                            </MudButton>
+                        </MudTd>
+                    </RowTemplate>
+
+                </MudTable>
+                <!-- Modal para la vista previa -->
+               
             }
 
             <button class="btn btn-primary" type="submit">Guardar Cambios</button>
 
         </div>
     </EditForm>
+
+    
+
+
+    <MudDialog @bind-Open="_isModalOpen">
+        <DialogContent>
+            <MudImage Src="@($"data:image/jpeg;base64,{_modalImageBase64}")"
+                      Alt="Vista Previa"
+                      MaxWidth="100%"
+                      MaxHeight="500px" />
+        </DialogContent>
+    </MudDialog>
+
+
+
+
+   
+
+ 
+   
+
 }

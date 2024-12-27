@@ -1,5 +1,13 @@
-﻿<MudCardContent>
+﻿@* <MudCardContent>
     <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
         <MudImage Src="images/779781883952778b25974baa3cf7679c.gif" Height="250" Width="250" />
     </div>
-</MudCardContent>
+</MudCardContent> *@
+
+
+<MudCard>
+    <div class="overlay d-flex flex-column justify-content-center align-items-center p-3">
+        <MudProgressCircular Indeterminate="true" Color="Color.Primary" Class="mb-3" />
+        <MudText Typo="Typo.h5">@Label</MudText>
+    </div>
+</MudCard>

@@ -7,6 +7,7 @@ using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.WEB.Repositories;
 using UPLOAD.WEB.Servicios;
+using MudBlazor;
 
 namespace UPLOAD.WEB.Pages.Documentos
 {
@@ -23,13 +24,13 @@ namespace UPLOAD.WEB.Pages.Documentos
 
         private bool uploading = false;
         private string uploadMessage = "";
-        private string? imageName;
-        private string? base64Image;
-        private readonly List<ImagenDTO> loadedImages = new();
+
+        private readonly List<ImagenDTO> loadedImages = new List<ImagenDTO>();
 
         private DateTime? _date3 = null;
-        //private DateTime _date3;
 
+        private string _modalImageBase64 = string.Empty;
+        private bool _isModalOpen = false;
         public bool FormPostedSuccessfully { get; set; }
 
         protected override void OnInitialized()
@@ -73,11 +74,6 @@ namespace UPLOAD.WEB.Pages.Documentos
             ObraSociales = responseHttp.Response;
         }
 
-        private async Task CreateUserAsync()
-        {
-            NavigationManager.NavigateTo("/");
-        }
-
         private async Task OnBeforeInternalNavigation(LocationChangingContext context)
         {
             //sino fue editado el formulario o grabado
@@ -112,6 +108,15 @@ namespace UPLOAD.WEB.Pages.Documentos
             context.PreventNavigation();
         }
 
+        public void Dispose()
+        {
+            //Elimina la suscripción al evento LocationChanging:
+
+            //Cuando se suscribe al evento LocationChanging en el NavigationManager en el método OnInitialized,
+            //el objeto actual(this) se convierte en un "oyente" del evento.
+            //NavigationManager.LocationChanging -= OnBeforeInternalNavigation;
+        }
+
         private async Task LoadFiles(InputFileChangeEventArgs e)
         {
             uploading = true;
@@ -121,58 +126,52 @@ namespace UPLOAD.WEB.Pages.Documentos
                 var files = e.GetMultipleFiles();
                 foreach (var file in files)
                 {
+                    if (file.Size > 3 * 1024 * 1024)
+                    {
+                        await SweetAlertService.FireAsync("Error", $"El archivo {file.Name} supera el límite de 3 MB.", SweetAlertIcon.Error);
+                        continue;
+                    }
+
                     using var memoryStream = new MemoryStream();
-                    await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024).CopyToAsync(memoryStream);
+                    await file.OpenReadStream(maxAllowedSize: 3 * 1024 * 1024).CopyToAsync(memoryStream);
                     byte[] imageData = memoryStream.ToArray();
 
-                    imageName = file.Name;
-                    base64Image = Convert.ToBase64String(imageData);
+                    var imagenDTO = new ImagenDTO(file.Name, Convert.ToBase64String(imageData));
 
-                    // Llamar al método de la API para cargar la imagen
-                    await UploadImage(imageName, base64Image);
+                    // Agrega el archivo cargado a la lista de archivos
+                    //loadedFiles.Add(imagenDTO);
+
+                    loadedImages.Add(imagenDTO);
+                    // Actualizar las propiedades de Image directamente
+                    Image.Name = imagenDTO.Name;
+                    Image.Url = imagenDTO.Base64;
+                    await UploadImage(imagenDTO);
                 }
-                // Mensaje único al final
-                var toast = SweetAlertService.Mixin(new SweetAlertOptions
-                {
-                    Toast = true,
-                    Position = SweetAlertPosition.BottomEnd,
-                    ShowConfirmButton = true,
-                    Timer = 3000
-                });
-                await toast.FireAsync(icon: SweetAlertIcon.Success, message: "Todas las imagenes se han cargado.");
-                //await SweetAlertService.FireAsync("Éxito", "Todas las imágenes se han cargado correctamente.", SweetAlertIcon.Success);
-                // Redirigir solo después de procesar todas las imágenes
-                Return();
+
+                await SweetAlertService.FireAsync("Éxito", "Todas las imágenes se han cargado correctamente.", SweetAlertIcon.Success);
             }
             catch (Exception ex)
             {
-                uploadMessage = $"Error al cargar la imagen en la nube: {ex.Message}";
+                uploadMessage = $"Error al cargar las imágenes: {ex.Message}";
             }
-
-            uploading = false;
+            finally
+            {
+                uploading = false;
+            }
         }
 
-        private async Task UploadImage(string imageName, string base64Image)
+        private async Task UploadImage(ImagenDTO imagenDTO)
         {
             try
-
             {
-                var imagenDTO = new ImagenDTO(imageName, base64Image);
-
-                // Llamar a la API para cargar la imagen utilizando
-                //
-                //var response = await Repository.PostAsync("api/imagenes", imagenDTO);
                 var response = await Repository.PostAsync("api/imagenes", imagenDTO);
 
-                //var response = await Repository.PostAsync<ImagenDTO>("api/imagenes", imagenDTO);
                 if (response.Error)
                 {
                     var message = await response.GetErrorMessageAsync();
-                    await SweetAlertService.FireAsync("Error", message);
+                    await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
                     return;
                 }
-
-                loadedImages.Add(imagenDTO);
             }
             catch (Exception ex)
             {
@@ -180,14 +179,46 @@ namespace UPLOAD.WEB.Pages.Documentos
             }
         }
 
+        private void DeleteImage(ImagenDTO imagen)
+        {
+            // Eliminar la imagen de la lista loadedImages
+            loadedImages.Remove(imagen);
+
+            // Mostrar un mensaje de éxito
+            SweetAlertService.FireAsync("Éxito", $"La imagen {imagen.Name} fue eliminada correctamente.", SweetAlertIcon.Success);
+        }
+
+        // Método para abrir el modal con la imagen completa
+        // Función para abrir el modal con la imagen seleccionada
+        private void OpenModal(string base64Image)
+        {
+            _modalImageBase64 = base64Image;
+            _isModalOpen = true;
+            // SweetAlertService.FireAsync("Modal", "Modal abierto con éxito!", SweetAlertIcon.Info);
+        }
+
+        // Método para cerrar el modal
+
         private void Return()
         {
             NavigationManager.NavigateTo("/document");
         }
 
-        private void OnValidSubmit()
+        private async Task OnValidSubmit()
         {
-            // Lógica para manejar el envío del formulario
+            if (loadedImages.Count == 0)
+            {
+                await SweetAlertService.FireAsync("Error", "Debes cargar al menos una imagen antes de guardar.", SweetAlertIcon.Error);
+                return;
+            }
+
+            // Aquí puedes implementar la lógica para guardar la información en la base de datos local.
+            await SweetAlertService.FireAsync("Éxito", "Documentación subida correctamente.", SweetAlertIcon.Success);
+            FormPostedSuccessfully = true;
+
+            // Redirige al usuario después de completar el proceso.
+            Return();
+            //NavigationManager.NavigateTo("/document");
         }
     }
 }
