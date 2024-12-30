@@ -2,7 +2,7 @@
 
 @if (Image == null || ObraSociales == null)
 {
-    <Loading />
+    <Loading Label="Cargando obras sociales espere..." />
 }
 else
 {
@@ -10,11 +10,15 @@ else
     <EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
         <DataAnnotationsValidator />
          <ValidationSummary />
-
+        <MudPaper Class="mb-3 p-3">
+            <MudText Typo="Typo.h4" GutterBottom="true">
+                Carga Documentación Obra Social
+            </MudText>
+        </MudPaper>
     <!-- Aquí van los campos del formulario -->
-        <div class="mb-3">
+     @*    <div class="mb-3">
             <h2>Carga Documentación Obra Social</h2>
-        </div>
+        </div> *@
       
             @* <InputText class="form-control" @bind-Value="Image.Name" />
             <ValidationMessage For="@(() => Image.Name)" /> *@
@@ -44,7 +48,7 @@ else
                     <span>
                         <i class="oi oi-data-transfer-upload" />Carga Documentos
                         <div class="upload-section">
-                            <h3 class="upload-heading">Selecciona tus imágenes</h3>
+                            <h3 class="upload-heading">Selecciona tus archivos...</h3>
                             <div class="file-input-container">
                                 <InputFile OnChange="LoadFiles" multiple />
                                
@@ -57,7 +61,7 @@ else
 
             @if (uploading)
             {
-                    <Loading />
+                <Loading Label="Subiendo Archivos a la nube..." />
             }
 
             @if (!string.IsNullOrEmpty(uploadMessage))
@@ -100,6 +104,10 @@ else
                 <!-- Modal para la vista previa -->
                
             }
+         @*    <MudButton Type="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">
+                Enviar
+            </MudButton> *@
+
 
             <button class="btn btn-primary" type="submit">Guardar Cambios</button>
 
