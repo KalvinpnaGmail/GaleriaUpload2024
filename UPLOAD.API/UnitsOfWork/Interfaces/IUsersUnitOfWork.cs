@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
+using UPLOAD.SHARE.Response;
 
 namespace UPLOAD.API.UnitsOfWork.Interfaces
 {
@@ -16,7 +17,6 @@ namespace UPLOAD.API.UnitsOfWork.Interfaces
 
         Task<bool> IsUserInRoleAsync(User user, string roleName);
 
-
         //para loguearse
         Task<SignInResult> LoginAsync(LoginDTO model);
 
@@ -29,7 +29,8 @@ namespace UPLOAD.API.UnitsOfWork.Interfaces
 
         Task<IdentityResult> UpdateUserAsync(User user);
 
+        Task<ActionResponse<IEnumerable<User>>> GetAsync(PaginationDTO pagination);
 
-
+        Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
     }
 }

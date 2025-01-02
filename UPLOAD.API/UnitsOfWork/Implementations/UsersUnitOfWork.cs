@@ -3,10 +3,11 @@ using UPLOAD.API.Repositories.Interfaces;
 using UPLOAD.API.UnitsOfWork.Interfaces;
 using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
+using UPLOAD.SHARE.Response;
 
 namespace UPLOAD.API.UnitsOfWork.Implementations
 {
-    public class UsersUnitOfWork:IUsersUnitOfWork
+    public class UsersUnitOfWork : IUsersUnitOfWork
     {
         private readonly IUsersRepository _usersRepository;
 
@@ -35,11 +36,8 @@ namespace UPLOAD.API.UnitsOfWork.Implementations
 
         public async Task<IdentityResult> UpdateUserAsync(User user) => await _usersRepository.UpdateUserAsync(user);
 
+        public async Task<ActionResponse<IEnumerable<User>>> GetAsync(PaginationDTO pagination) => await _usersRepository.GetAsync(pagination);
 
-
-
+        public async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination) => await _usersRepository.GetTotalPagesAsync(pagination);
     }
-
-
-
 }
