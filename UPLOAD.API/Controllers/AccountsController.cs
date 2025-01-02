@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using UPLOAD.API.Helpers;
+using UPLOAD.API.Repositories.Interfaces;
 using UPLOAD.API.UnitsOfWork.Interfaces;
 using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
@@ -21,6 +22,7 @@ namespace UPLOAD.API.Controllers
         private readonly IUsersUnitOfWork _usersUnitOfWork;
         private readonly IConfiguration _configuration;
         private readonly IFileStorage _fileStorage;
+
         private readonly string _container;
 
         public AccountsController(IUsersUnitOfWork usersUnitOfWork, IConfiguration configuration, IFileStorage fileStorage)

@@ -26,8 +26,7 @@ namespace UPLOAD.WEB.Pages.Autenticacion
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private ILoginService LoginService { get; set; } = null!;
-
-
+        [Parameter, SupplyParameterFromQuery] public bool IsAdmin { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -53,9 +52,6 @@ namespace UPLOAD.WEB.Pages.Autenticacion
             //await InvokeAsync(StateHasChanged);
         }
 
-
-
-
         private async Task LoadCountriesAsync()
         {
             var responseHttp = await Repository.GetAsync<List<Country>>("/api/countries/combo");
@@ -77,10 +73,6 @@ namespace UPLOAD.WEB.Pages.Autenticacion
             userDTO.CityId = 0;
             await LoadCitiesAsyn(selectedStateId);
         }
-
-
-
-
 
         private async Task LoadStatesAsyn(int countryId)
         {
@@ -108,12 +100,15 @@ namespace UPLOAD.WEB.Pages.Autenticacion
             cities = responseHttp.Response;
         }
 
-
-
         private async Task CreteUserAsync()
         {
             userDTO.UserName = userDTO.Email;
             userDTO.UserType = UserType.User;
+            if (IsAdmin)
+            {
+                userDTO.UserType = UserType.Admin;
+            }
+
             loading = true;
 
             var responseHttp = await Repository.PostAsync<UserDTO, TokenDTO>("/api/accounts/CreateUser", userDTO);
@@ -130,7 +125,4 @@ namespace UPLOAD.WEB.Pages.Autenticacion
             NavigationManager.NavigateTo("/");
         }
     }
-
-
 }
-
