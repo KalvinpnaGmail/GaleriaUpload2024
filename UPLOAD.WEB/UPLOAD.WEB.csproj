@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\images\logo.PNG" />
+    <None Include="wwwroot\images\logo.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +40,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UPLOAD.SHARE\UPLOAD.SHARE.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\images\779781883952778b25974baa3cf7679c.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\logo2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
