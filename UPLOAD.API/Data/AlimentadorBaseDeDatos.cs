@@ -1,4 +1,7 @@
-﻿using UPLOAD.API.UnitsOfWork.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
+using UPLOAD.API.Helpers;
+using UPLOAD.API.UnitsOfWork.Interfaces;
 using UPLOAD.SHARE.Entities;
 using UPLOAD.SHARE.Enums;
 
@@ -8,26 +11,35 @@ namespace UPLOAD.API.Data
     {
         private readonly DataContext _context;
         private readonly IUsersUnitOfWork _usersUnitOfWork;
+        private readonly IFileStorage _fileStorage;
 
-        public AlimentadorBaseDeDatos(DataContext context, IUsersUnitOfWork usersUnitOfWork)
+        public AlimentadorBaseDeDatos(DataContext context, IUsersUnitOfWork usersUnitOfWork, IFileStorage fileStorage)
         {
             _context = context;
             _usersUnitOfWork = usersUnitOfWork;
+            _fileStorage = fileStorage;
         }
 
         public async Task SeedAsync()
         {
-            //Aseguramen que haya base de datos EnsureCreatedAsync() 
+            //Aseguramen que haya base de datos EnsureCreatedAsync()
             //corre todas las migraciones pendientes...o se update-database
             await _context.Database.EnsureCreatedAsync();
+            //await CheckCountriesFullAsync();
             await checkCountriesAsync();
             await checkCateforiesAsync();
             await CheckRolesAsync();
-            await CheckUserAsync("1010", "Gabriel", "Lopez", "lopez.gabriel@yopmail.com", "3434564831", "Venezuela 1165", UserType.Admin);
-
+            await CheckUserAsync("1010", "Gabriel", "Lopez", "lopez.gabriel@yopmail.com", "3434564831", "Venezuela 1165", "gabriel.jpg", UserType.Admin);
         }
 
-
+        private async Task CheckCountriesFullAsync()
+        {
+            if (!_context.Countries.Any())
+            {
+                var countriesStatesCitiesSQLScript = File.ReadAllText("Data\\CountriesStatesCities.sql");
+                await _context.Database.ExecuteSqlRawAsync(countriesStatesCitiesSQLScript);
+            }
+        }
 
         private async Task CheckRolesAsync()
         {
@@ -35,11 +47,26 @@ namespace UPLOAD.API.Data
             await _usersUnitOfWork.CheckRoleAsync(UserType.User.ToString());
         }
 
-        private async Task<User> CheckUserAsync(string document, string firstName, string lastName, string email, string phone, string address, UserType userType)
+        private async Task<User> CheckUserAsync(string document, string firstName, string lastName, string email, string phone, string address, string image, UserType userType)
         {
             var user = await _usersUnitOfWork.GetUserAsync(email);
             if (user == null)
             {
+                var city = await _context.Cities.FirstOrDefaultAsync(x => x.Name == "Medellín");
+                city ??= await _context.Cities.FirstOrDefaultAsync();
+
+                string filePath;
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    filePath = $"{Environment.CurrentDirectory}\\Images\\users\\{image}";
+                }
+                else
+                {
+                    filePath = $"{Environment.CurrentDirectory}/Images/users/{image}";
+                }
+                var fileBytes = File.ReadAllBytes(filePath);
+                var imagePath = await _fileStorage.SaveFileAsync(fileBytes, "jpg", "users");
+
                 user = new User
                 {
                     FirstName = firstName,
@@ -51,6 +78,7 @@ namespace UPLOAD.API.Data
                     Document = document,
                     CityId = 1,
                     UserType = userType,
+                    Photo = imagePath,
                 };
 
                 await _usersUnitOfWork.AddUserAsync(user, "123456");
@@ -59,8 +87,6 @@ namespace UPLOAD.API.Data
 
             return user;
         }
-
-
 
         private async Task checkCateforiesAsync()
         {
@@ -71,7 +97,6 @@ namespace UPLOAD.API.Data
                 _context.Categories.Add(new SHARE.Entities.Category { Name = "5" });
                 _context.Categories.Add(new SHARE.Entities.Category { Name = "4" });
                 await _context.SaveChangesAsync();
-
             }
         }
 
@@ -136,7 +161,6 @@ namespace UPLOAD.API.Data
                     }
                 },
             }
-
                 });
 
                 _context.Countries.Add(new Country
@@ -159,7 +183,7 @@ namespace UPLOAD.API.Data
                 new Provincia()
                 {
                     Name = "Santa Fe",
-                    Cities = new List<City>() 
+                    Cities = new List<City>()
                         {
                             new City() { Name = "Santa Fe" },
                             new City() { Name = "Rosario" },
@@ -167,13 +191,7 @@ namespace UPLOAD.API.Data
                 },
             }
                 });
-              
-
-
-
             }
-
-
 
             //_context.Countries.Add(new SHARE.Entities.Country { Name = "Brasil" });
             //_context.Countries.Add(new SHARE.Entities.Country { Name = "Colombia" });
@@ -181,7 +199,6 @@ namespace UPLOAD.API.Data
             //_context.Countries.Add(new SHARE.Entities.Country { Name = "Venezuela" });
             //_context.Countries.Add(new SHARE.Entities.Country { Name = "Paraguay" });
             await _context.SaveChangesAsync();
-
         }
     }
 }

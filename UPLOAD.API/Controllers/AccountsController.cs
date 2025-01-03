@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using UPLOAD.API.Helpers;
-using UPLOAD.API.Repositories.Interfaces;
 using UPLOAD.API.UnitsOfWork.Interfaces;
 using UPLOAD.SHARE.DTOS;
 using UPLOAD.SHARE.Entities;
