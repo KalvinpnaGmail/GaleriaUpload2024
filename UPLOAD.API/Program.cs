@@ -83,6 +83,12 @@ builder.Services.AddDbContext<DataContext>(options =>
     }
 },
 ServiceLifetime.Transient);
+//scoped: la usamos cuando quiero que cree una nueva instancia cada vez que lo llamo
+//Transient:usamos solouna vez se injecta una vez---en el ciclo de vida del program
+//Singleton:la primera vez lo crea y lo deja en memoria
+///alimientador base datos trnasiente si no lo usamos nunca que no quede en memoria
+
+builder.Services.AddTransient<AlimentadorBaseDeDatos>();
 
 builder.Services.AddScoped<IFileStorage, FileStorage>();
 
@@ -113,13 +119,6 @@ builder.Services.AddIdentity<User, IdentityRole>(x =>
 })
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
-
-//scoped: la usamos cuando quiero que cree una nueva instancia cada vez que lo llamo
-//Transient:usamos solouna vez se injecta una vez---en el ciclo de vida del program
-//Singleton:la primera vez lo crea y lo deja en memoria
-///alimientador base datos trnasiente si no lo usamos nunca que no quede en memoria
-
-builder.Services.AddTransient<AlimentadorBaseDeDatos>();
 
 /////inyectamos para token autenticacion
 
@@ -155,6 +154,12 @@ async void SeedData(WebApplication app)
 }
 
 ///como esta clase no tienen inyectcion lo hacemos manualmente
+///
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true)
+    .AllowCredentials());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -168,10 +173,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.UseCors(x => x
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .SetIsOriginAllowed(origin => true)
-    .AllowCredentials());
 
 app.Run();

@@ -7,19 +7,18 @@ using static UPLOAD.API.Helpers.AclerHelper;
 
 public class ClinicaService : IClinicaService
 {
-     
-        private readonly HttpClient _httpClient;
-        private readonly string _usuario;
-        private readonly string _pass;
-        private readonly string _url;
+    private readonly HttpClient _httpClient;
+    private readonly string _usuario;
+    private readonly string _pass;
+    private readonly string _url;
 
-        public ClinicaService(IConfiguration configuration)
-        {
-            _httpClient = new HttpClient(new HttpClientHandler { ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true });
-            _usuario = configuration["AclerApi:usuario"]!;
-            _pass = configuration["AclerApi:pass"]!;
-            _url = configuration["AclerApi:url"]!;
-        }
+    public ClinicaService(IConfiguration configuration)
+    {
+        _httpClient = new HttpClient(new HttpClientHandler { ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true });
+        _usuario = configuration["AclerApi:usuario"]!;
+        _pass = configuration["AclerApi:pass"]!;
+        _url = configuration["AclerApi:url"]!;
+    }
 
     public async Task<ActionResponse<IEnumerable<Clinica>>> GetClinicasAsync()
     {
@@ -70,7 +69,6 @@ public class ClinicaService : IClinicaService
         }
     }
 
-
     public async Task<IEnumerable<Clinica>> GetComboAsync()
     {
         try
@@ -104,11 +102,4 @@ public class ClinicaService : IClinicaService
             throw new Exception($"Error al obtener datos: {ex.Message}", ex);
         }
     }
-
-
-
-
 }
-
-
-

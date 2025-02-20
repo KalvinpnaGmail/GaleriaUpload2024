@@ -170,7 +170,7 @@ namespace UPLOAD.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Categories");
@@ -215,7 +215,7 @@ namespace UPLOAD.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id", "Name")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Countries");
@@ -243,7 +243,7 @@ namespace UPLOAD.API.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

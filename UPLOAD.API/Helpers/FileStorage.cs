@@ -1,44 +1,47 @@
-﻿
-using Azure.Storage.Blobs;
+﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 
 namespace UPLOAD.API.Helpers
 {
     public class FileStorage : IFileStorage
     {
-
-        private readonly string _connectionString;
+        private readonly Cloudinary _cloudinary;
 
         public FileStorage(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("AzureStorage")!;
-            ;
+            var cloudName = configuration["Cloud:usuario"];
+            var apiKey = configuration["Cloud:pass"];
+            var apiSecret = configuration["Cloud:llave"];
+
+            var account = new Account(cloudName, apiKey, apiSecret);
+            _cloudinary = new Cloudinary(account);
         }
+
+        public async Task<string> SaveFileAsync(byte[] content, string extension, string containerName)
+        {
+            using (var ms = new MemoryStream(content))
+            {
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(Guid.NewGuid().ToString(), ms),
+                    Folder = containerName, // Nombre de la carpeta en Cloudinary
+                    UseFilename = true,
+                    UniqueFilename = true
+                };
+
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                return uploadResult.SecureUrl.ToString(); // Devuelve la URL segura
+            }
+        }
+
         public async Task RemoveFileAsync(string path, string containerName)
         {
-            var client = new BlobContainerClient(_connectionString, containerName);
-            await client.CreateIfNotExistsAsync();
-            var fileName = Path.GetFileName(path);
-            var blob = client.GetBlobClient(fileName);
-            await blob.DeleteIfExistsAsync();  ///usar esto por si la foto no exsite asi no contralo
-        }
+            var publicId = Path.GetFileNameWithoutExtension(path); // Obtiene el ID del archivo
+            var deleteParams = new DeletionParams(publicId);
 
-        public async Task<string> SaveFileAsync(byte[] content, string extention, string containerName)
-        {
-            var client = new BlobContainerClient(_connectionString, containerName);///crea la carpeta
-            await client.CreateIfNotExistsAsync();
-            client.SetAccessPolicy(PublicAccessType.Blob);///acceso publico sin token
-            var fileName = $"{Guid.NewGuid()}{extention}";//se arma nombre de archivo unico para cada foto con el Guid n con letras y guiiones
-            var blob = client.GetBlobClient(fileName);//nueva instancia con el nombre del archivo
-
-            using (var ms = new MemoryStream(content))   
-            {
-                await blob.UploadAsync(ms);
-            }
-
-            return blob.Uri.ToString();  ///nos devuelve la ruta donde almacenamos la foto
+            await _cloudinary.DestroyAsync(deleteParams);
         }
     }
-
-
 }

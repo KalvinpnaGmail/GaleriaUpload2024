@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UPLOAD.API.Migrations
 {
     /// <inheritdoc />
-    public partial class SinCabeceraImagen : Migration
+    public partial class InitDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,7 +58,7 @@ namespace UPLOAD.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Url = table.Column<string>(type: "text", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ObraSocial = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Periodo = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -296,9 +296,9 @@ namespace UPLOAD.API.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_Id",
+                name: "IX_Categories_Name",
                 table: "Categories",
-                column: "Id",
+                column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -308,9 +308,9 @@ namespace UPLOAD.API.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Countries_Id_Name",
+                name: "IX_Countries_Name",
                 table: "Countries",
-                columns: new[] { "Id", "Name" },
+                column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(

@@ -29,11 +29,15 @@ namespace UPLOAD.API.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new ImageConfiguration());
-            modelBuilder.ApplyConfiguration(new CountryConfiguration());
-            modelBuilder.ApplyConfiguration(new CategoryConfiguraration());
-            modelBuilder.ApplyConfiguration(new ProvinciaConfiguration());
-            modelBuilder.ApplyConfiguration(new CityConfiguration());
+            modelBuilder.Entity<Category>().HasIndex(x => x.Name).IsUnique();
+            modelBuilder.Entity<Country>().HasIndex(x => x.Name).IsUnique();
+            modelBuilder.Entity<City>().HasIndex(x => new { x.ProvinciaId, x.Name }).IsUnique();
+            modelBuilder.Entity<Provincia>().HasIndex(x => new { x.CountryId, x.Name }).IsUnique();
+            //modelBuilder.ApplyConfiguration(new ImageConfiguration());
+            //modelBuilder.ApplyConfiguration(new CountryConfiguration());
+            //modelBuilder.ApplyConfiguration(new CategoryConfiguraration());
+            //modelBuilder.ApplyConfiguration(new ProvinciaConfiguration());
+            //modelBuilder.ApplyConfiguration(new CityConfiguration());
 
             DisableCascadingDelete(modelBuilder);
         }
