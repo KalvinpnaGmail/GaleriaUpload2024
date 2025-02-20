@@ -88,8 +88,21 @@ namespace UPLOAD.API.Repositories.Implementations
 
         public async Task<IdentityResult> UpdateUserAsync(User user)
         {
-            return await _userManager.UpdateAsync(user);
+            var existingUser = await _context.Users.FindAsync(user.Id);
+            if (existingUser == null)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "User not found" });
+            }
+
+            _context.Entry(existingUser).CurrentValues.SetValues(user); // 🔥 Solo actualiza los valores, no trackea una nueva entidad
+            await _context.SaveChangesAsync();
+            return IdentityResult.Success;
         }
+
+        //public async Task<IdentityResult> UpdateUserAsync(User user)
+        //{
+        //    return await _userManager.UpdateAsync(user);
+        //}
 
         public async Task<ActionResponse<IEnumerable<User>>> GetAsync(PaginationDTO pagination)
         {

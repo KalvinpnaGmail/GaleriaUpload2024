@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -173,6 +174,23 @@ namespace UPLOAD.API.Controllers
                 currentUser.PhoneNumber = user.PhoneNumber;
                 currentUser.Photo = !string.IsNullOrEmpty(user.Photo) && user.Photo != currentUser.Photo ? user.Photo : currentUser.Photo;
                 currentUser.CityId = user.CityId;
+
+                ////
+                //var updatedUser = new User
+                //{
+                //    Id = currentUser.Id,
+                //    UserName = currentUser.UserName,  // <-- Esto es clave
+                //    Email = currentUser.Email,        // <-- También asegúrate de incluir el Email
+                //    Document = user.Document,
+                //    FirstName = user.FirstName,
+                //    LastName = user.LastName,
+                //    Address = user.Address,
+                //    PhoneNumber = user.PhoneNumber,
+                //    Photo = !string.IsNullOrEmpty(user.Photo) && user.Photo != currentUser.Photo ? user.Photo : currentUser.Photo,
+                //    CityId = user.CityId
+                //};
+
+                //
 
                 var result = await _usersUnitOfWork.UpdateUserAsync(currentUser);
                 if (result.Succeeded)
