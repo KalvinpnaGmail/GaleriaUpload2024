@@ -1,0 +1,50 @@
+﻿@page "/practicas"
+@using UPLOAD.SHARE.DTOS
+@using UPLOAD.WEB.Servicios
+@inject PracticaApiService PracticaService
+
+<h3>Listado de Prácticas</h3>
+
+@if (practicas == null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Obra Social</th>
+                <th>Código</th>
+                <th>Descripción</th>
+                <th>Importe 1</th>
+                <th>Importe 2</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var practica in practicas)
+            {
+                <tr>
+                    <td>@practica.ObraSocial</td>
+                    <td>@practica.Codigo</td>
+                    <td>@practica.Descripcion</td>
+                    <td>@practica.Importe1</td>
+                    <td>@practica.Importe2</td>
+                    <td>@practica.FechaInicio.ToShortDateString()</td>
+                    <td>@practica.FechaFin.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<PracticaDto> practicas;
+
+    protected override async Task OnInitializedAsync()
+    {
+        practicas = await PracticaService.GetPracticasAsync();
+    }
+}
