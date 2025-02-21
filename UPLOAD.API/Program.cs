@@ -74,7 +74,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexionSql"),
+    options.UseSqlServer(builder.Configuration.GetConnectionString("LocalConnection"),
         (a) => a.MigrationsAssembly("UPLOAD.API"));
     // Solo habilitar durante el desarrollo
     if (builder.Environment.IsDevelopment())
