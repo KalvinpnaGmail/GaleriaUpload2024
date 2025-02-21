@@ -1,5 +1,5 @@
 ﻿@page "/"
-<AuthorizeView Roles="Admin">
+@* <AuthorizeView Roles="Admin">
     <Authorized>
         <p>Estas autenticado y autorizado, @context.User.Identity?.Name</p>
     </Authorized>
@@ -8,36 +8,81 @@
   </NotAuthorized>
 </AuthorizeView>
 
-@if (result!=null)
-{
-    @foreach (clienteSwager.WeatherForecast weather in result) 
-    {
-        <div>
-            @weather.TemperatureC
-            @weather.TemperatureF
-            @weather.Summary
-            @weather.Date
-        </div>
-        
-    }
-}
+ *@
+
+<MudContainer>
+    <MudGrid>
+        <MudItem xs="12">
+            <MudCard>
+                <MudCardMedia Image="images/inicio.png" Title="Quienes Somos" />
+            <MudCardContent>
+                <MudTypography variant="h5" align="center">¿Quiénes Somos?</MudTypography>
+                <MudTypography variant="body1" align="justify" style="margin-top: 10px;">
+                    Es una asociación civil sin fines de lucro, con jurisdicción en toda la provincia de Entre Ríos, 
+                    que representa numerosas instituciones sanatoriales ante los diversos entes municipales, provinciales, 
+                    nacionales y laborales.
+                </MudTypography>
+            </MudCardContent>
+        </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    <MudGrid>
+        <MudItem xs="12" sm="4">
+            <MudCard>
+                <MudCardMedia Image="ruta/a/imagen1.jpg" Title="Consulta Médica" />
+               
+            <MudCardContent>
+                <MudTypography variant="h5" align="center">¿Quiénes Somos?</MudTypography>
+                <MudTypography variant="body1" align="justify" style="margin-top: 10px;">
+                    Es una asociación civil sin fines de lucro, con jurisdicción en toda la provincia de Entre Ríos, 
+                    que representa numerosas instituciones sanatoriales ante los diversos entes municipales, provinciales, 
+                    nacionales y laborales.
+                </MudTypography>
+            </MudCardContent>
+        </MudCard>
+            
+        </MudItem>
+        <MudItem xs="12" sm="4">
+            <MudCard>
+                <MudCardMedia Image="images/LogoAcler.png" Title="Laboratorio" />
+                 <MudCardContent>
+                <MudTypography variant="h5" align="center">¿Quiénes Somos?</MudTypography>
+                <MudTypography variant="body1" align="justify" style="margin-top: 10px;">
+                    Es una asociación civil sin fines de lucro, con jurisdicción en toda la provincia de Entre Ríos, 
+                    que representa numerosas instituciones sanatoriales ante los diversos entes municipales, provinciales, 
+                    nacionales y laborales.
+                </MudTypography>
+            </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="4">
+            <MudCard>
+                <MudCardMedia Image="ruta/a/imagen3.jpg" Title="Emergencias" />
+                 <MudCardContent>
+                <MudTypography variant="h5" align="center">¿Quiénes Somos?</MudTypography>
+                <MudTypography variant="body1" align="justify" style="margin-top: 10px;">
+                    Es una asociación civil sin fines de lucro, con jurisdicción en toda la provincia de Entre Ríos, 
+                    que representa numerosas instituciones sanatoriales ante los diversos entes municipales, provinciales, 
+                    nacionales y laborales.
+                </MudTypography>
+            </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    <MudGrid>
+        <MudItem xs="12">
+            <MudCard>
+                <MudCardContent>
+                    <MudTypography variant="body1" align="center">&copy; 2025 Acler. Todos los derechos reservados.</MudTypography>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
 
 
-@code{
-    private ICollection<clienteSwager.WeatherForecast> result;
-    private clienteSwager.swaggerjsonClient client = new clienteSwager.swaggerjsonClient("https://localhost:7207/", new HttpClient());
-
-
-    private async Task Refresh()
-    {
-        result = await client.GetWeatherForecastAsync();
-    }
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        await Refresh();
-    }
    
-}
+
  

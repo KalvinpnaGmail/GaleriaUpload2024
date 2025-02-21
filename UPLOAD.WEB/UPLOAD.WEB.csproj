@@ -14,6 +14,7 @@
     <None Include="wwwroot\images\logo.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="wwwroot\images\LogoAcler.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,94 @@
+﻿@page "/practicas"
+@using UPLOAD.SHARE.DTOS
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-5">
+    @if (_loading)
+    {
+       
+            <Loading Label="Cargando Listado de Practicas...Espere por Favor" />
+          
+    }
+    else
+    {
+        <MudPaper Elevation="3" Class="pa-4" Width="100%">
+            <MudGrid>
+                <MudItem xs="12">
+                    @* <MudButton Variant="Variant.Filled"
+                               StartIcon="@Icons.Material.Filled.Add"
+                               Color="Color.Primary"
+                               OnClick="@(() => navigationManager.NavigateTo("/"))"
+                               Disabled="true">
+                        Nueva
+                    </MudButton> *@
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTable Items="@listapracticas"
+                              Dense="true"
+                              Striped="true"
+                              Bordered="true"
+                              ItemSize="40"
+                              RowsPerPage="@rowsPerPage"
+                              RowsPerPageChanged="OnRowsPerPageChanged"
+                              Filter="new Func<PracticaDto,bool>(FilterFunc1)"
+                              @bind-SelectedItem="selectedItem1"
+                              Loading="@_loading"
+                              LoadingProgressColor="Color.Info">
+                        <ToolBarContent>
+                            <MudSpacer />
+                            <MudTextField @bind-Value="searchString1"
+                                          Placeholder="Buscar por Código o nombre de pràctica"
+                                          Adornment="Adornment.Start"
+                                          AdornmentIcon="@Icons.Material.Filled.Search"
+                                          IconSize="Size.Medium"
+                                          Class="mt-0">
+                            </MudTextField>
+                        </ToolBarContent>
+                        <HeaderContent>
+                            <MudTh>
+                                <MudTableSortLabel SortBy="new Func<PracticaDto, object>(x => x.ObraSocial)">
+                                    Obra Social
+                                </MudTableSortLabel>
+                            </MudTh>
+                            
+                            <MudTableSortLabel SortBy="new Func<PracticaDto, object>(x => x.Codigo)">
+                                Código
+                            </MudTableSortLabel>
+                            <MudTh Style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                Descripción
+                            </MudTh>
+
+                            <MudTh>Importe</MudTh>
+                            <MudTh>Vigencia</MudTh>
+                            <MudTh>Opciones</MudTh>
+                        </HeaderContent>
+                        <RowTemplate Context="practicaRow">
+                            <MudTd DataLabel="Obra Social">@practicaRow.ObraSocial</MudTd>
+                            <MudTd DataLabel="Codigo">@practicaRow.Codigo</MudTd>
+                            <MudTd DataLabel="Descripción">@practicaRow.Descripcion</MudTd>
+                            <MudTd DataLabel="Importe">@practicaRow.Importe2</MudTd>
+                            <MudTd DataLabel="Vigencia">@practicaRow.FechaFin.ToString("dd/MM/yyyy")</MudTd>
+                            <MudTd DataLabel="Opciones">
+                                <MudFab Color="Color.Primary"
+                                        StartIcon="@Icons.Material.Filled.Edit"
+                                        Size="Size.Small"
+                                        Href="@($"/pages/Clinicas/{practicaRow.Codigo}")"
+                                        IconSize="Size.Small" />
+                                <!--
+                                <MudFab Color="Color.Error"
+                                        StartIcon="@Icons.Material.Filled.Delete"
+                                        Size="Size.Small"
+                                        IconSize="Size.Small"
+                                        OnClick="@(() => Delete(practicaRow))" />
+                                -->
+                            </MudTd>
+                        </RowTemplate>
+                        <PagerContent>
+                            <MudTablePager />
+                        </PagerContent>
+                    </MudTable>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    }
+</MudContainer>
+
