@@ -15,7 +15,6 @@ namespace UPLOAD.WEB.Pages.Practicas
         private PracticaDto selectedItem1 = null;
         private bool _loading = true;
         private int rowsPerPage = 25;
-        private Dictionary<string, decimal> promediosPracticas = new();
 
         private void OnRowsPerPageChanged(int newRowsPerPage)
         {
@@ -35,13 +34,6 @@ namespace UPLOAD.WEB.Pages.Practicas
             }
 
             listapracticas = responseHppt.Response!;
-            // Calcular el promedio de Importe2 por cada Código
-            promediosPracticas = listapracticas
-                .GroupBy(p => p.Codigo)
-                .ToDictionary(
-                    g => g.Key,
-                    g => g.Average(p => p.Importe2)
-                );
         }
 
         protected override async Task OnInitializedAsync()
