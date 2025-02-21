@@ -13,6 +13,7 @@ using UPLOAD.API.Service;
 using UPLOAD.API.UnitsOfWork.Implementations;
 using UPLOAD.API.UnitsOfWork.Interfaces;
 using UPLOAD.SHARE.Entities;
+using UPLOAD.SHARE.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -107,6 +108,9 @@ builder.Services.AddScoped<IObraSocialService, ObraSocialService>();
 
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 builder.Services.AddScoped<ICategoriesUnitOfWork, CategoriesUnitOfWork>();
+//servicio soap acler
+builder.Services.AddHttpClient<IPracticaService, PracticaService>();
+builder.Services.AddScoped<IPracticaService, PracticaService>();
 
 builder.Services.AddIdentity<User, IdentityRole>(x =>
 {
