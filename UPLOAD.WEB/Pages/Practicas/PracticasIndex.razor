@@ -58,7 +58,8 @@
                             </MudTh>
 
                             <MudTh>Importe</MudTh>
-                            <MudTh>Vigencia</MudTh>
+                            <MudTh>Vigencia</MudTh> 
+                            <MudTh>Promedio de Práctica</MudTh>
                             <MudTh>Opciones</MudTh>
                         </HeaderContent>
                         <RowTemplate Context="practicaRow">
@@ -67,6 +68,9 @@
                             <MudTd DataLabel="Descripción">@practicaRow.Descripcion</MudTd>
                             <MudTd DataLabel="Importe">@practicaRow.Importe2</MudTd>
                             <MudTd DataLabel="Vigencia">@practicaRow.FechaFin.ToString("dd/MM/yyyy")</MudTd>
+                            <MudTd DataLabel="Promedio de Práctica">
+                                @(promediosPracticas.ContainsKey(practicaRow.Codigo) ? promediosPracticas[practicaRow.Codigo].ToString("N2") : "N/A")
+                            </MudTd>
                             <MudTd DataLabel="Opciones">
                                 <MudFab Color="Color.Primary"
                                         StartIcon="@Icons.Material.Filled.Edit"
