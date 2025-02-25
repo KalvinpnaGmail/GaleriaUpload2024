@@ -13,8 +13,11 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
+///la uri es la que me das Swager 7207
 ///la uri es la que me das Swager
 builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7207/") });
+//builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("http://192.168.1.100:7207/") });
+
 //formas de inyectar serviios
 //scoped: la usamos cuando quiero que cree una nueva instancia cada vez que lo llamo
 //Transient:usamos solouna vez se injecta una vez---en el ciclo de vida del program

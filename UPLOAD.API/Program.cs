@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -62,20 +62,36 @@ builder.Services.AddSwaggerGen(c =>
 
 ///modificamos swagger para poder mandarle el swagger y no usar postman
 
+//var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(name: MyAllowSpecificOrigins,
+//                      policy =>
+//                      {
+//                          policy.AllowAnyOrigin(); // add the allowed origins
+//                      });
+//});
+
+//nuevo 25/02/2025
+
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.AllowAnyOrigin(); // add the allowed origins
-                      });
+    options.AddPolicy(MyAllowSpecificOrigins, policy =>
+    {
+        policy.WithOrigins("http://192.168.1.100:7183", "https://localhost:7265", "https://192.168.1.10:7265", "https://181.228.28.10") // Permitir solo este origen
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // Habilita cookies/autenticación en CORS
+    });
 });
 
+///
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexionSql"),
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexionServer"),
         (a) => a.MigrationsAssembly("UPLOAD.API"));
     // Solo habilitar durante el desarrollo
     if (builder.Environment.IsDevelopment())
@@ -137,7 +153,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ClockSkew = TimeSpan.Zero
     });
 
-// Configuraci�n del logging para consola
+// Configuración del logging para consola
 //builder.Logging.ClearProviders();
 //builder.Logging.AddConsole();
 
@@ -159,11 +175,14 @@ async void SeedData(WebApplication app)
 
 ///como esta clase no tienen inyectcion lo hacemos manualmente
 ///
-app.UseCors(x => x
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .SetIsOriginAllowed(origin => true)
-    .AllowCredentials());
+/////IMPORTANTE: Asegúrate de llamar a UseCors ANTES de UseAuthentication y UseAuthorization
+//nuvevo 25/02/2025
+app.UseCors(MyAllowSpecificOrigins);
+//app.UseCors(x => x
+//    .AllowAnyMethod()
+//    .AllowAnyHeader()
+//    .SetIsOriginAllowed(origin => true)
+//    .AllowCredentials());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
