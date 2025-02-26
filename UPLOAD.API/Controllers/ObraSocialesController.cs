@@ -8,6 +8,7 @@ using UPLOAD.SHARE.Entities;
 namespace UPLOAD.API.Controllers
 {
     [ApiController]
+    [EnableCors("_myAllowSpecificOrigins")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("/api/obraSociales")]
     public class ObraSocialesController : ControllerBase

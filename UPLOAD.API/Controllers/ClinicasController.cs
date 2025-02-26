@@ -9,7 +9,7 @@ namespace UPLOAD.API.Controllers
 {
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    //[EnableCors("_myAllowSpecificOrigins")]
+    [EnableCors("_myAllowSpecificOrigins")]
     [Route("/api/clinicas")]
     public class ClinicasController : ControllerBase
     {

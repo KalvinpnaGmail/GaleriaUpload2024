@@ -15,7 +15,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 ///la uri es la que me das Swager 7207
 ///la uri es la que me das Swager
-builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7207/") });
+//builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7207/") });
+builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://192.168.1.10:7207/") });
 //builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("http://192.168.1.100:7207/") });
 
 //formas de inyectar serviios
