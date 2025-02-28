@@ -91,7 +91,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexionServer"),
+    options.UseSqlServer(builder.Configuration.GetConnectionString("LocalConnection"),
         (a) => a.MigrationsAssembly("UPLOAD.API"));
     // Solo habilitar durante el desarrollo
     if (builder.Environment.IsDevelopment())
@@ -108,6 +108,7 @@ ServiceLifetime.Transient);
 builder.Services.AddTransient<AlimentadorBaseDeDatos>();
 
 builder.Services.AddScoped<IFileStorage, FileStorage>();
+builder.Services.AddScoped<ImailHelpers, MailHelper>();
 
 builder.Services.AddScoped(typeof(IGenericUnitOfWork<>), typeof(GenericUnitOfWork<>));
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -130,12 +131,20 @@ builder.Services.AddScoped<IPracticaService, PracticaService>();
 
 builder.Services.AddIdentity<User, IdentityRole>(x =>
 {
+    //confirmar registro de usuario
+    x.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+    x.SignIn.RequireConfirmedEmail = true;
+    ///confirmar registro de usuario
     x.User.RequireUniqueEmail = true;
     x.Password.RequireDigit = false;
     x.Password.RequiredUniqueChars = 0;
     x.Password.RequireLowercase = false;
     x.Password.RequireNonAlphanumeric = false;
     x.Password.RequireUppercase = false;
+    // mas seguridad al sistema ..si me equivoco 3 veces me bloquea 5 minutos
+    x.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    x.Lockout.MaxFailedAccessAttempts = 3;
+    x.Lockout.AllowedForNewUsers = true;
 })
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();

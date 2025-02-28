@@ -7,6 +7,10 @@ namespace UPLOAD.API.UnitsOfWork.Interfaces
 {
     public interface IUsersUnitOfWork
     {
+        Task<string> GenerateEmailConfirmationTokenAsync(User user);
+
+        Task<IdentityResult> ConfirmEmailAsync(User user, string token);
+
         Task<User> GetUserAsync(string email);
 
         Task<IdentityResult> AddUserAsync(User user, string password);
