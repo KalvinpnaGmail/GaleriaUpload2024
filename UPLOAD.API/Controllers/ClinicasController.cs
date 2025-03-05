@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using UPLOAD.API.Service;
 using UPLOAD.SHARE.Entities;
@@ -8,6 +9,7 @@ namespace UPLOAD.API.Controllers
 {
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [EnableCors("_myAllowSpecificOrigins")]
     [Route("/api/clinicas")]
     public class ClinicasController : ControllerBase
     {
@@ -33,15 +35,10 @@ namespace UPLOAD.API.Controllers
             }
         }
 
-
-
-       
         [HttpGet("combo")]
         public async Task<IActionResult> GetComboAsync()
         {
             return Ok(await _clinicaService.GetComboAsync());
         }
-
     }
-
 }
