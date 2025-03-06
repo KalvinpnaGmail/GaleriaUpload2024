@@ -2,7 +2,7 @@ using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using UPLOAD.WEB.Repositories;
 
-namespace D_.Proyect.Visual.GaleriaApiUpload.UPLOAD_WEB.Pages.Autenticacion
+namespace UPLOAD.WEB.Pages.Autenticacion
 {
     public partial class ConfirmEmail
     {
