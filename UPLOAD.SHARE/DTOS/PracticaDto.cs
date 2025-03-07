@@ -17,6 +17,8 @@ namespace UPLOAD.SHARE.DTOS
         public DateTime FechaFin { get; set; }
         public string CodigoInterno { get; set; }
         public string OtroCodigo { get; set; }
-        public decimal PromedioPractica { get; set; } // Nueva propiedad
+
+        public string cod_obrasocial { get; set; }
+        public string nro_conv { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using UPLOAD.API.Service;
 using UPLOAD.SHARE.Entities;
@@ -7,6 +8,7 @@ using UPLOAD.SHARE.Entities;
 namespace UPLOAD.API.Controllers
 {
     [ApiController]
+    [EnableCors("_myAllowSpecificOrigins")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("/api/obraSociales")]
     public class ObraSocialesController : ControllerBase
