@@ -10,6 +10,7 @@ namespace UPLOAD.WEB.Pages.Practicas
         [Inject] private IRepository repository { get; set; } = null!;
         [Inject] private SweetAlertService sweetAlertService { get; set; } = null!;
         [Inject] private NavigationManager navigationManager { get; set; } = null!;
+
         public List<PracticaDto> listapracticas = new List<PracticaDto>();
         private string searchString1 = "";
         private PracticaDto selectedItem1 = null;

@@ -59,14 +59,16 @@
 
                             <MudTh>Importe</MudTh>
                             <MudTh>Vigencia</MudTh>
+                            <MudTh>CodOs</MudTh>
                             <MudTh>Opciones</MudTh>
                         </HeaderContent>
                         <RowTemplate Context="practicaRow">
                             <MudTd DataLabel="Obra Social">@practicaRow.ObraSocial</MudTd>
-                            <MudTd DataLabel="Codigo">@practicaRow.Codigo</MudTd>
+                            <MudTd DataLabel="Cod.Practica">@practicaRow.Codigo</MudTd>
                             <MudTd DataLabel="Descripción">@practicaRow.Descripcion</MudTd>
                             <MudTd DataLabel="Importe">@practicaRow.Importe2</MudTd>
                             <MudTd DataLabel="Vigencia">@practicaRow.FechaFin.ToString("dd/MM/yyyy")</MudTd>
+                            <MudTd DataLabel="Cod.Os">@practicaRow.cod_obrasocial</MudTd>
                             <MudTd DataLabel="Opciones">
                                 <MudFab Color="Color.Primary"
                                         StartIcon="@Icons.Material.Filled.Edit"

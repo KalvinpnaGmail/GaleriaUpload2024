@@ -96,6 +96,9 @@ namespace UPLOAD.API.Service
             foreach (XmlNode item in items)
             {
                 string datos = item["datos"]?.InnerText;
+                string codOs = item["cod_os"]?.InnerText;  // Extraer el valor de <cod_os>
+                string nroconv = item["nroconv"]?.InnerText;  // Extraer el valor de <nroconv>
+
                 if (string.IsNullOrEmpty(datos)) continue;
 
                 // Divide los datos eliminando espacios en blanco automáticamente
@@ -112,7 +115,9 @@ namespace UPLOAD.API.Service
                     FechaInicio = DateTime.TryParse(partes[5], out var f1) ? f1 : DateTime.MinValue,
                     FechaFin = DateTime.TryParse(partes[6], out var f2) ? f2 : DateTime.MinValue,
                     CodigoInterno = partes[7],
-                    OtroCodigo = partes[8]
+                    OtroCodigo = partes[8],
+                    cod_obrasocial = codOs,  // Asignar el valor de cod_os al nuevo campo
+                    nro_conv = nroconv
                 });
             }
 

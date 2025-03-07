@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MudBlazor;
 using System.Text;
 using System.Text.Json.Serialization;
 using UPLOAD.API.Data;
@@ -128,6 +129,9 @@ builder.Services.AddScoped<ICategoriesUnitOfWork, CategoriesUnitOfWork>();
 //servicio soap acler
 builder.Services.AddHttpClient<IPracticaService, PracticaService>();
 builder.Services.AddScoped<IPracticaService, PracticaService>();
+
+// Registrar ApiService en el contenedor de dependencias
+builder.Services.AddHttpClient<ApiService>();
 
 builder.Services.AddIdentity<User, IdentityRole>(x =>
 {
