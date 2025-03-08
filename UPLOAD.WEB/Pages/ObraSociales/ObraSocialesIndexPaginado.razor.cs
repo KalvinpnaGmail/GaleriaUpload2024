@@ -28,7 +28,7 @@ namespace UPLOAD.WEB.Pages.ObraSociales
 
         private async Task LoadAsync()
         {
-            var responseHppt = await repository.GetAsync<List<ObraSocial>>("/api/obraSociales/DevuelveObraSociales");
+            var responseHppt = await repository.GetAsync<List<ObraSocial>>("/api/ApiAcler/DevuelveObraSociales");
             //var result = await repository.GetAsync<List<ObraSocial>>("/api/clinicas/DevuelveObrasSociales");
             // var result = await _libroServicio.Lista();
             if (responseHppt.Error)

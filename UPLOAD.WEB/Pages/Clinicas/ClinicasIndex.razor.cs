@@ -13,9 +13,6 @@ namespace UPLOAD.WEB.Pages.Clinicas
         [Inject] private NavigationManager navigationManager { get; set; } = null!;
         [Inject] private SweetAlertService sweetAlertService { get; set; } = null!;
 
-
-
-
         //        @inject IDialogService _dialogServicio
         //@inject ISnackbar _snackBar
         //@inject SweetAlertService Swal;
@@ -29,7 +26,7 @@ namespace UPLOAD.WEB.Pages.Clinicas
 
         private async Task LoadAsync()
         {
-            var result = await repository.GetAsync<List<Clinica>>("/api/clinicas/DevuelveClinicas");
+            var result = await repository.GetAsync<List<Clinica>>("/api/ApiAcler/DevuelveClinicas");
             // var result = await _libroServicio.Lista();
 
             if (!result.Error)
@@ -37,12 +34,14 @@ namespace UPLOAD.WEB.Pages.Clinicas
                 listaClinicas = result.Response!;
             }
         }
+
         protected override async Task OnInitializedAsync()
         {
             // _menuServicio.SetMenu(new BreadcrumbItem("Clinicas", href: null));
             await LoadAsync();
             _loading = false;
         }
+
         private bool FilterFunc1(Clinica element) => FilterFunc(element, searchString1);
 
         private bool FilterFunc(Clinica element, string searchString)
@@ -58,7 +57,6 @@ namespace UPLOAD.WEB.Pages.Clinicas
             return false;
         }
 
-
         private async Task Delete(Clinica clinica)
         {
             SweetAlertResult result = await sweetAlertService.FireAsync(new SweetAlertOptions
@@ -70,8 +68,6 @@ namespace UPLOAD.WEB.Pages.Clinicas
                 ConfirmButtonText = "Si, eliminar",
                 CancelButtonText = "No, volver"
             });
-
-
         }
     }
 }

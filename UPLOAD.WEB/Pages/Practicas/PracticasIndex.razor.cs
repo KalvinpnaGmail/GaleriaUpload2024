@@ -26,7 +26,7 @@ namespace UPLOAD.WEB.Pages.Practicas
         {
             //var result = await repository.GetAsync<List<Clinica>>("/api/clinicas/DevuelveClinicas");
 
-            var responseHppt = await repository.GetAsync<List<PracticaDto>>("/api/practicas/GetAll");
+            var responseHppt = await repository.GetAsync<List<PracticaDto>>("/api/ApiAcler/GetAllPracticas");
             if (responseHppt.Error)
             {
                 var message = await responseHppt.GetErrorMessageAsync();

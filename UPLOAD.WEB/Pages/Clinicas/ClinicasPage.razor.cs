@@ -9,15 +9,12 @@ namespace UPLOAD.WEB.Pages.Clinicas
     [Authorize(Roles = "Admin")]
     public partial class ClinicasPage
     {
-
         [Inject] private IRepository repository { get; set; } = null!;
         [Inject] private SweetAlertService sweetAlertService { get; set; } = null!;
 
         public List<Clinica>? Clinicas { get; set; }
 
-
-
-        protected async override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
             await LoadAsync();
         }
@@ -26,7 +23,7 @@ namespace UPLOAD.WEB.Pages.Clinicas
         {
             //var result = await repository.GetAsync<List<Clinica>>("/api/clinicas/DevuelveClinicas");
 
-            var responseHppt = await repository.GetAsync<List<Clinica>>("/api/clinicas/DevuelveClinicas");
+            var responseHppt = await repository.GetAsync<List<Clinica>>("/api/ApiAcler/DevuelveClinicas");
             if (responseHppt.Error)
             {
                 var message = await responseHppt.GetErrorMessageAsync();
@@ -34,6 +31,6 @@ namespace UPLOAD.WEB.Pages.Clinicas
                 return;
             }
             Clinicas = responseHppt.Response!;
-         }
+        }
     }
 }

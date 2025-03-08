@@ -21,7 +21,7 @@ namespace UPLOAD.WEB.Pages.ObraSociales
         {
             //var result = await repository.GetAsync<List<Clinica>>("/api/clinicas/DevuelveClinicas");
 
-            var responseHppt = await repository.GetAsync<List<ObraSocial>>("/api/obraSociales/DevuelveObraSociales");
+            var responseHppt = await repository.GetAsync<List<ObraSocial>>("/api/ApiAcler/DevuelveObraSociales");
             if (responseHppt.Error)
             {
                 var message = await responseHppt.GetErrorMessageAsync();
