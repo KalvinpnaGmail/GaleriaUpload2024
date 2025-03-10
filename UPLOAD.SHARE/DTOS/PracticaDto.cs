@@ -20,5 +20,7 @@ namespace UPLOAD.SHARE.DTOS
 
         public string cod_obrasocial { get; set; }
         public string nro_conv { get; set; }
+
+        public string ValorPractica { get; set; }
     }
 }

@@ -1,5 +1,6 @@
-using CurrieTechnologies.Razor.SweetAlert2;
+﻿using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using UPLOAD.SHARE.DTOS;
 using UPLOAD.WEB.Repositories;
 
@@ -70,6 +71,54 @@ namespace UPLOAD.WEB.Pages.Practicas
                 ConfirmButtonText = "Si, eliminar",
                 CancelButtonText = "No, volver"
             });
+        }
+
+        private async Task<TableData<PracticaDto>> LoadPracticasPaginadasAsync(TableState state, CancellationToken cancellationToken)
+        {
+            var skip = state.Page * state.PageSize;
+            var take = state.PageSize;
+
+            var response = await repository.GetAsync<List<PracticaDto>>($"/api/ApiAcler/GetPracticasPaginadas?skip={skip}&take={take}");
+            if (response.Error)
+            {
+                var message = await response.GetErrorMessageAsync();
+                await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                return new TableData<PracticaDto> { Items = new List<PracticaDto>(), TotalItems = 0 };
+            }
+
+            listapracticas = response.Response!;
+
+            // Obtener valores para los 25 registros cargados
+            foreach (var practica in listapracticas)
+            {
+                if (cancellationToken.IsCancellationRequested)
+                    return new TableData<PracticaDto> { Items = listapracticas, TotalItems = 500 };
+
+                var valor = await repository.GetAsync<string>($"/api/ApiAcler/ObtenerValorPractica?codigo={practica.Codigo}&codOS={practica.cod_obrasocial}&nroConv={practica.nro_conv}");
+
+                if (!valor.Error)
+                {
+                    practica.ValorPractica = valor.Response;
+                }
+            }
+
+            return new TableData<PracticaDto> { Items = listapracticas, TotalItems = 500 };
+        }
+
+        private async Task ObtenerValorPractica(PracticaDto practica)
+        {
+            var valor = await repository.GetAsync<string>($"/api/ApiAcler/obtenervalorpractica?codigoPractica={practica.Codigo}&codOS={practica.cod_obrasocial}&nroConv={practica.nro_conv}");
+
+            if (!valor.Error)
+            {
+                practica.ValorPractica = valor.Response;
+                StateHasChanged(); // 🔄 Actualiza la tabla para reflejar los cambios
+            }
+            else
+            {
+                var message = await valor.GetErrorMessageAsync();
+                await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+            }
         }
     }
 }

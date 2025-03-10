@@ -33,6 +33,7 @@
                               @bind-SelectedItem="selectedItem1"
                               Loading="@_loading"
                               LoadingProgressColor="Color.Info">
+                              
                         <ToolBarContent>
                             <MudSpacer />
                             <MudTextField @bind-Value="searchString1"
@@ -59,7 +60,7 @@
 
                             <MudTh>Importe</MudTh>
                             <MudTh>Vigencia</MudTh>
-                            <MudTh>CodOs</MudTh>
+                            <MudTh>Valor Práctica NN</MudTh>
                             <MudTh>Opciones</MudTh>
                         </HeaderContent>
                         <RowTemplate Context="practicaRow">
@@ -68,21 +69,34 @@
                             <MudTd DataLabel="Descripción">@practicaRow.Descripcion</MudTd>
                             <MudTd DataLabel="Importe">@practicaRow.Importe2</MudTd>
                             <MudTd DataLabel="Vigencia">@practicaRow.FechaFin.ToString("dd/MM/yyyy")</MudTd>
-                            <MudTd DataLabel="Cod.Os">@practicaRow.cod_obrasocial</MudTd>
+                           
+                            <MudTd DataLabel="Valor Práctica NN">@practicaRow.ValorPractica</MudTd>
                             <MudTd DataLabel="Opciones">
-                                <MudFab Color="Color.Primary"
+                                <MudTooltip Text="Obtener valor de la práctica">
+                                    <MudFab Color="Color.Error"
+                                            StartIcon="@Icons.Material.Filled.YoutubeSearchedFor"
+                                            Size="Size.Small"
+                                            IconSize="Size.Small"
+                                            OnClick="() => ObtenerValorPractica(practicaRow)" />
+                                </MudTooltip>
+                               
+                           @*   <MudButton Color="Color.Primary"
+                                           OnClick="() => ObtenerValorPractica(practicaRow)">
+                                    Obtener Valor
+                            </MudButton> *@
+
+                               @*  <MudFab Color="Color.Primary"
                                         StartIcon="@Icons.Material.Filled.Edit"
                                         Size="Size.Small"
                                         Href="@($"/pages/Clinicas/{practicaRow.Codigo}")"
                                         IconSize="Size.Small" />
-                                <!--
+                                
                                 <MudFab Color="Color.Error"
                                         StartIcon="@Icons.Material.Filled.Delete"
                                         Size="Size.Small"
                                         IconSize="Size.Small"
-                                        OnClick="@(() => Delete(practicaRow))" />
-                                -->
-                            </MudTd>
+                                        OnClick="@(() => Delete(practicaRow))" /> *@
+                                                            </MudTd>
                         </RowTemplate>
                         <PagerContent>
                             <MudTablePager />

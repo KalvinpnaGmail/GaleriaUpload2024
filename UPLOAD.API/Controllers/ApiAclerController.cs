@@ -65,7 +65,7 @@ namespace UPLOAD.API.Controllers
             return Ok(await _apiServiceAcler.GetClinicaComboAsync());
         }
 
-        [HttpGet("obtener-valor-practica")]
+        [HttpGet("obtenervalorpractica")]
         public async Task<IActionResult> ObtenerValorPractica([FromQuery] string codigoPractica, [FromQuery] string codOS, [FromQuery] string nroConv)
         {
             try

@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
+using System.Net.NetworkInformation;
 using UPLOAD.WEB;
 using UPLOAD.WEB.AuthenticationProviders;
 using UPLOAD.WEB.Repositories;
 using UPLOAD.WEB.Services;
 using UPLOAD.WEB.Servicios;
+using UPLOAD.SHARE.DTOS;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

@@ -6,7 +6,7 @@ namespace UPLOAD.WEB.Shared
 {
     public partial class ConfirmDialog
     {
-        [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = null!;
+        [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
         [Parameter] public string Message { get; set; } = null!;
 
