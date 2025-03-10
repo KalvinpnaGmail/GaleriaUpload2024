@@ -17,6 +17,8 @@ namespace UPLOAD.API.Service
         private readonly string _usuario;
         private readonly string _pass;
         private readonly string _url;
+        private readonly string _usuarioService;
+        private readonly string _passService;
 
         public ApiServiceAcler(IConfiguration configuration, HttpClient httpClient)
         {
@@ -24,6 +26,8 @@ namespace UPLOAD.API.Service
             _usuario = configuration["AclerApi:usuario"]!;
             _pass = configuration["AclerApi:pass"]!;
             _url = configuration["AclerApi:url"]!;
+            _usuarioService = configuration["WebService:usuario"]!;
+            _passService = configuration["Webservice:password"]!;
         }
 
         public async Task<List<PracticaDto>> GetPracticasAsync()
@@ -41,9 +45,12 @@ namespace UPLOAD.API.Service
 
             var content = new StringContent(soapRequest, Encoding.UTF8, "text/xml");
             content.Headers.Add("SOAPAction", "https://181.228.28.10/wsacler/wsacler4.php/GETALL_PRACTICAS");
+            // string credencialesBase64 = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_usuario}:{_pass}"));
 
             // Agregamos la autenticación básica
-            var byteArray = Encoding.ASCII.GetBytes("wacler@245:Fritolin.542");
+            var byteArray = Encoding.ASCII.GetBytes($"{_usuarioService}:{_passService}");
+
+            // var byteArray = Encoding.ASCII.GetBytes("wacler@245:Fritolin.542");
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
