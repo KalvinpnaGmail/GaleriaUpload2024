@@ -12,6 +12,8 @@
 
         Task<HttpResponseWrapper<T>> GetAsync<T>(string url);
 
+        Task<HttpResponseWrapper<T>> GetAsync<T>(string url, CancellationToken cancellationToken);  // Nueva sobrecarga
+
         //sin que me devuelva nadie
         Task<HttpResponseWrapper<object>> PostAsync<T>(string url, T model);
 
