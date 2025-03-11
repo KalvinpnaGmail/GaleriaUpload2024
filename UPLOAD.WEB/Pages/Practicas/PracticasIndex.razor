@@ -61,7 +61,7 @@
                             <MudTh>Importe</MudTh>
                             <MudTh>Vigencia</MudTh>
                             <MudTh>Valor Práctica NN</MudTh>
-                            <MudTh>Opciones</MudTh>
+                            
                         </HeaderContent>
                         <RowTemplate Context="practicaRow">
                             <MudTd DataLabel="Obra Social">@practicaRow.ObraSocial</MudTd>
@@ -69,9 +69,26 @@
                             <MudTd DataLabel="Descripción">@practicaRow.Descripcion</MudTd>
                             <MudTd DataLabel="Importe">@practicaRow.Importe2</MudTd>
                             <MudTd DataLabel="Vigencia">@practicaRow.FechaFin.ToString("dd/MM/yyyy")</MudTd>
+                            <MudTd DataLabel="Valor Práctica">
+                                @if (string.IsNullOrEmpty(practicaRow.ValorPractica))
+                                {
+                                    <MudTooltip Text="Obtener valor de la práctica">
+                                        <MudFab Color="Color.Error"
+                                                StartIcon="@Icons.Material.Filled.YoutubeSearchedFor"
+                                                Size="Size.Small"
+                                                IconSize="Size.Small"
+                                                OnClick="() => ObtenerValorPractica(practicaRow)" />
+                                    </MudTooltip>
+                                }
+                                else
+                                {
+                                    @practicaRow.ValorPractica
+                                }
+                            </MudTd>
+                          
                            
-                            <MudTd DataLabel="Valor Práctica NN">@practicaRow.ValorPractica</MudTd>
-                            <MudTd DataLabel="Opciones">
+                           
+                            @* <MudTd DataLabel="Opciones">
                                 <MudTooltip Text="Obtener valor de la práctica">
                                     <MudFab Color="Color.Error"
                                             StartIcon="@Icons.Material.Filled.YoutubeSearchedFor"
@@ -79,7 +96,7 @@
                                             IconSize="Size.Small"
                                             OnClick="() => ObtenerValorPractica(practicaRow)" />
                                 </MudTooltip>
-                               
+                                *@
                            @*   <MudButton Color="Color.Primary"
                                            OnClick="() => ObtenerValorPractica(practicaRow)">
                                     Obtener Valor
@@ -96,7 +113,7 @@
                                         Size="Size.Small"
                                         IconSize="Size.Small"
                                         OnClick="@(() => Delete(practicaRow))" /> *@
-                                                            </MudTd>
+                                                         
                         </RowTemplate>
                         <PagerContent>
                             <MudTablePager />

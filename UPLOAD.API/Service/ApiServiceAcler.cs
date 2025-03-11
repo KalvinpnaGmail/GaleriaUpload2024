@@ -188,28 +188,36 @@ namespace UPLOAD.API.Service
             }
         }
 
-        public async Task<string> ObtenerValorPracticaAsync(string codigoPractica, string codOS, string nroConv)
+        public async Task<Dictionary<string, decimal>> ObtenerValorPracticaAsync(string codigoPractica, string codOS, string nroConv)
         {
-            // Construcción de la URL completa con el archivo PHP
             var url = $"{_url}api_cta.php?action=obtenerValorPractica&codigoPractica={codigoPractica}&codOS={codOS}&nroConv={nroConv}";
 
-            // Configuración de la autorización básica
             var byteArray = Encoding.ASCII.GetBytes($"{_usuario}:{_pass}");
-
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
-            // Realizamos la solicitud GET
             var response = await _httpClient.GetAsync(url);
 
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
-                // Si la respuesta es exitosa, leemos el contenido
-                return await response.Content.ReadAsStringAsync();
-            }
-            else
-            {
-                // Si la respuesta no es exitosa, lanzamos una excepción
                 throw new Exception($"Error al obtener datos de la API externa: {response.ReasonPhrase}");
+            }
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+
+            // ✅ Si la API devuelve "No se encontro la practica.", retornamos un diccionario vacío
+            if (string.IsNullOrWhiteSpace(jsonString) || jsonString == "{}" || jsonString == "null" || jsonString.Contains("No se encontro la practica."))
+            {
+                return new Dictionary<string, decimal>();
+            }
+
+            try
+            {
+                var datos = JsonSerializer.Deserialize<Dictionary<string, decimal>>(jsonString);
+                return datos?.ToDictionary(k => k.Key.Trim(), v => v.Value) ?? new Dictionary<string, decimal>();
+            }
+            catch (JsonException ex)
+            {
+                throw new Exception($"Error al deserializar la respuesta JSON: {ex.Message}\nRespuesta de la API: {jsonString}");
             }
         }
 
