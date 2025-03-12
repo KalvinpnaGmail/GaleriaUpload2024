@@ -1,6 +1,7 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using System.Text.Json;
 using UPLOAD.SHARE.DTOS;
 using UPLOAD.WEB.Repositories;
 
@@ -107,12 +108,22 @@ namespace UPLOAD.WEB.Pages.Practicas
 
         private async Task ObtenerValorPractica(PracticaDto practica)
         {
-            var valor = await repository.GetAsync<string>($"/api/ApiAcler/obtenervalorpractica?codigoPractica={practica.Codigo}&codOS={practica.cod_obrasocial}&nroConv={practica.nro_conv}");
+            var valor = await repository.GetAsync<Dictionary<string, decimal>>(
+                $"/api/ApiAcler/obtenervalorpractica?codigoPractica={practica.Codigo}&codOS={practica.cod_obrasocial}&nroConv={practica.nro_conv}"
+            );
 
             if (!valor.Error)
             {
-                practica.ValorPractica = valor.Response;
-                StateHasChanged(); // 🔄 Actualiza la tabla para reflejar los cambios
+                if (valor.Response != null && valor.Response.ContainsKey("GASTOS + HONORARIOS"))
+                {
+                    practica.ValorPractica = valor.Response["GASTOS + HONORARIOS"].ToString();
+                }
+                else
+                {
+                    practica.ValorPractica = "No existe valor";
+                }
+
+                StateHasChanged(); // 🔄 Actualiza la interfaz
             }
             else
             {
@@ -120,5 +131,62 @@ namespace UPLOAD.WEB.Pages.Practicas
                 await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
             }
         }
+
+        private async Task ObtenerValorPractica2(PracticaDto practica)
+        {
+            var valor = await repository.GetAsync<string>($"/api/ApiAcler/obtenervalorpractica?codigoPractica={practica.Codigo}&codOS={practica.cod_obrasocial}&nroConv={practica.nro_conv}");
+
+            if (!valor.Error)
+            {
+                try
+                {
+                    // 🔽 Deserializamos la respuesta JSON en un diccionario
+                    var valoresPractica = JsonSerializer.Deserialize<Dictionary<string, decimal>>(valor.Response);
+
+                    // 🔽 Verificamos si el diccionario contiene la clave "GASTOS + HONORARIOS"
+                    if (valoresPractica != null && valoresPractica.ContainsKey("GASTOS + HONORARIOS"))
+                    {
+                        practica.ValorPractica = valoresPractica["GASTOS + HONORARIOS"].ToString();
+                    }
+                    else
+                    {
+                        practica.ValorPractica = "No existe valor";
+                    }
+
+                    StateHasChanged(); // 🔄 Actualiza la tabla para reflejar los cambios
+                }
+                catch (JsonException ex)
+                {
+                    await sweetAlertService.FireAsync("Error", $"Error al procesar los datos: {ex.Message}", SweetAlertIcon.Error);
+                }
+            }
+            else
+            {
+                var message = await valor.GetErrorMessageAsync();
+                await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+            }
+        }
+
+        //private async Task ObtenerValorPractica(PracticaDto practica)
+        //{
+        //    var valor = await repository.GetAsync<string>($"/api/ApiAcler/obtenervalorpractica?codigoPractica={practica.Codigo}&codOS={practica.cod_obrasocial}&nroConv={practica.nro_conv}");
+
+        //    if (!valor.Error)
+        //    {
+        //        //if (valoresPractica.ContainsKey("GASTOS RX"))
+        //        //{
+        //        //    var gastosRx = valoresPractica["GASTOS RX"];
+        //        //    Console.WriteLine($"Gastos RX: {gastosRx}");
+        //        //}
+
+        //        practica.ValorPractica = valor.Response;
+        //        StateHasChanged(); // 🔄 Actualiza la tabla para reflejar los cambios
+        //    }
+        //    else
+        //    {
+        //        var message = await valor.GetErrorMessageAsync();
+        //        await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+        //    }
+        //}
     }
 }

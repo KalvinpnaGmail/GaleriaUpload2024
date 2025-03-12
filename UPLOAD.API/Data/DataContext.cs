@@ -17,7 +17,7 @@ namespace UPLOAD.API.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Image> Images { get; set; }
-        //public DbSet<CabeceraImage> CabeceraImages { get; set; }
+        public DbSet<CabeceraImage> CabeceraImages { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
@@ -33,6 +33,11 @@ namespace UPLOAD.API.Data
             modelBuilder.Entity<Country>().HasIndex(x => x.Name).IsUnique();
             modelBuilder.Entity<City>().HasIndex(x => new { x.ProvinciaId, x.Name }).IsUnique();
             modelBuilder.Entity<Provincia>().HasIndex(x => new { x.CountryId, x.Name }).IsUnique();
+            modelBuilder.Entity<CabeceraImage>()
+            .HasMany(c => c.Images)
+            .WithOne()
+            .HasForeignKey(i => i.CabeceraImageId); // Suponiendo que tienes un campo CabeceraImageId en Image
+
             //modelBuilder.ApplyConfiguration(new ImageConfiguration());
             //modelBuilder.ApplyConfiguration(new CountryConfiguration());
             //modelBuilder.ApplyConfiguration(new CategoryConfiguraration());

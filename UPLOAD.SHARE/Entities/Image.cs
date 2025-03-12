@@ -30,6 +30,11 @@ namespace UPLOAD.SHARE.Entities
             return Periodo.ToString("MM/yyyy");
         }
 
+        // Relación con CabeceraImage
+        public int CabeceraImageId { get; set; }
+
+        public CabeceraImage? CabeceraImage { get; set; }
+
         //public int CabeceraImageId { get; set; }
         //public CabeceraImage? CabeceraImage { get; set; }
     }

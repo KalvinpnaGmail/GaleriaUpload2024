@@ -6,8 +6,6 @@ namespace UPLOAD.API.Service
 {
     public interface IApiServiceAcler
     {
-        //Task<string> ObtenerValorPracticaAsync(string codigoPractica, string codOS, string nroConv);
-
         Task<Dictionary<string, decimal>> ObtenerValorPracticaAsync(string codigoPractica, string codOS, string nroConv);
 
         //Clinicas
