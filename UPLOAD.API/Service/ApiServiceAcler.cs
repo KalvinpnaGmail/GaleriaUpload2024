@@ -12,7 +12,9 @@ using UPLOAD.SHARE.DTOS;
 namespace UPLOAD.API.Service
 {
     public class ApiServiceAcler : IApiServiceAcler
-    {
+    {#if true
+
+	#endif
         private readonly HttpClient _httpClient;
         private readonly string _usuario;
         private readonly string _pass;
@@ -188,7 +190,7 @@ namespace UPLOAD.API.Service
             }
         }
 
-        public async Task<string> ObtenerValorPracticaAsync(string codigoPractica, string codOS, string nroConv)
+        public async Task<Dictionary<string, decimal>> ObtenerValorPracticaAsync(string codigoPractica, string codOS, string nroConv)
         {
             // Construcción de la URL completa con el archivo PHP
             var url = $"{_url}api_cta.php?action=obtenerValorPractica&codigoPractica={codigoPractica}&codOS={codOS}&nroConv={nroConv}";
@@ -203,8 +205,13 @@ namespace UPLOAD.API.Service
 
             if (response.IsSuccessStatusCode)
             {
-                // Si la respuesta es exitosa, leemos el contenido
-                return await response.Content.ReadAsStringAsync();
+                var jsonString = await response.Content.ReadAsStringAsync();
+
+                // Deserializar a un diccionario con claves limpias
+                var datos = JsonSerializer.Deserialize<Dictionary<string, decimal>>(jsonString);
+                var datosLimpios = datos.ToDictionary(k => k.Key.Trim(), v => v.Value);
+
+                return datosLimpios;
             }
             else
             {
