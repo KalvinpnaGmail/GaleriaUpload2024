@@ -65,7 +65,7 @@ namespace UPLOAD.WEB.Pages.Practicas
                 }
                 else
                 {
-                    practica.ValorPractica = "No existe valor";
+                    practica.ValorPractica = "0";
                 }
 
                 StateHasChanged(); // 🔄 Actualiza la interfaz
