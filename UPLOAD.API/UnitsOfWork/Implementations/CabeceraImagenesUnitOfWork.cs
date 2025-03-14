@@ -17,5 +17,8 @@ namespace UPLOAD.API.UnitsOfWork.Implementations
         public async Task<ActionResponse<IEnumerable<CabeceraImage>>> GetAsync() => await _cabeceraImagenesRepository.GetAsync();
 
         public async Task<ActionResponse<CabeceraImage>> GetAsync(int id) => await _cabeceraImagenesRepository.GetAsync((id));
+
+        public async Task<ActionResponse<CabeceraImage>> AddAsync(CabeceraImage cabeceraImage) =>
+    await _cabeceraImagenesRepository.AddAsync(cabeceraImage);
     }
 }

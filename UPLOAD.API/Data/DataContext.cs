@@ -40,6 +40,12 @@ namespace UPLOAD.API.Data
             .HasMany(c => c.Images)
             .WithOne()
             .HasForeignKey(i => i.CabeceraImageId); // Suponiendo que tienes un campo CabeceraImageId en Image
+
+            modelBuilder.Entity<Image>()
+    .HasOne(i => i.CabeceraImage)
+    .WithMany(c => c.Images)
+    .HasForeignKey(i => i.CabeceraImageId);
+
             //modelBuilder.ApplyConfiguration(new ImageConfiguration());
             //modelBuilder.ApplyConfiguration(new CountryConfiguration());
             //modelBuilder.ApplyConfiguration(new CategoryConfiguraration());

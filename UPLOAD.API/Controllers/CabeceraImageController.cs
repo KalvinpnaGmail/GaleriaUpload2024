@@ -40,5 +40,23 @@ namespace UPLOAD.API.Controllers
             }
             return BadRequest();
         }
+
+        [HttpPost("async")]
+        public async Task<IActionResult> Post([FromBody] CabeceraImage cabeceraImage)
+        {
+            if (cabeceraImage == null)
+            {
+                return BadRequest(new { message = "Los datos de la cabecera son inválidos." });
+            }
+
+            var response = await _cabeceraImagenesUnitOfWork.AddAsync(cabeceraImage);
+
+            if (!response.WasSuccess)
+            {
+                return BadRequest(new { message = response.Message });
+            }
+
+            return CreatedAtAction(nameof(GetAsync), new { id = response.Result.Id }, response.Result);
+        }
     }
 }

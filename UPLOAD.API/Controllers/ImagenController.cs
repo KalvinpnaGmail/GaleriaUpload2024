@@ -48,14 +48,6 @@ namespace UPLOAD.API.Controllers
             return Ok(imagen);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> PostAsync(Image image, ImagenDTO request)
-        //{
-        //    _contexto.Add(image);
-        //    await _contexto.SaveChangesAsync();
-        //    return Ok(image);
-        //}
-
         [HttpPost]
         public async Task<IActionResult> PostAsync(ImagenDTO request)
         {
@@ -65,7 +57,7 @@ namespace UPLOAD.API.Controllers
             {
                 Name = request.Name,             //Cloudinary
                 ObraSocial = obraSocial,
-                //Periodo = periodo,
+                Periodo = DateTime.UtcNow,
                 Url = await Upload(request.Base64, obraSocial)
             };
 
