@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using UPLOAD.API.Data;
+using UPLOAD.API.UnitsOfWork.Implementations;
+using UPLOAD.API.UnitsOfWork.Interfaces;
 using UPLOAD.SHARE.Entities;
 
 namespace UPLOAD.API.Controllers
@@ -10,56 +10,53 @@ namespace UPLOAD.API.Controllers
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
-    public class CabeceraImageController : ControllerBase
+    public class CabeceraImageController : GenericController<CabeceraImage>
     {
-        private readonly DataContext _contexto;
+        private readonly ICabeceraImagenesUnitOfWork _cabeceraImagenesUnitOfWork;
 
-        public CabeceraImageController(DataContext contexto)
+        public CabeceraImageController(IGenericUnitOfWork<CabeceraImage> unitOfWork, ICabeceraImagenesUnitOfWork cabeceraImagenesUnitOfWork) : base(unitOfWork)
         {
-            _contexto = contexto;
+            _cabeceraImagenesUnitOfWork = cabeceraImagenesUnitOfWork;
         }
 
-        // Crear una nueva cabecera de imagen
-        [HttpPost]
-        public async Task<IActionResult> PostAsync(CabeceraImage cabecera)
+        [HttpGet("full")]
+        public override async Task<IActionResult> GetAsync()
         {
-            if (cabecera == null)
+            var action = await _cabeceraImagenesUnitOfWork.GetAsync();
+            if (action.WasSuccess)
             {
-                return BadRequest("Los datos de la cabecera son incorrectos.");
+                return Ok(action.Result);
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("{id}")]
+        public override async Task<IActionResult> GetAsync(int id)
+        {
+            var action = await _cabeceraImagenesUnitOfWork.GetAsync(id);
+            if (action.WasSuccess)
+            {
+                return Ok(action.Result);
+            }
+            return BadRequest();
+        }
+
+        [HttpPost("async")]
+        public async Task<IActionResult> Post([FromBody] CabeceraImage cabeceraImage)
+        {
+            if (cabeceraImage == null)
+            {
+                return BadRequest(new { message = "Los datos de la cabecera son inválidos." });
             }
 
-            await _contexto.CabeceraImages.AddAsync(cabecera);
-            await _contexto.SaveChangesAsync();
+            var response = await _cabeceraImagenesUnitOfWork.AddAsync(cabeceraImage);
 
-            return Ok(cabecera);
-        }
-
-        // Listar todas las cabeceras de imágenes
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var cabeceras = await _contexto.CabeceraImages
-                .Include(c => c.Images) // Incluimos las imágenes relacionadas
-                .AsNoTracking()
-                .ToListAsync();
-
-            return Ok(cabeceras);
-        }
-
-        // Listar las imágenes asociadas a una cabecera por ID
-        [HttpGet("{id}/imagenes")]
-        public async Task<IActionResult> GetImagesByCabeceraId(int id)
-        {
-            var cabecera = await _contexto.CabeceraImages
-                .Include(c => c.Images)
-                .FirstOrDefaultAsync(c => c.Id == id);
-
-            if (cabecera == null)
+            if (!response.WasSuccess)
             {
-                return NotFound("Cabecera no encontrada.");
+                return BadRequest(new { message = response.Message });
             }
 
-            return Ok(cabecera.Images);
+            return CreatedAtAction(nameof(GetAsync), new { id = response.Result.Id }, response.Result);
         }
     }
 }

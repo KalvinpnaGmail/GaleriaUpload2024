@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UPLOAD.API.Data;
 
@@ -11,9 +12,11 @@ using UPLOAD.API.Data;
 namespace UPLOAD.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250313144621_table_cabecera")]
+    partial class table_cabecera
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -252,6 +255,9 @@ namespace UPLOAD.API.Migrations
                     b.Property<int>("CabeceraImageId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CabeceraImageId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -271,6 +277,8 @@ namespace UPLOAD.API.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CabeceraImageId");
+
+                    b.HasIndex("CabeceraImageId1");
 
                     b.ToTable("Images");
                 });
@@ -459,11 +467,16 @@ namespace UPLOAD.API.Migrations
 
             modelBuilder.Entity("UPLOAD.SHARE.Entities.Image", b =>
                 {
-                    b.HasOne("UPLOAD.SHARE.Entities.CabeceraImage", "CabeceraImage")
+                    b.HasOne("UPLOAD.SHARE.Entities.CabeceraImage", null)
                         .WithMany("Images")
                         .HasForeignKey("CabeceraImageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("UPLOAD.SHARE.Entities.CabeceraImage", "CabeceraImage")
+                        .WithMany()
+                        .HasForeignKey("CabeceraImageId1")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("CabeceraImage");
                 });

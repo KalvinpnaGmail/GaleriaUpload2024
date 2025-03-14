@@ -121,6 +121,10 @@ builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IUsersUnitOfWork, UsersUnitOfWork>();
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 builder.Services.AddScoped<ICategoriesUnitOfWork, CategoriesUnitOfWork>();
+
+builder.Services.AddScoped<ICabeceraImagenesRepository, CabeceraImagenesRepository>();
+builder.Services.AddScoped<ICabeceraImagenesUnitOfWork, CabeceraImagenesUnitOfWork>();
+
 //servicio soap acler
 
 builder.Services.AddHttpClient<IApiServiceAcler, ApiServiceAcler>();

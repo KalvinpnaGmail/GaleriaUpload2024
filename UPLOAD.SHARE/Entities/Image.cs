@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace UPLOAD.SHARE.Entities
 {
@@ -33,9 +34,6 @@ namespace UPLOAD.SHARE.Entities
         // Relación con CabeceraImage
         public int CabeceraImageId { get; set; }
 
-        public CabeceraImage? CabeceraImage { get; set; }
-
-        //public int CabeceraImageId { get; set; }
-        //public CabeceraImage? CabeceraImage { get; set; }
+        public CabeceraImage? CabeceraImage { get; set; } // Permitir valores nulos
     }
 }

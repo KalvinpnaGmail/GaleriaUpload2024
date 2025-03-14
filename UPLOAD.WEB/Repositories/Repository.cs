@@ -51,6 +51,24 @@ namespace UPLOAD.WEB.Repositories
             return new HttpResponseWrapper<T>(default, true, responseHttp);
         }
 
+        public async Task<HttpResponseWrapper<T>> GetAsync<T>(string url, CancellationToken cancellationToken)
+        {
+            // Aquí pasas el CancellationToken al método GetAsync de HttpClient
+            var responseHttp = await _httpClient.GetAsync(url, cancellationToken);
+
+            // Si la respuesta es exitosa
+            if (responseHttp.IsSuccessStatusCode)
+            {
+                // Lee y deserializa la respuesta
+                var response = await UnserializeAnswer<T>(responseHttp, _jsonDefaultOptions);
+                // Devuelve la respuesta envolviendo el resultado
+                return new HttpResponseWrapper<T>(response, false, responseHttp);
+            }
+
+            // Si no es exitosa, devuelve el valor por defecto
+            return new HttpResponseWrapper<T>(default, true, responseHttp);
+        }
+
         ///Este post no devuelve nada
         public async Task<HttpResponseWrapper<object>> PostAsync<T>(string url, T model)
         {
